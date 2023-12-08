@@ -1,0 +1,44 @@
+<div class="container">
+  <div class="recipe-details mat-elevation-z2">
+    <div>Max amount: {{ recipeAmount }}</div>
+    <h1 class="recipe-details__title">{{ recipeDetails.recipe.name }}</h1>
+
+    <div class="recipe-details__section">
+      <h2 class="recipe-details__subtitle">Description</h2>
+      <p class="recipe-details__description">
+        {{ recipeDetails.recipe.description }}
+      </p>
+    </div>
+
+    <div class="recipe-details__section">
+      <h2 class="recipe-details__subtitle">Cooking Instructions</h2>
+      <p class="recipe-details__instructions">
+        {{ recipeDetails.recipe.cookingInstructions }}
+      </p>
+    </div>
+
+    <div class="recipe-details__section">
+      <h2 class="recipe-details__subtitle">Categories</h2>
+      <ul class="recipe-details__category-list">
+        <li
+          *ngFor="let category of recipeDetails.categories"
+          class="recipe-details__category"
+        >
+          {{ category.category.name }}
+        </li>
+      </ul>
+    </div>
+
+    <div class="recipe-details__section">
+      <h2 class="recipe-details__subtitle">Ingredients</h2>
+      <ul class="recipe-details__ingredient-list">
+        <li
+          *ngFor="let ingredient of recipeDetails.ingredients"
+          class="recipe-details__ingredient"
+        >
+          {{ ingredient.quantity }} - {{ ingredient.ingredient.name }}
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

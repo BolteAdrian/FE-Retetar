@@ -1,0 +1,28 @@
+<nav class="navbar">
+  <div class="navbar__col-md-6 navbar__icon" (click)="toggleDropdown()">
+    <img src="./../../assets/images/chef.png" alt="site icon" />
+    <h2><a href="" class="navbar__title">The Recipe</a></h2>
+  </div>
+  <div
+    class="navbar__col-md-3 navbar__login"
+    *ngIf="authService.isAuthenticated()"
+  >
+    <button mat-button [matMenuTriggerFor]="menu" class="navbar__menu">Menu</button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="logout()">Logout</button>
+      <button mat-menu-item (click)="changePassword()">Change Password</button>
+      <button mat-menu-item (click)="changeEmail()">Change Email</button>
+    </mat-menu>
+  </div>
+  <div
+    class="navbar__col-md-3 navbar__login"
+    *ngIf="!authService.isAuthenticated()"
+  >
+    <a href="/login" class="navbar__register-login-btn btn btn-default"
+      >Login</a
+    >
+    <a href="/register" class="navbar__register-login-btn btn btn-default"
+      >Register</a
+    >
+  </div>
+</nav>

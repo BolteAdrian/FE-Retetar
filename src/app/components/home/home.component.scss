@@ -1,0 +1,46 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60vh;
+  }
+  
+  .hero {
+    text-align: center;
+  
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+  
+    p {
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+    }
+  }
+  
+  .action-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+  
+    .recipe-button,
+    .ingredient-button {
+      padding: 10px 20px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  
+    .recipe-button {
+      background-color: #4caf50;
+      color: white;
+    }
+  
+    .ingredient-button {
+      background-color: #2196f3;
+      color: white;
+    }
+  }
+  

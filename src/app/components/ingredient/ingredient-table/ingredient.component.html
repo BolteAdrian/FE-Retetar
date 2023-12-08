@@ -1,0 +1,21 @@
+<div class="container">
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Description</th>
+          <th>categoryId</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let ingredient of ingredients">
+          <td>{{ ingredient.id }}</td>
+          <td>{{ ingredient.name }}</td>
+          <td>{{ ingredient.description }}</td>
+          <td>{{ ingredient.categoryId }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  

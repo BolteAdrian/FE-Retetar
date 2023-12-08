@@ -1,0 +1,19 @@
+table {
+  width: 100%;
+  border-collapse: collapse; // To remove default spacing between table cells
+}
+
+.mat-elevation-z8 {
+  width: 100%;
+}
+
+.mat-mdc-form-field {
+  font-size: 14px;
+  width: 30%;
+}
+
+td,
+th {
+  width: 25%;
+  padding: 8px; // Adjust padding as needed
+}

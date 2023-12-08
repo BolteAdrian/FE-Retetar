@@ -1,0 +1,30 @@
+<h1 mat-dialog-title>
+    {{ (data.operation === 'edit' ? 'EDIT' : data.operation) | uppercase }} Recipe
+  </h1>
+  
+  <div mat-dialog-content>
+    <form (ngSubmit)="performOperation()" #operationForm="ngForm">
+      <div *ngIf="data.operation === 'add' || data.operation === 'edit'">
+        <mat-form-field>
+          <input matInput placeholder="Name" [(ngModel)]="data.recipe.name" name="name" required>
+        </mat-form-field>
+        <mat-form-field>
+          <textarea matInput placeholder="Description" [(ngModel)]="data.recipe.description" name="description" required></textarea>
+        </mat-form-field>
+      </div>
+  
+      <div *ngIf="data.operation === 'edit'">
+        <button mat-button color="warn" (click)="performDelete()">Delete</button>
+      </div>
+  
+      <div *ngIf="data.operation === 'delete'">
+        <p>Are you sure you want to delete this recipe?</p>
+      </div>
+  
+      <div mat-dialog-actions>
+        <button mat-button (click)="dialogRef.close()">Cancel</button>
+        <button mat-button type="submit" [disabled]="!operationForm.valid">Confirm</button>
+      </div>
+    </form>
+  </div>
+  
