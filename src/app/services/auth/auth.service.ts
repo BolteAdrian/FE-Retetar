@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { IUserAuth } from 'src/app/models/IUserAuth';
+import { IJwtAutResponse } from 'src/app/models/IJwtAutResponse';
 
 @Injectable({
   providedIn: 'root',
@@ -10,14 +11,16 @@ import { IUserAuth } from 'src/app/models/IUserAuth';
 export class AuthService {
   private apiUrl = environment.apiUrl;
   private readonly TOKEN_KEY = 'authToken';
+  private readonly USER_NAME = 'username';
 
   constructor(private http: HttpClient) {}
 
   login(user: IUserAuth): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/User/login`, user).pipe(
-      tap((response: { token: string }) => {
+      tap((response: IJwtAutResponse) => {
         if (response && response.token) {
           localStorage.setItem(this.TOKEN_KEY, response.token);
+          localStorage.setItem('username', response.userName);
         }
       })
     );
@@ -29,6 +32,7 @@ export class AuthService {
 
   logout(): void {
     localStorage.removeItem(this.TOKEN_KEY);
+    localStorage.removeItem(this.USER_NAME);
   }
 
   getToken(): string | null {

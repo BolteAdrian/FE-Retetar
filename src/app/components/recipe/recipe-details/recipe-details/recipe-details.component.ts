@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { RecipeService } from 'src/app/services/recipe/recipe.service';
 
 @Component({
@@ -12,11 +12,16 @@ export class RecipeDetailsComponent {
   recipeAmount: number = 0;
   constructor(
     private route: ActivatedRoute,
-    private recipeService: RecipeService
+    private recipeService: RecipeService,
+    private router: Router
   ) {}
 
   ngOnInit() {
     this.getRecipeDetails();
+  }
+
+  goToRecipeUpdate(id: number): void {
+    this.router.navigateByUrl('/recipe/update/' + id);
   }
 
   getRecipeDetails(): void {

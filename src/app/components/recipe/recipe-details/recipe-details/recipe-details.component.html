@@ -1,5 +1,8 @@
 <div class="container">
   <div class="recipe-details mat-elevation-z2">
+    <button mat-raised-button color="primary" (click)="goToRecipeUpdate(recipeDetails.recipe.id)">
+      Edit Recipe
+    </button>
     <div>Max amount: {{ recipeAmount }}</div>
     <h1 class="recipe-details__title">{{ recipeDetails.recipe.name }}</h1>
 

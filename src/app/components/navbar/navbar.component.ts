@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth/auth.service';
 
 @Component({
@@ -9,7 +10,7 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 export class NavbarComponent {
   isDropdownOpen = false;
 
-  constructor(protected authService: AuthService) {}
+  constructor(protected authService: AuthService, private router: Router) {}
 
   ngOnInit() {}
 
@@ -20,6 +21,7 @@ export class NavbarComponent {
   logout() {
     this.authService.logout();
     this.isDropdownOpen = false;
+    this.router.navigateByUrl('/');
   }
 
   changePassword() {

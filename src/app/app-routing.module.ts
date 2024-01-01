@@ -8,6 +8,8 @@ import { RecipeComponent } from './components/recipe/recipe-table/recipe.compone
 import { IngredientComponent } from './components/ingredient/ingredient-table/ingredient.component';
 import { IngredientQuantityComponent } from './components/ingredient/ingredient-quantity/ingredient-quantity.component';
 import { RecipeDetailsComponent } from './components/recipe/recipe-details/recipe-details/recipe-details.component';
+import { RecipeFormComponent } from './components/recipe/recipe-form/recipe-form/recipe-form.component';
+import { AuthGuard } from './components/auth/auth.guard';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -16,6 +18,8 @@ const routes: Routes = [
   { path: 'ingredient/:id/quantity', component: IngredientQuantityComponent },
   { path: 'recipe', component: RecipeComponent },
   { path: 'recipe/:id', component: RecipeDetailsComponent },
+  { path: 'create-recipe', component: RecipeFormComponent, canActivate: [AuthGuard],},
+  //{ path: 'recipe/update/:id', component: RecipeFormComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent }
 ];

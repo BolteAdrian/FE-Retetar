@@ -11,7 +11,7 @@ export class CategoryService {
   constructor(private http: HttpClient) {}
 
   getCategories(): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/Recipe/`);
+    return this.http.get<any>(`${this.apiUrl}/Category/`);
   }
 
   // getAllCategoriesPaginated(options: any): Observable<any> {

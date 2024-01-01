@@ -10,7 +10,7 @@ import { RecipeComponent } from './components/recipe/recipe-table/recipe.compone
 import { IngredientComponent } from './components/ingredient/ingredient-table/ingredient.component';
 import { CategoryComponent } from './components/category/category.component';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
@@ -23,7 +23,11 @@ import { IngredientQuantityComponent } from './components/ingredient/ingredient-
 import { ModalComponent } from './components/modal/modal.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { RecipeDetailsComponent } from './components/recipe/recipe-details/recipe-details/recipe-details.component';
-import { RecipeSaveComponent } from './components/recipe/recipe-save/recipe-save/recipe-save.component';
+import { RecipeFormComponent } from './components/recipe/recipe-form/recipe-form/recipe-form.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatCardModule } from '@angular/material/card';
+import { MatSelectModule } from '@angular/material/select';
+import { HttpClientInterceptor } from './components/auth/http-client-interceptor';
 
 @NgModule({
   declarations: [
@@ -38,7 +42,7 @@ import { RecipeSaveComponent } from './components/recipe/recipe-save/recipe-save
     IngredientQuantityComponent,
     ModalComponent,
     RecipeDetailsComponent,
-    RecipeSaveComponent,
+    RecipeFormComponent,
   ],
   imports: [
     BrowserModule,
@@ -53,9 +57,18 @@ import { RecipeSaveComponent } from './components/recipe/recipe-save/recipe-save
     MatTableModule,
     MatSortModule,
     MatPaginatorModule,
-    MatDialogModule
+    MatDialogModule,
+    MatCardModule,
+    ReactiveFormsModule,
+    MatSelectModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpClientInterceptor,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

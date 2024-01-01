@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { RecipeSaveComponent } from './recipe-save.component';
+import { RecipeFormComponent } from './recipe-form.component';
 
 describe('RecipeSaveComponent', () => {
-  let component: RecipeSaveComponent;
-  let fixture: ComponentFixture<RecipeSaveComponent>;
+  let component: RecipeFormComponent;
+  let fixture: ComponentFixture<RecipeFormComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [RecipeSaveComponent]
+      declarations: [RecipeFormComponent]
     });
-    fixture = TestBed.createComponent(RecipeSaveComponent);
+    fixture = TestBed.createComponent(RecipeFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
