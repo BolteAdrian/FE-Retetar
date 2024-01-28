@@ -21,7 +21,7 @@ export class RecipeDetailsComponent {
   }
 
   goToRecipeUpdate(id: number): void {
-    this.router.navigateByUrl('/recipe/update/' + id);
+    this.router.navigateByUrl('/recipe/edit/' + id);
   }
 
   getRecipeDetails(): void {

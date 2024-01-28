@@ -8,7 +8,7 @@ import { HomeComponent } from './components/home/home.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { RecipeComponent } from './components/recipe/recipe-table/recipe.component';
 import { IngredientComponent } from './components/ingredient/ingredient-table/ingredient.component';
-import { CategoryComponent } from './components/category/category.component';
+import { CategoryComponent } from './components/category/category-table/category.component';
 import { FormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -28,6 +28,10 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatSelectModule } from '@angular/material/select';
 import { HttpClientInterceptor } from './components/auth/http-client-interceptor';
+import { MatIconModule } from '@angular/material/icon';
+import { EditorModule } from '@tinymce/tinymce-angular';
+import { CategoryModalComponent } from './components/category/category-modal/category-modal/category-modal.component';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [
@@ -43,6 +47,7 @@ import { HttpClientInterceptor } from './components/auth/http-client-interceptor
     ModalComponent,
     RecipeDetailsComponent,
     RecipeFormComponent,
+    CategoryModalComponent,
   ],
   imports: [
     BrowserModule,
@@ -61,6 +66,9 @@ import { HttpClientInterceptor } from './components/auth/http-client-interceptor
     MatCardModule,
     ReactiveFormsModule,
     MatSelectModule,
+    MatIconModule,
+    EditorModule,
+    MatCheckboxModule
   ],
   providers: [
     {

@@ -50,11 +50,15 @@ export class RecipeComponent implements OnInit {
     }
   }
 
-  goToRecipeDetails(id:Number): void {
-    this.router.navigateByUrl('/recipe/'+id);
+  goToRecipeDetails(id: Number): void {
+    this.router.navigateByUrl('/recipe/' + id);
   }
 
   goToRecipeCreate(): void {
     this.router.navigateByUrl('/create-recipe');
+  }
+
+  goToCategoryManagement(type: string) {
+    this.router.navigateByUrl('/category/' + type);
   }
 }
