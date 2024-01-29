@@ -19,7 +19,6 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { IngredientQuantityComponent } from './components/ingredient/ingredient-quantity/ingredient-quantity.component';
 import { ModalComponent } from './components/modal/modal.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { RecipeDetailsComponent } from './components/recipe/recipe-details/recipe-details/recipe-details.component';
@@ -32,6 +31,12 @@ import { MatIconModule } from '@angular/material/icon';
 import { EditorModule } from '@tinymce/tinymce-angular';
 import { CategoryModalComponent } from './components/category/category-modal/category-modal/category-modal.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { IngredientQuantityTableComponent } from './components/ingredient/ingredient-quantity/ingredient-quantity-table/ingredient-quantity-table.component';
+import { IngredientQuantityModalComponent } from './components/ingredient/ingredient-quantity/ingredient-quantity-modal/ingredient-quantity-modal.component';
+import { IngredientModalComponent } from './components/ingredient/ingredient-modal/ingredient-modal.component';
+import { MatNativeDateModule } from '@angular/material/core';
+import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 @NgModule({
   declarations: [
@@ -43,11 +48,13 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     LoginComponent,
     IngredientComponent,
     CategoryComponent,
-    IngredientQuantityComponent,
     ModalComponent,
     RecipeDetailsComponent,
     RecipeFormComponent,
     CategoryModalComponent,
+    IngredientQuantityTableComponent,
+    IngredientQuantityModalComponent,
+    IngredientModalComponent,
   ],
   imports: [
     BrowserModule,
@@ -68,7 +75,10 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     MatSelectModule,
     MatIconModule,
     EditorModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatNativeDateModule,
+    NgxMaterialTimepickerModule,
+    MatDatepickerModule,
   ],
   providers: [
     {

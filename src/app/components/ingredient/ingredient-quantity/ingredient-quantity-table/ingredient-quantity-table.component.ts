@@ -1,36 +1,42 @@
 import { Component, ViewChild } from '@angular/core';
+import { IngredientQuantityModalComponent } from '../ingredient-quantity-modal/ingredient-quantity-modal.component';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { CategoryService } from 'src/app/services/category/category.service';
-import { MatDialog } from '@angular/material/dialog';
-import { CategoryModalComponent } from '../category-modal/category-modal/category-modal.component';
+import { IngredientService } from 'src/app/services/ingredient/ingredient.service';
 
 @Component({
-  selector: 'app-category',
-  templateUrl: './category.component.html',
-  styleUrls: ['./category.component.scss'],
+  selector: 'app-ingredient-quantity-table',
+  templateUrl: './ingredient-quantity-table.component.html',
+  styleUrls: ['./ingredient-quantity-table.component.scss'],
 })
-export class CategoryComponent {
-  displayedColumns: string[] = ['id', 'name', 'description'];
+export class IngredientQuantityTableComponent {
+  displayedColumns: string[] = [
+    'id',
+    'amount',
+    'unit',
+    'expiringDate',
+    'dateOfPurchase',
+  ];
   dataSource: MatTableDataSource<any> = new MatTableDataSource<any>();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
   constructor(
-    private categoryService: CategoryService,
+    private ingredientService: IngredientService,
     public dialog: MatDialog
   ) {}
 
   ngOnInit() {
-    this.getCategories();
+    this.getIngredients();
   }
 
-  getCategories() {
-    this.categoryService.getCategories().subscribe(
+  getIngredients() {
+    this.ingredientService.getIngredients().subscribe(
       (response: any) => {
-        this.dataSource = new MatTableDataSource(response.categories);
+        this.dataSource = new MatTableDataSource(response.ingredients);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
       },
@@ -50,7 +56,7 @@ export class CategoryComponent {
   }
 
   openOperationModal(mode: 'add' | 'edit', data: any): void {
-    const dialogRef = this.dialog.open(CategoryModalComponent, {
+    const dialogRef = this.dialog.open(IngredientQuantityModalComponent, {
       width: '400px',
       data: { mode, category: data },
     });
@@ -60,14 +66,14 @@ export class CategoryComponent {
         // Dacă utilizatorul a apăsat "Save" în modal, poți face ceva cu datele salvate.
         console.log(result);
         // În cazul adăugării sau editării, poți actualiza lista de categorii.
-        this.categoryService.addCategory(result).subscribe(
+        this.ingredientService.addIngredientQuantities(result).subscribe(
           (response: any) => {
             // Logică pentru gestionarea răspunsului cu succes de la serviciu.
-            console.log('Categorie adăugată cu succes:', response);
+            console.log('Ingredient adăugat cu succes:', response);
           },
           (error: any) => {
             // Logică pentru gestionarea erorii de la serviciu.
-            console.error('Eroare în timpul adăugării categoriei:', error);
+            console.error('Eroare în timpul adăugării ingredientului:', error);
             // Aici poți adăuga orice logică suplimentară pentru gestionarea erorilor, cum ar fi afișarea unui mesaj de eroare către utilizator.
           }
         );
@@ -75,15 +81,15 @@ export class CategoryComponent {
     });
   }
 
-  deleteCategory(categoryId: number): void {
-    this.categoryService.deleteCategory(categoryId).subscribe(
+  deleteIngredient(ingredientId: number): void {
+    this.ingredientService.deleteIngredientQuantities(ingredientId).subscribe(
       (response: any) => {
         // Logică pentru gestionarea răspunsului cu succes de la serviciu.
-        console.log('Categorie stearsă cu succes:', response);
+        console.log('Ingredient sters cu succes:', response);
       },
       (error: any) => {
         // Logică pentru gestionarea erorii de la serviciu.
-        console.error('Eroare în timpul stergerii categoriei:', error);
+        console.error('Eroare în timpul stergerii ingredientului:', error);
         // Aici poți adăuga orice logică suplimentară pentru gestionarea erorilor, cum ar fi afișarea unui mesaj de eroare către utilizator.
       }
     );

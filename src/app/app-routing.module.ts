@@ -6,22 +6,33 @@ import { LoginComponent } from './components/auth/login/login.component';
 import { RegisterComponent } from './components/auth/register/register.component';
 import { RecipeComponent } from './components/recipe/recipe-table/recipe.component';
 import { IngredientComponent } from './components/ingredient/ingredient-table/ingredient.component';
-import { IngredientQuantityComponent } from './components/ingredient/ingredient-quantity/ingredient-quantity.component';
 import { RecipeDetailsComponent } from './components/recipe/recipe-details/recipe-details/recipe-details.component';
 import { AuthGuard } from './components/auth/auth.guard';
 import { RecipeFormComponent } from './components/recipe/recipe-form/recipe-form/recipe-form.component';
+import { IngredientQuantityTableComponent } from './components/ingredient/ingredient-quantity/ingredient-quantity-table/ingredient-quantity-table.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'category/:type', component: CategoryComponent },
   { path: 'ingredient', component: IngredientComponent },
-  { path: 'ingredient/:id/quantity', component: IngredientQuantityComponent },
+  {
+    path: 'ingredient/:id/quantity',
+    component: IngredientQuantityTableComponent,
+  },
+  {
+    path: 'ingredient/quantity',
+    component: IngredientQuantityTableComponent,
+  },
   { path: 'recipe', component: RecipeComponent },
   { path: 'recipe/:id', component: RecipeDetailsComponent },
-  { path: 'create-recipe', component: RecipeFormComponent, canActivate: [AuthGuard],},
+  {
+    path: 'create-recipe',
+    component: RecipeFormComponent,
+    canActivate: [AuthGuard],
+  },
   { path: 'recipe/edit/:id', component: RecipeFormComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent }
+  { path: 'register', component: RegisterComponent },
 ];
 
 @NgModule({

@@ -1,0 +1,62 @@
+<h2 mat-dialog-title>
+  {{ data.mode === "add" ? "Add Ingredient" : "Edit Ingredient" }}
+</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="ingredientForm">
+    <mat-form-field appearance="fill">
+      <mat-label>Name</mat-label>
+      <input matInput formControlName="name" required />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Short Description</mat-label>
+      <textarea matInput formControlName="shortDescription" required></textarea>
+    </mat-form-field>
+    <div class="form-group">
+      <label for="description">Description:</label>
+      <editor
+        apiKey="c8qwc5cv96qiwizuswzet80gvul391n2juf3v14t1vs4rcem"
+        id="description"
+        formControlName="description"
+        required
+      ></editor>
+    </div>
+
+    <input type="file" (change)="onFileSelected($event)" />
+
+    <div>
+      <mat-form-field appearance="fill">
+        <mat-label>Categories</mat-label>
+        <mat-select formArrayName="categories" multiple>
+          <mat-option
+            *ngFor="let category of categories; let i = index"
+            [value]="category.id"
+            (click)="onCategorySelectionChange(category)"
+          >
+            {{ category.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <div
+        *ngIf="selectedCategories.length > 0"
+        class="selected_category__container"
+      >
+        <div
+          *ngFor="let category of selectedCategories; let i = index"
+          class="selected_category"
+        >
+          {{ category.name }}
+          <button mat-icon-button (click)="removeCategory(i)">
+            <mat-icon>close</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancel</button>
+  <button mat-button color="accent" (click)="onSaveClick()">Save</button>
+</mat-dialog-actions>

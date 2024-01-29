@@ -1,0 +1,48 @@
+<h2 mat-dialog-title>
+  {{ data.mode === "add" ? "Add Quantity" : "Edit Quantity" }}
+</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="ingredientQuantityForm">
+    <mat-form-field appearance="fill">
+      <mat-label>Amount</mat-label>
+      <input matInput formControlName="amount" required />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Unit</mat-label>
+      <textarea matInput formControlName="unit" required></textarea>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Expiring Date</mat-label>
+      <input
+        matInput
+        [matDatepicker]="expiringDatePicker"
+        formControlName="expiringDate"
+      />
+      <mat-datepicker-toggle
+        matSuffix
+        [for]="expiringDatePicker"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #expiringDatePicker></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Date Of Purchase</mat-label>
+      <input
+        matInput
+        [matDatepicker]="dateOfPurchasePicker"
+        formControlName="dateOfPurchase"
+      />
+      <mat-datepicker-toggle
+        matSuffix
+        [for]="dateOfPurchasePicker"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #dateOfPurchasePicker></mat-datepicker>
+    </mat-form-field></form
+></mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancel</button>
+  <button mat-button color="accent" (click)="onSaveClick()">Save</button>
+</mat-dialog-actions>
