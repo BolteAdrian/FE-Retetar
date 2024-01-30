@@ -4,7 +4,7 @@ import { Observable, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { IUserAuth } from 'src/app/models/IUserAuth';
 import { IJwtAutResponse } from 'src/app/models/IJwtAutResponse';
-
+import { JwtHelperService } from '@auth0/angular-jwt';
 @Injectable({
   providedIn: 'root',
 })
@@ -13,7 +13,7 @@ export class AuthService {
   private readonly TOKEN_KEY = 'authToken';
   private readonly USER_NAME = 'username';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private jwtHelper: JwtHelperService) {}
 
   login(user: IUserAuth): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/User/login`, user).pipe(
@@ -40,7 +40,8 @@ export class AuthService {
   }
 
   isAuthenticated(): boolean {
-    return this.getToken() !== null; // Checks if token exists
+    const token = this.getToken();
+    return !!token && !this.jwtHelper.isTokenExpired(token);
   }
 
   getAllUsers(): Observable<any> {

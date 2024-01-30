@@ -5,6 +5,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { CategoryService } from 'src/app/services/category/category.service';
 import { MatDialog } from '@angular/material/dialog';
 import { CategoryModalComponent } from '../category-modal/category-modal/category-modal.component';
+import { DeleteModalComponent } from '../../modal/delete-modal/delete-modal.component';
 
 @Component({
   selector: 'app-category',
@@ -12,7 +13,13 @@ import { CategoryModalComponent } from '../category-modal/category-modal/categor
   styleUrls: ['./category.component.scss'],
 })
 export class CategoryComponent {
-  displayedColumns: string[] = ['id', 'name', 'description'];
+  displayedColumns: string[] = [
+    'id',
+    'picture',
+    'name',
+    'shortDescription',
+    'actions',
+  ];
   dataSource: MatTableDataSource<any> = new MatTableDataSource<any>();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -60,32 +67,58 @@ export class CategoryComponent {
         // Dacă utilizatorul a apăsat "Save" în modal, poți face ceva cu datele salvate.
         console.log(result);
         // În cazul adăugării sau editării, poți actualiza lista de categorii.
-        this.categoryService.addCategory(result).subscribe(
+        if (mode == 'add') {
+          this.categoryService.addCategory(result).subscribe(
+            (response: any) => {
+              // Logică pentru gestionarea răspunsului cu succes de la serviciu.
+              console.log('Categorie adăugată cu succes:', response);
+              location.reload();
+            },
+            (error: any) => {
+              // Logică pentru gestionarea erorii de la serviciu.
+              console.error('Eroare în timpul adăugării categoriei:', error);
+              // Aici poți adăuga orice logică suplimentară pentru gestionarea erorilor, cum ar fi afișarea unui mesaj de eroare către utilizator.
+            }
+          );
+        } else {
+          this.categoryService.updateCategory(data.id, result).subscribe(
+            (response: any) => {
+              // Logică pentru gestionarea răspunsului cu succes de la serviciu.
+              console.log('Categorie modificată cu succes:', response);
+              location.reload();
+            },
+            (error: any) => {
+              // Logică pentru gestionarea erorii de la serviciu.
+              console.error('Eroare în timpul modificării categoriei:', error);
+              // Aici poți adăuga orice logică suplimentară pentru gestionarea erorilor, cum ar fi afișarea unui mesaj de eroare către utilizator.
+            }
+          );
+        }
+      }
+    });
+  }
+
+  openDeleteConfirmation(categoryId: number): void {
+    const dialogRef = this.dialog.open(DeleteModalComponent, {
+      width: '400px',
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        // User confirmed delete, perform your delete logic here
+        this.categoryService.deleteCategory(categoryId).subscribe(
           (response: any) => {
             // Logică pentru gestionarea răspunsului cu succes de la serviciu.
-            console.log('Categorie adăugată cu succes:', response);
+            console.log('Categorie stearsă cu succes:', response);
+            location.reload();
           },
           (error: any) => {
             // Logică pentru gestionarea erorii de la serviciu.
-            console.error('Eroare în timpul adăugării categoriei:', error);
+            console.error('Eroare în timpul stergerii categoriei:', error);
             // Aici poți adăuga orice logică suplimentară pentru gestionarea erorilor, cum ar fi afișarea unui mesaj de eroare către utilizator.
           }
         );
       }
     });
-  }
-
-  deleteCategory(categoryId: number): void {
-    this.categoryService.deleteCategory(categoryId).subscribe(
-      (response: any) => {
-        // Logică pentru gestionarea răspunsului cu succes de la serviciu.
-        console.log('Categorie stearsă cu succes:', response);
-      },
-      (error: any) => {
-        // Logică pentru gestionarea erorii de la serviciu.
-        console.error('Eroare în timpul stergerii categoriei:', error);
-        // Aici poți adăuga orice logică suplimentară pentru gestionarea erorilor, cum ar fi afișarea unui mesaj de eroare către utilizator.
-      }
-    );
   }
 }

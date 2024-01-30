@@ -19,7 +19,6 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { ModalComponent } from './components/modal/modal.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { RecipeDetailsComponent } from './components/recipe/recipe-details/recipe-details/recipe-details.component';
 import { RecipeFormComponent } from './components/recipe/recipe-form/recipe-form/recipe-form.component';
@@ -37,6 +36,8 @@ import { IngredientModalComponent } from './components/ingredient/ingredient-mod
 import { MatNativeDateModule } from '@angular/material/core';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { JwtModule } from '@auth0/angular-jwt';
+import { DeleteModalComponent } from './components/modal/delete-modal/delete-modal.component';
 
 @NgModule({
   declarations: [
@@ -48,13 +49,13 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
     LoginComponent,
     IngredientComponent,
     CategoryComponent,
-    ModalComponent,
     RecipeDetailsComponent,
     RecipeFormComponent,
     CategoryModalComponent,
     IngredientQuantityTableComponent,
     IngredientQuantityModalComponent,
     IngredientModalComponent,
+    DeleteModalComponent,
   ],
   imports: [
     BrowserModule,
@@ -79,6 +80,13 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
     MatNativeDateModule,
     NgxMaterialTimepickerModule,
     MatDatepickerModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: () => {
+          return localStorage.getItem('authToken');
+        },
+      },
+    }),
   ],
   providers: [
     {

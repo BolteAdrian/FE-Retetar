@@ -6,6 +6,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { IngredientService } from 'src/app/services/ingredient/ingredient.service';
 import { IngredientModalComponent } from '../ingredient-modal/ingredient-modal.component';
 import { Router } from '@angular/router';
+import { DeleteModalComponent } from '../../modal/delete-modal/delete-modal.component';
 
 @Component({
   selector: 'app-ingredient',
@@ -13,7 +14,14 @@ import { Router } from '@angular/router';
   styleUrls: ['./ingredient.component.scss'],
 })
 export class IngredientComponent {
-  displayedColumns: string[] = ['id', 'name', 'description', 'categoryId'];
+  displayedColumns: string[] = [
+    'id',
+    'name',
+    'shortDescription',
+    'picture',
+    'categoryId',
+    'actions',
+  ];
   dataSource: MatTableDataSource<any> = new MatTableDataSource<any>();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -59,17 +67,57 @@ export class IngredientComponent {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        // Dacă utilizatorul a apăsat "Save" în modal, poți face ceva cu datele salvate.
-        console.log(result);
-        // În cazul adăugării sau editării, poți actualiza lista de categorii.
-        this.ingredientService.addIngredient(result).subscribe(
+        if (mode == 'add') {
+          this.ingredientService.addIngredient(result).subscribe(
+            (response: any) => {
+              // Logică pentru gestionarea răspunsului cu succes de la serviciu.
+              console.log('Ingredient adăugată cu succes:', response);
+              location.reload();
+            },
+            (error: any) => {
+              // Logică pentru gestionarea erorii de la serviciu.
+              console.error('Eroare în timpul adăugării categoriei:', error);
+              // Aici poți adăuga orice logică suplimentară pentru gestionarea erorilor, cum ar fi afișarea unui mesaj de eroare către utilizator.
+            }
+          );
+        } else {
+          this.ingredientService.updateIngredient(data.id, result).subscribe(
+            (response: any) => {
+              // Logică pentru gestionarea răspunsului cu succes de la serviciu.
+              console.log('Ingredient modificată cu succes:', response);
+              location.reload();
+            },
+            (error: any) => {
+              // Logică pentru gestionarea erorii de la serviciu.
+              console.error(
+                'Eroare în timpul modificării ingredientului:',
+                error
+              );
+              // Aici poți adăuga orice logică suplimentară pentru gestionarea erorilor, cum ar fi afișarea unui mesaj de eroare către utilizator.
+            }
+          );
+        }
+      }
+    });
+  }
+
+  openDeleteConfirmation(categoryId: number): void {
+    const dialogRef = this.dialog.open(DeleteModalComponent, {
+      width: '400px',
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        // User confirmed delete, perform your delete logic here
+        this.ingredientService.deleteIngredient(categoryId).subscribe(
           (response: any) => {
             // Logică pentru gestionarea răspunsului cu succes de la serviciu.
-            console.log('Ingredient adăugată cu succes:', response);
+            console.log('Ingredient stearsă cu succes:', response);
+            location.reload();
           },
           (error: any) => {
             // Logică pentru gestionarea erorii de la serviciu.
-            console.error('Eroare în timpul adăugării ingredientului:', error);
+            console.error('Eroare în timpul stergerii ingredientului:', error);
             // Aici poți adăuga orice logică suplimentară pentru gestionarea erorilor, cum ar fi afișarea unui mesaj de eroare către utilizator.
           }
         );
@@ -77,21 +125,11 @@ export class IngredientComponent {
     });
   }
 
-  deleteIngredient(ingredientId: number): void {
-    this.ingredientService.deleteIngredient(ingredientId).subscribe(
-      (response: any) => {
-        // Logică pentru gestionarea răspunsului cu succes de la serviciu.
-        console.log('Ingredient sters cu succes:', response);
-      },
-      (error: any) => {
-        // Logică pentru gestionarea erorii de la serviciu.
-        console.error('Eroare în timpul stergerii ingredientului:', error);
-        // Aici poți adăuga orice logică suplimentară pentru gestionarea erorilor, cum ar fi afișarea unui mesaj de eroare către utilizator.
-      }
-    );
-  }
-
   goToIngredientQuantityManagement(): void {
     this.router.navigateByUrl('/ingredient/quantity');
+  }
+
+  goToIngredientQuantities(ingredientId: string): void {
+    this.router.navigateByUrl('/ingredient/' + ingredientId + '/quantity');
   }
 }
