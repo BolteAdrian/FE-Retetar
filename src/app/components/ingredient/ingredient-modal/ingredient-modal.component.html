@@ -28,30 +28,23 @@
     <div>
       <mat-form-field appearance="fill">
         <mat-label>Categories</mat-label>
-        <mat-select formArrayName="categories" multiple>
-          <mat-option
-            *ngFor="let category of categories; let i = index"
-            [value]="category.id"
-            (click)="onCategorySelectionChange(category)"
-          >
+        <mat-select
+          formControlName="selectedCategory"
+          (selectionChange)="onCategoryChange($event)"
+        >
+          <mat-option *ngFor="let category of categories" [value]="category.id">
             {{ category.name }}
           </mat-option>
         </mat-select>
       </mat-form-field>
+    </div>
 
-      <div
-        *ngIf="selectedCategories.length > 0"
-        class="selected_category__container"
-      >
-        <div
-          *ngFor="let category of selectedCategories; let i = index"
-          class="selected_category"
-        >
-          {{ category.name }}
-          <button mat-icon-button (click)="removeCategory(i)">
-            <mat-icon>close</mat-icon>
-          </button>
-        </div>
+    <div *ngIf="selectedCategory" class="selected_category__container">
+      <div class="selected_category">
+        {{ selectedCategory.name }}
+        <button mat-icon-button (click)="removeCategory()">
+          <mat-icon>close</mat-icon>
+        </button>
       </div>
     </div>
   </form>

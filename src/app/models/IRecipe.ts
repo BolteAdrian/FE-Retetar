@@ -1,8 +1,8 @@
-export interface IIngredint {
+export interface IRecipe {
   id?: number;
   name: string;
   description?: string;
   shortDescription?: string;
   picture?: string;
-  categoryId?: number;
+  cookingInstructions?: string;
 }

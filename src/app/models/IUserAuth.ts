@@ -1,5 +1,5 @@
-export interface IUserAuth{
-    userName?:string;
-    email:string;
-    password:string
+export interface IUserAuth {
+  userName?: string;
+  email: string;
+  password: string;
 }

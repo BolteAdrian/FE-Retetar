@@ -15,11 +15,13 @@ export class IngredientQuantityModalComponent {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private formBuilder: FormBuilder
   ) {
+    const idIngredient = this.data.idIngredient;
     this.ingredientQuantityForm = this.formBuilder.group({
       amount: ['', Validators.required],
       unit: [''],
       expiringDate: [''],
       dateOfPurchase: [''],
+      ingredientId: idIngredient,
     });
 
     // If editing, populate the form with existing data

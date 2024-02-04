@@ -18,8 +18,8 @@ import { CategoryService } from 'src/app/services/category/category.service';
 export class IngredientModalComponent {
   ingredientForm: FormGroup;
   categories: any[] = [];
-  selectedCategoriesIds: any[] = [];
-  selectedCategories: any[] = [];
+  selectedCategory: any = null;
+
   constructor(
     public dialogRef: MatDialogRef<IngredientModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -30,13 +30,21 @@ export class IngredientModalComponent {
       name: ['', Validators.required],
       shortDescription: [''],
       description: [''],
-      pictureURL: [''],
-      categories: this.formBuilder.array([]),
+      picture: [''],
+      selectedCategory: [''],
     });
 
     // If editing, populate the form with existing data
     if (data && data.category) {
       this.ingredientForm.patchValue(data.category);
+      this.ingredientForm
+        .get('selectedCategory')
+        ?.setValue(data.category.categoryId);
+
+      // Setează selectedCategory în funcție de data.category
+      this.selectedCategory = this.categories.find(
+        (category) => category.id === data.category.categoryId
+      );
     }
   }
 
@@ -75,37 +83,15 @@ export class IngredientModalComponent {
     });
   }
 
-  onCategorySelectionChange(category: any) {
-    // Verifică dacă category.id există deja în selectedCategoriesIds
-    if (!this.selectedCategoriesIds.includes(category.id)) {
-      // Adaugă id-ul în array doar dacă nu există deja
-      this.selectedCategoriesIds.push(category.id);
-
-      // Verifică dacă category nu există deja în selectedCategories
-      const categoryExists = this.selectedCategories.some(
-        (selectedCategory) => selectedCategory.id === category.id
-      );
-
-      // Adaugă category în array doar dacă nu există deja
-      if (!categoryExists) {
-        this.selectedCategories.push(category);
-      }
-    }
+  onCategoryChange(event: any): void {
+    const selectedCategoryId = event.value;
+    this.selectedCategory = this.categories.find(
+      (category) => category.id === selectedCategoryId
+    );
   }
 
-  removeCategory(index: number): void {
-    if (index >= 0 && index < this.selectedCategoriesIds.length) {
-      const removedCategoryId = this.selectedCategoriesIds.splice(index, 1)[0];
-
-      // Remove the corresponding category from selectedCategories
-      const removedCategoryIndex = this.selectedCategories.findIndex(
-        (category) => category.id === removedCategoryId
-      );
-
-      if (removedCategoryIndex !== -1) {
-        this.selectedCategories.splice(removedCategoryIndex, 1);
-      }
-    }
+  removeCategory(): void {
+    this.selectedCategory = null;
   }
 
   onFileSelected(event: any): void {
@@ -119,8 +105,8 @@ export class IngredientModalComponent {
         // Transformă imaginea în Base64
         const base64Image = e.target.result;
 
-        // Setează codul Base64 în câmpul 'pictureURL' al formularului
-        this.ingredientForm.get('pictureURL')?.setValue(base64Image);
+        // Setează codul Base64 în câmpul 'picture' al formularului
+        this.ingredientForm.get('picture')?.setValue(base64Image);
       };
 
       reader.readAsDataURL(file);
@@ -129,7 +115,8 @@ export class IngredientModalComponent {
 
   onSaveClick(): void {
     if (this.ingredientForm.valid) {
-      const formData = this.ingredientForm.value;
+      let formData = this.ingredientForm.value;
+      formData.categoryId = formData.selectedCategory;
       // Add any additional logic to handle form data as needed
       this.dialogRef.close(formData);
     }

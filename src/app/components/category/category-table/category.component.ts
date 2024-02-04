@@ -6,6 +6,7 @@ import { CategoryService } from 'src/app/services/category/category.service';
 import { MatDialog } from '@angular/material/dialog';
 import { CategoryModalComponent } from '../category-modal/category-modal/category-modal.component';
 import { DeleteModalComponent } from '../../modal/delete-modal/delete-modal.component';
+import { ICategory } from 'src/app/models/ICategory';
 
 @Component({
   selector: 'app-category',
@@ -103,7 +104,7 @@ export class CategoryComponent {
       width: '400px',
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
+    dialogRef.afterClosed().subscribe((result: ICategory) => {
       if (result) {
         // User confirmed delete, perform your delete logic here
         this.categoryService.deleteCategory(categoryId).subscribe(

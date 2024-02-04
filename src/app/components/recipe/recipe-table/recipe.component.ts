@@ -13,9 +13,10 @@ import { Router } from '@angular/router';
 export class RecipeComponent implements OnInit {
   displayedColumns: string[] = [
     'id',
+    'picture',
     'name',
-    'description',
-    'cookingInstructions',
+    'shortDescription',
+    'category',
   ];
   dataSource: MatTableDataSource<any> = new MatTableDataSource<any>();
 
@@ -31,7 +32,8 @@ export class RecipeComponent implements OnInit {
   getRecipes() {
     this.recipeService.getRecipes().subscribe(
       (response: any) => {
-        this.dataSource = new MatTableDataSource(response.recipes);
+        console.log(response.recipes.result);
+        this.dataSource = new MatTableDataSource(response.recipes.result);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
       },

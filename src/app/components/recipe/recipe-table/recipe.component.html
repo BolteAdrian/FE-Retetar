@@ -1,6 +1,8 @@
 <div class="container">
   <div>
-    <button class="recipe-button" (click)="goToCategoryManagement('recipe')">Create more categories</button>
+    <button class="recipe-button" (click)="goToCategoryManagement('recipe')">
+      Create more categories
+    </button>
   </div>
   <div class="filter-container">
     <mat-form-field>
@@ -26,24 +28,45 @@
         <td mat-cell *matCellDef="let row">{{ row.id }}</td>
       </ng-container>
 
+      <!-- Picture Column -->
+      <ng-container matColumnDef="picture">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Picture</th>
+        <td mat-cell *matCellDef="let row">
+          <img [src]="row.picture" />
+        </td>
+      </ng-container>
+
       <!-- Name Column -->
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
         <td mat-cell *matCellDef="let row">{{ row.name }}</td>
       </ng-container>
 
-      <!-- Description Column -->
-      <ng-container matColumnDef="description">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Description</th>
-        <td mat-cell *matCellDef="let row">{{ row.description }}</td>
+      <!-- Short Description Column -->
+      <ng-container matColumnDef="shortDescription">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          Short Description
+        </th>
+        <td mat-cell *matCellDef="let row">{{ row.shortDescription }}</td>
       </ng-container>
 
-      <!-- Description Column -->
-      <ng-container matColumnDef="cookingInstructions">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>
-          Cooking Instructions
-        </th>
-        <td mat-cell *matCellDef="let row">{{ row.cookingInstructions }}</td>
+      <!-- Category Column -->
+      <ng-container matColumnDef="category">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Category</th>
+        <td mat-cell *matCellDef="let row">
+          <ng-container
+            *ngIf="row.recipeCategories && row.recipeCategories.length > 0"
+          >
+            <p *ngFor="let category of row.recipeCategories">
+              {{ category.category.name }}
+            </p>
+          </ng-container>
+          <ng-container
+            *ngIf="!row.recipeCategories || row.recipeCategories.length === 0"
+          >
+            <p>No categories</p>
+          </ng-container>
+        </td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

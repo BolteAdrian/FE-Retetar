@@ -7,6 +7,7 @@ import { IngredientService } from 'src/app/services/ingredient/ingredient.servic
 import { IngredientModalComponent } from '../ingredient-modal/ingredient-modal.component';
 import { Router } from '@angular/router';
 import { DeleteModalComponent } from '../../modal/delete-modal/delete-modal.component';
+import { IIngredint } from 'src/app/models/IIngredint';
 
 @Component({
   selector: 'app-ingredient',
@@ -16,10 +17,10 @@ import { DeleteModalComponent } from '../../modal/delete-modal/delete-modal.comp
 export class IngredientComponent {
   displayedColumns: string[] = [
     'id',
-    'name',
-    'shortDescription',
     'picture',
-    'categoryId',
+    'name',
+    'category',
+    'shortDescription',
     'actions',
   ];
   dataSource: MatTableDataSource<any> = new MatTableDataSource<any>();
@@ -40,6 +41,7 @@ export class IngredientComponent {
   getIngredients() {
     this.ingredientService.getIngredients().subscribe(
       (response: any) => {
+        console.log(response.ingredients);
         this.dataSource = new MatTableDataSource(response.ingredients);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
@@ -65,7 +67,7 @@ export class IngredientComponent {
       data: { mode, category: data },
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
+    dialogRef.afterClosed().subscribe((result: IIngredint) => {
       if (result) {
         if (mode == 'add') {
           this.ingredientService.addIngredient(result).subscribe(

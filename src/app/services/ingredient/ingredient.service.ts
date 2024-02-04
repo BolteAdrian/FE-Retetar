@@ -34,10 +34,18 @@ export class IngredientService {
     return this.http.delete<any>(`${this.apiUrl}/Ingredient/${id}`);
   }
 
-  getAllIngredientQuantitiessPaginated(options: any): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/IngredientQuantities`, {
-      params: options,
-    });
+  // getAllIngredientQuantitiesPaginated(options: any): Observable<any> {
+  //   return this.http.get<any>(`${this.apiUrl}/IngredientQuantities`, {
+  //     params: options,
+  //   });
+  // }
+
+  getAllIngredientQuantitiesPaginated(): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/IngredientQuantities`);
+  }
+
+  getAllQuantities(ingredientId: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/IngredientQuantities/all/${ingredientId}`);
   }
 
   getIngredientQuantitiesById(id: number): Observable<any> {

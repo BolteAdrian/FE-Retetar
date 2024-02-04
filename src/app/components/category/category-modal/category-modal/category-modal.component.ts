@@ -19,7 +19,7 @@ export class CategoryModalComponent {
       name: ['', Validators.required],
       shortDescription: [''],
       description: [''],
-      pictureURL: [''],
+      picture: [''],
       isRecipe: [false],
     });
 
@@ -44,8 +44,8 @@ export class CategoryModalComponent {
         // Transformă imaginea în Base64
         const base64Image = e.target.result;
 
-        // Setează codul Base64 în câmpul 'pictureURL' al formularului
-        this.categoryForm.get('pictureURL')?.setValue(base64Image);
+        // Setează codul Base64 în câmpul 'picture' al formularului
+        this.categoryForm.get('picture')?.setValue(base64Image);
       };
 
       reader.readAsDataURL(file);
