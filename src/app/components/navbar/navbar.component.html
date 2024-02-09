@@ -7,11 +7,13 @@
     class="navbar__col-md-3 navbar__login"
     *ngIf="authService.isAuthenticated()"
   >
-    <button mat-button [matMenuTriggerFor]="menu" class="navbar__menu">Menu</button>
+    <button mat-button [matMenuTriggerFor]="menu" class="navbar__menu">
+      Menu
+    </button>
     <mat-menu #menu="matMenu">
-      <button mat-menu-item (click)="logout()">Logout</button>
       <button mat-menu-item (click)="changePassword()">Change Password</button>
       <button mat-menu-item (click)="changeEmail()">Change Email</button>
+      <button mat-menu-item (click)="logout()">Logout</button>
     </mat-menu>
   </div>
   <div

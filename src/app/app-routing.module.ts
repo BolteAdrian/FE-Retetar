@@ -13,24 +13,42 @@ import { IngredientQuantityTableComponent } from './components/ingredient/ingred
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
-  { path: 'category/:type', component: CategoryComponent },
-  { path: 'ingredient', component: IngredientComponent },
+  {
+    path: 'category/:type',
+    component: CategoryComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'ingredient',
+    component: IngredientComponent,
+    canActivate: [AuthGuard],
+  },
   {
     path: 'ingredient/:id/quantity',
     component: IngredientQuantityTableComponent,
+    canActivate: [AuthGuard],
   },
   {
     path: 'ingredient/quantity',
     component: IngredientQuantityTableComponent,
+    canActivate: [AuthGuard],
   },
-  { path: 'recipe', component: RecipeComponent },
-  { path: 'recipe/:id', component: RecipeDetailsComponent },
+  { path: 'recipe', component: RecipeComponent, canActivate: [AuthGuard] },
+  {
+    path: 'recipe/:id',
+    component: RecipeDetailsComponent,
+    canActivate: [AuthGuard],
+  },
   {
     path: 'create-recipe',
     component: RecipeFormComponent,
     canActivate: [AuthGuard],
   },
-  { path: 'recipe/edit/:id', component: RecipeFormComponent },
+  {
+    path: 'recipe/edit/:id',
+    component: RecipeFormComponent,
+    canActivate: [AuthGuard],
+  },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
 ];

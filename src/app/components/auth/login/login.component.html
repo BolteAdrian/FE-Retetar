@@ -1,28 +1,40 @@
 <div class="container">
-  <form (ngSubmit)="login()">
-    <div>
-      <label for="email">Email</label>
-      <input
-        type="email"
-        id="email"
-        [(ngModel)]="user.email"
-        name="email"
-        required
-      />
-    </div>
-    <div>
-      <label for="password">Password</label>
-      <input
-        type="password"
-        id="password"
-        [(ngModel)]="user.password"
-        name="password"
-        required
-      />
-    </div>
-    <div>
-      <button type="submit">Login</button>
-    </div>
-    <div *ngIf="error" class="error">{{ error }}</div>
-  </form>
+  <div class="mat-card login-container">
+    <mat-card-title>Login</mat-card-title>
+    <mat-card-content>
+      <form (ngSubmit)="login()">
+        <mat-form-field appearance="fill">
+          <mat-label>Email</mat-label>
+          <input
+            matInput
+            type="email"
+            id="email"
+            [(ngModel)]="user.email"
+            name="email"
+            required
+          />
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Password</mat-label>
+          <input
+            matInput
+            [type]="showPassword ? 'text' : 'password'"
+            id="password"
+            [(ngModel)]="user.password"
+            name="password"
+            required
+          />
+          <mat-icon-button matSuffix (click)="togglePasswordVisibility()">
+            <mat-icon>{{
+              showPassword ? "visibility_off" : "visibility"
+            }}</mat-icon>
+          </mat-icon-button>
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" type="submit">Login</button>
+        <button mat-button (click)="forgotPassword()">Forgot Password</button>
+        <div *ngIf="error" class="error">{{ error }}</div>
+      </form>
+    </mat-card-content>
+  </div>
 </div>

@@ -1,0 +1,11 @@
+<h2 mat-dialog-title>Change Email</h2>
+<mat-dialog-content>
+  <!-- Formular pentru schimbarea emailului -->
+  <mat-form-field>
+    <input matInput placeholder="New Email" [(ngModel)]="newEmail">
+  </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button (click)="updateEmail()">Save</button>
+  <button mat-button (click)="closeDialog()">Cancel</button>
+</mat-dialog-actions>

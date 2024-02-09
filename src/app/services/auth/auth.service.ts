@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { IUserAuth } from 'src/app/models/IUserAuth';
@@ -12,6 +12,7 @@ export class AuthService {
   private apiUrl = environment.apiUrl;
   private readonly TOKEN_KEY = 'authToken';
   private readonly USER_NAME = 'username';
+  private readonly USER_ID = 'userid';
 
   constructor(private http: HttpClient, private jwtHelper: JwtHelperService) {}
 
@@ -20,7 +21,8 @@ export class AuthService {
       tap((response: IJwtAutResponse) => {
         if (response && response.token) {
           localStorage.setItem(this.TOKEN_KEY, response.token);
-          localStorage.setItem('username', response.userName);
+          localStorage.setItem(this.USER_NAME, response.userName);
+          localStorage.setItem(this.USER_ID, response.id);
         }
       })
     );
@@ -33,6 +35,7 @@ export class AuthService {
   logout(): void {
     localStorage.removeItem(this.TOKEN_KEY);
     localStorage.removeItem(this.USER_NAME);
+    localStorage.removeItem(this.USER_ID);
   }
 
   getToken(): string | null {
@@ -52,25 +55,37 @@ export class AuthService {
     return this.http.get<any>(`${this.apiUrl}/User/${userId}`);
   }
 
-  changeUserRole(userId: string): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/User/change-role/${userId}`, {});
+  changeUserRole(): Observable<any> {
+    return this.http.post<any>(
+      `${this.apiUrl}/User/change-role/${localStorage.getItem(this.USER_ID)}`,
+      {}
+    );
   }
 
   deleteAccount(userId: string): Observable<any> {
     return this.http.delete<any>(`${this.apiUrl}/User/delete/${userId}`);
   }
 
-  updateEmail(userId: string, newEmail: string): Observable<any> {
+  updateEmail(newEmail: string): Observable<any> {
+    const options = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+    };
+
     return this.http.put<any>(
-      `${this.apiUrl}/User/update-email/${userId}`,
-      newEmail
+      `${this.apiUrl}/User/update-email/${localStorage.getItem(this.USER_ID)}`,
+      JSON.stringify(newEmail),
+      options // Pasarea opțiunilor de cerere către metoda put
     );
   }
 
-  updatePassword(userId: string, model: any): Observable<any> {
+  updatePassword(data: any): Observable<any> {
     return this.http.put<any>(
-      `${this.apiUrl}/User/update-password/${userId}`,
-      model
+      `${this.apiUrl}/User/update-password/${localStorage.getItem(
+        this.USER_ID
+      )}`,
+      data
     );
   }
 

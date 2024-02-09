@@ -8,13 +8,15 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent {
-  user: IUserAuth = { email: '', password: '' }; // Inițializează utilizatorul cu datele introduse în formular
+  user: IUserAuth = { email: '', password: '' };
   error: string = '';
+  showPassword = false;
+
   constructor(private authService: AuthService, private router: Router) {}
 
   login(): void {
     this.authService.login(this.user).subscribe(
-      (response:any) => {
+      (response: any) => {
         this.router.navigateByUrl('/');
       },
       (error: Error) => {
@@ -22,5 +24,13 @@ export class LoginComponent {
         console.log(error.message);
       }
     );
+  }
+
+  togglePasswordVisibility(): void {
+    this.showPassword = !this.showPassword;
+  }
+
+  forgotPassword() {
+    // Implement changePassword logic here
   }
 }

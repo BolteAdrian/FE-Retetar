@@ -38,6 +38,9 @@ import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { JwtModule } from '@auth0/angular-jwt';
 import { DeleteModalComponent } from './components/modal/delete-modal/delete-modal.component';
+import { ConfirmationModalComponent } from './components/modal/confirmation-modal/confirmation-modal.component';
+import { ChangeEmailDialogComponent } from './components/modal/change-email-dialog/change-email-dialog.component';
+import { ChangePasswordDialogComponent } from './components/modal/change-password-dialog/change-password-dialog.component';
 
 @NgModule({
   declarations: [
@@ -56,6 +59,9 @@ import { DeleteModalComponent } from './components/modal/delete-modal/delete-mod
     IngredientQuantityModalComponent,
     IngredientModalComponent,
     DeleteModalComponent,
+    ConfirmationModalComponent,
+    ChangeEmailDialogComponent,
+    ChangePasswordDialogComponent,
   ],
   imports: [
     BrowserModule,
