@@ -15,8 +15,8 @@ export class RecipeComponent implements OnInit {
     'id',
     'picture',
     'name',
-    'shortDescription',
     'category',
+    'shortDescription',
   ];
   dataSource: MatTableDataSource<any> = new MatTableDataSource<any>();
 

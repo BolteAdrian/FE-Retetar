@@ -1,0 +1,26 @@
+.category-page {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.filter-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.filter-field {
+  width: 200px;
+}
+
+.add-category-button {
+  margin-left: 20px;
+}
+
+.category-image {
+  width: 100px;
+  height: 100px;
+  margin: 10px;
+  object-fit: cover;
+}

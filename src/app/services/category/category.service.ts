@@ -14,6 +14,10 @@ export class CategoryService {
     return this.http.get<any>(`${this.apiUrl}/Category/`);
   }
 
+  getCategoriesByType(isRecipe: boolean): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/Category/type/${isRecipe}`);
+  }
+
   // getAllCategoriesPaginated(options: any): Observable<any> {
   //   return this.http.get<any>(`${this.apiUrl}/Category`, { params: options });
   // }

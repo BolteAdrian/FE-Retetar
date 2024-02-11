@@ -4,9 +4,10 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { CategoryService } from 'src/app/services/category/category.service';
 import { MatDialog } from '@angular/material/dialog';
-import { CategoryModalComponent } from '../category-modal/category-modal/category-modal.component';
+import { CategoryModalComponent } from '../category-modal/category-modal.component';
 import { DeleteModalComponent } from '../../modal/delete-modal/delete-modal.component';
 import { ICategory } from 'src/app/models/ICategory';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-category',
@@ -25,10 +26,11 @@ export class CategoryComponent {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
-
+  isRecipe: boolean = false;
   constructor(
     private categoryService: CategoryService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit() {
@@ -36,9 +38,10 @@ export class CategoryComponent {
   }
 
   getCategories() {
-    this.categoryService.getCategories().subscribe(
+    this.isRecipe = !!this.route.snapshot.paramMap.get('type');
+    this.categoryService.getCategoriesByType(this.isRecipe).subscribe(
       (response: any) => {
-        this.dataSource = new MatTableDataSource(response.categories);
+        this.dataSource = new MatTableDataSource(response.data.result);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
       },

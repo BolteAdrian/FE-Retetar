@@ -1,48 +1,39 @@
 <h2 mat-dialog-title>
   {{ data.mode === "add" ? "Add Quantity" : "Edit Quantity" }}
+  <button mat-icon-button mat-dialog-close class="close-button">
+    <mat-icon aria-label="Close dialog">close</mat-icon>
+  </button>
 </h2>
 
-<mat-dialog-content>
+<mat-dialog-content class="dialog-content">
   <form [formGroup]="ingredientQuantityForm">
-    <mat-form-field appearance="fill">
+    <mat-form-field class="form-field">
       <mat-label>Amount</mat-label>
       <input matInput formControlName="amount" required />
     </mat-form-field>
 
-    <mat-form-field appearance="fill">
+    <mat-form-field class="form-field">
       <mat-label>Unit</mat-label>
-      <textarea matInput formControlName="unit" required></textarea>
+      <input matInput formControlName="unit" required />
     </mat-form-field>
 
-    <mat-form-field appearance="fill">
+    <mat-form-field class="form-field">
       <mat-label>Expiring Date</mat-label>
-      <input
-        matInput
-        [matDatepicker]="expiringDatePicker"
-        formControlName="expiringDate"
-      />
-      <mat-datepicker-toggle
-        matSuffix
-        [for]="expiringDatePicker"
-      ></mat-datepicker-toggle>
+      <input matInput [matDatepicker]="expiringDatePicker" formControlName="expiringDate" />
+      <mat-datepicker-toggle matSuffix [for]="expiringDatePicker"></mat-datepicker-toggle>
       <mat-datepicker #expiringDatePicker></mat-datepicker>
     </mat-form-field>
 
-    <mat-form-field appearance="fill">
+    <mat-form-field class="form-field">
       <mat-label>Date Of Purchase</mat-label>
-      <input
-        matInput
-        [matDatepicker]="dateOfPurchasePicker"
-        formControlName="dateOfPurchase"
-      />
-      <mat-datepicker-toggle
-        matSuffix
-        [for]="dateOfPurchasePicker"
-      ></mat-datepicker-toggle>
+      <input matInput [matDatepicker]="dateOfPurchasePicker" formControlName="dateOfPurchase" />
+      <mat-datepicker-toggle matSuffix [for]="dateOfPurchasePicker"></mat-datepicker-toggle>
       <mat-datepicker #dateOfPurchasePicker></mat-datepicker>
-    </mat-form-field></form
-></mat-dialog-content>
-<mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">Cancel</button>
-  <button mat-button color="accent" (click)="onSaveClick()">Save</button>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions class="dialog-actions" align="end">
+  <button mat-button class="cancel-button" (click)="onNoClick()">Cancel</button>
+  <button mat-button color="accent" class="save-button" (click)="onSaveClick()">Save</button>
 </mat-dialog-actions>

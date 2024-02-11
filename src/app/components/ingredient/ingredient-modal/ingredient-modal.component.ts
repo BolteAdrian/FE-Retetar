@@ -57,23 +57,15 @@ export class IngredientModalComponent {
   }
 
   getCategories() {
-    this.categoryService
-      .getCategories()
-      .pipe(
-        map((response: any) => response.categories),
-        map((categories: any[]) =>
-          categories.filter((category) => category.isRecipe === false)
-        )
-      )
-      .subscribe(
-        (filteredCategories: any[]) => {
-          this.categories = filteredCategories;
-          this.populateCategories();
-        },
-        (error: any) => {
-          console.error(error);
-        }
-      );
+    this.categoryService.getCategoriesByType(false).subscribe(
+      (response: any) => {
+        this.categories = response.data.result;
+        this.populateCategories();
+      },
+      (error: any) => {
+        console.error(error);
+      }
+    );
   }
 
   populateCategories() {

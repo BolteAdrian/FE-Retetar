@@ -68,7 +68,7 @@ export class RecipeFormComponent {
           description: recipeDetails.description,
           shortDescription: recipeDetails.shortDescription,
           picture: recipeDetails.Picture,
-          cookingInstructions: recipeDetails.cookingInstructions
+          cookingInstructions: recipeDetails.cookingInstructions,
         });
 
         recipeDetails.recipeCategories.map((category: any) => {
@@ -122,23 +122,15 @@ export class RecipeFormComponent {
   }
 
   getCategories() {
-    this.categoryService
-      .getCategories()
-      .pipe(
-        map((response: any) => response.categories),
-        map((categories: any[]) =>
-          categories.filter((category) => category.isRecipe === true)
-        )
-      )
-      .subscribe(
-        (filteredCategories: any[]) => {
-          this.categories = filteredCategories;
-          this.populateCategories();
-        },
-        (error: any) => {
-          console.error(error);
-        }
-      );
+    this.categoryService.getCategoriesByType(true).subscribe(
+      (response: any) => {
+        this.categories = response.data.result;
+        this.populateCategories();
+      },
+      (error: any) => {
+        console.error(error);
+      }
+    );
   }
 
   populateCategories() {

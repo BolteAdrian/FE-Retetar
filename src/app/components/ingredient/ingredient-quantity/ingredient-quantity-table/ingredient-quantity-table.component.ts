@@ -39,18 +39,33 @@ export class IngredientQuantityTableComponent {
   }
 
   getIngredients() {
-    this.ingredientService.getAllQuantities(this.idIngredient).subscribe(
-      (response: any) => {
-        this.dataSource = new MatTableDataSource(
-          response.ingredientQuantities.result
-        );
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
-      },
-      (error: any) => {
-        console.error(error);
-      }
-    );
+    if (this.idIngredient) {
+      this.ingredientService.getAllQuantities(this.idIngredient).subscribe(
+        (response: any) => {
+          this.dataSource = new MatTableDataSource(
+            response.ingredientQuantities.result
+          );
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
+        },
+        (error: any) => {
+          console.error(error);
+        }
+      );
+    } else {
+      this.ingredientService.getAllIngredientQuantitiesPaginated().subscribe(
+        (response: any) => {
+          this.dataSource = new MatTableDataSource(
+            response.ingredientQuantities
+          );
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
+        },
+        (error: any) => {
+          console.error(error);
+        }
+      );
+    }
   }
 
   applyFilter(event: Event) {
@@ -79,7 +94,7 @@ export class IngredientQuantityTableComponent {
             (response: any) => {
               // Logică pentru gestionarea răspunsului cu succes de la serviciu.
               console.log('Cantitate adăugată cu succes:', response);
-              location.reload()
+              location.reload();
               // Update local data instead of reloading the page
               // this.ingredientService.updateLocalData(response); // Modify this line based on your service
             },
@@ -96,7 +111,7 @@ export class IngredientQuantityTableComponent {
               (response: any) => {
                 // Logică pentru gestionarea răspunsului cu succes de la serviciu.
                 console.log('Cantitate modificată cu succes:', response);
-                location.reload()
+                location.reload();
                 // Update local data instead of reloading the page
                 // this.ingredientService.updateLocalData(response); // Modify this line based on your service
               },

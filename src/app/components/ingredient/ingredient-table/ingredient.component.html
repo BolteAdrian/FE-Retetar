@@ -1,19 +1,25 @@
 <div class="container">
-  <div>
-    <button class="recipe-button" (click)="goToIngredientQuantityManagement()">
+  <div class="quantities_category_buttons">
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="goToCategoryManagement('')"
+    >
+      Create more categories
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="goToIngredientQuantityManagement()"
+    >
       Ingredient Quantity
     </button>
   </div>
 
   <div class="filter-container">
-    <mat-form-field>
+    <mat-form-field class="filter-field">
       <mat-label>Filter</mat-label>
-      <input
-        matInput
-        (keyup)="applyFilter($event)"
-        placeholder="Ex. Mia"
-        #input
-      />
+      <input matInput (keyup)="applyFilter($event)" #input />
     </mat-form-field>
     <button
       mat-raised-button
@@ -36,7 +42,7 @@
       <ng-container matColumnDef="picture">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Picture</th>
         <td mat-cell *matCellDef="let row">
-          <img [src]="row.picture" />
+          <img [src]="row.picture" ngClass="ingredient_picture" />
         </td>
       </ng-container>
 

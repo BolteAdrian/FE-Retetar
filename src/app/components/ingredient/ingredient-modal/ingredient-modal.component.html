@@ -1,55 +1,54 @@
 <h2 mat-dialog-title>
   {{ data.mode === "add" ? "Add Ingredient" : "Edit Ingredient" }}
+  <button mat-icon-button mat-dialog-close class="close-button">
+    <mat-icon aria-label="Close dialog">close</mat-icon>
+  </button>
 </h2>
 
-<mat-dialog-content>
+<mat-dialog-content class="dialog-content">
   <form [formGroup]="ingredientForm">
-    <mat-form-field appearance="fill">
+    <mat-form-field class="form-field">
       <mat-label>Name</mat-label>
       <input matInput formControlName="name" required />
     </mat-form-field>
 
-    <mat-form-field appearance="fill">
-      <mat-label>Short Description</mat-label>
+    <mat-form-field class="form-field">
+      <mat-label>Description</mat-label>
       <textarea matInput formControlName="shortDescription" required></textarea>
     </mat-form-field>
-    <div class="form-group">
-      <label for="description">Description:</label>
-      <editor
-        apiKey="c8qwc5cv96qiwizuswzet80gvul391n2juf3v14t1vs4rcem"
-        id="description"
-        formControlName="description"
-        required
-      ></editor>
-    </div>
 
-    <input type="file" (change)="onFileSelected($event)" />
+    <input type="file" class="file-upload" (change)="onFileSelected($event)" />
 
-    <div>
-      <mat-form-field appearance="fill">
-        <mat-label>Categories</mat-label>
-        <mat-select
-          formControlName="selectedCategory"
-          (selectionChange)="onCategoryChange($event)"
-        >
-          <mat-option *ngFor="let category of categories" [value]="category.id">
-            {{ category.name }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div>
+    <mat-form-field class="form-field">
+      <mat-label>Categories</mat-label>
+      <mat-select
+        formControlName="selectedCategory"
+        (selectionChange)="onCategoryChange($event)"
+      >
+        <mat-option *ngFor="let category of categories" [value]="category.id">{{
+          category.name
+        }}</mat-option>
+      </mat-select>
+    </mat-form-field>
 
-    <div *ngIf="selectedCategory" class="selected_category__container">
-      <div class="selected_category">
+    <div *ngIf="selectedCategory" class="selected-category-container">
+      <div class="selected-category">
         {{ selectedCategory.name }}
-        <button mat-icon-button (click)="removeCategory()">
-          <mat-icon>close</mat-icon>
+        <button
+          mat-icon-button
+          class="remove-category-button"
+          (click)="removeCategory()"
+        >
+          <mat-icon aria-label="Remove category">close</mat-icon>
         </button>
       </div>
     </div>
   </form>
 </mat-dialog-content>
-<mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">Cancel</button>
-  <button mat-button color="accent" (click)="onSaveClick()">Save</button>
+
+<mat-dialog-actions class="dialog-actions" align="end">
+  <button mat-button class="cancel-button" (click)="onNoClick()">Cancel</button>
+  <button mat-button color="accent" class="save-button" (click)="onSaveClick()">
+    Save
+  </button>
 </mat-dialog-actions>

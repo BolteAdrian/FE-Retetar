@@ -1,0 +1,30 @@
+<h2 mat-dialog-title>
+  {{ data.mode === "add" ? "Add Category" : "Edit Category" }}
+  <button mat-icon-button mat-dialog-close class="close-button">
+    <mat-icon aria-label="Close dialog">close</mat-icon>
+  </button>
+</h2>
+
+<mat-dialog-content class="dialog-content">
+  <form [formGroup]="categoryForm">
+    <mat-form-field class="form-field">
+      <mat-label>Name</mat-label>
+      <input matInput formControlName="name" required />
+    </mat-form-field>
+
+    <mat-form-field class="form-field">
+      <mat-label>Description</mat-label>
+      <textarea matInput formControlName="shortDescription" required></textarea>
+    </mat-form-field>
+
+    <input type="file" (change)="onFileSelected($event)" />
+    <input type="checkbox" formControlName="isRecipe" /> Is Recipe
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions class="dialog-actions" align="end">
+  <button mat-button class="cancel-button" (click)="onNoClick()">Cancel</button>
+  <button mat-button color="accent" class="save-button" (click)="onSaveClick()">
+    Save
+  </button>
+</mat-dialog-actions>

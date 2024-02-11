@@ -1,0 +1,64 @@
+.container {
+  display: flex;
+  justify-content: center;
+
+  .recipe-details {
+    width: 80%;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+    &__title {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    &__description {
+      font-size: 16px;
+      margin-bottom: 20px;
+    }
+
+    &__section {
+      margin-bottom: 20px;
+
+      &__subtitle {
+        font-size: 18px;
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
+
+      &__category-list,
+      &__ingredient-list {
+        list-style-type: none;
+        padding: 0;
+
+        &__category,
+        &__ingredient {
+          font-size: 16px;
+          margin-bottom: 5px;
+        }
+      }
+    }
+
+    &__actions {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 20px;
+
+      &__quantity {
+        display: flex;
+        flex-direction: column;
+      }
+
+      &__quantity-label {
+        margin-bottom: 5px;
+      }
+
+      &__quantity-input {
+        margin-bottom: 10px;
+      }
+    }
+  }
+}

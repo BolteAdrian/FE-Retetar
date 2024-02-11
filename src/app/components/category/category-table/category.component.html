@@ -1,11 +1,10 @@
-<div class="container">
+<div class="category-page container">
   <div class="filter-container">
-    <mat-form-field>
+    <mat-form-field class="filter-field">
       <mat-label>Filter</mat-label>
       <input
         matInput
         (keyup)="applyFilter($event)"
-        placeholder="Ex. Mia"
         #input
       />
     </mat-form-field>
@@ -13,6 +12,7 @@
     <button
       mat-raised-button
       color="primary"
+      class="add-category-button"
       (click)="openOperationModal('add', null)"
     >
       Add Category
@@ -21,27 +21,23 @@
 
   <div class="mat-elevation-z8">
     <table mat-table [dataSource]="dataSource" matSort>
-      <!-- ID Column -->
       <ng-container matColumnDef="id">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Id</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
         <td mat-cell *matCellDef="let row">{{ row.id }}</td>
       </ng-container>
 
-      <!-- Picture Column -->
       <ng-container matColumnDef="picture">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Picture</th>
         <td mat-cell *matCellDef="let row">
-          <img [src]="row.picture" />
+          <img [src]="row.picture" class="category-image" />
         </td>
       </ng-container>
 
-      <!-- Name Column -->
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
         <td mat-cell *matCellDef="let row">{{ row.name }}</td>
       </ng-container>
 
-      <!-- Short Description Column -->
       <ng-container matColumnDef="shortDescription">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>
           Short Description
@@ -49,16 +45,24 @@
         <td mat-cell *matCellDef="let row">{{ row.shortDescription }}</td>
       </ng-container>
 
-      <!-- Actions Column -->
       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef></th>
         <td mat-cell *matCellDef="let row">
           <button
             mat-icon-button
             color="warn"
+            class="delete-button"
             (click)="openDeleteConfirmation(row.id); $event.stopPropagation()"
           >
             <mat-icon>delete</mat-icon>
+          </button>
+          <button
+            mat-icon-button
+            color="primary"
+            class="edit-button"
+            (click)="openOperationModal('edit', row)"
+          >
+            <mat-icon>edit</mat-icon>
           </button>
         </td>
       </ng-container>
@@ -68,16 +72,18 @@
         mat-row
         *matRowDef="let row; columns: displayedColumns"
         (click)="openOperationModal('edit', row)"
+        class="category-row"
       ></tr>
 
       <tr class="mat-row" *matNoDataRow>
-        <td class="mat-cell" colspan="4">
+        <td class="mat-cell" colspan="5">
           No data matching the filter "{{ input.value }}"
         </td>
       </tr>
     </table>
 
     <mat-paginator
+      class="paginator"
       [pageSizeOptions]="[5, 10, 25, 100]"
       aria-label="Select page of users"
     ></mat-paginator>

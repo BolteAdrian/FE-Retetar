@@ -134,4 +134,8 @@ export class IngredientComponent {
   goToIngredientQuantities(ingredientId: string): void {
     this.router.navigateByUrl('/ingredient/' + ingredientId + '/quantity');
   }
+
+  goToCategoryManagement(type: string) {
+    this.router.navigateByUrl('/category/' + type);
+  }
 }
