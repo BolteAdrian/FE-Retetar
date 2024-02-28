@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { IUserAuth } from 'src/app/models/IUserAuth';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { Router } from '@angular/router';
+import { NotificationsService } from 'angular2-notifications';
+import { NgForm } from '@angular/forms';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -12,18 +14,29 @@ export class LoginComponent {
   error: string = '';
   showPassword = false;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private notificationsService: NotificationsService
+  ) {}
 
-  login(): void {
-    this.authService.login(this.user).subscribe(
-      (response: any) => {
-        this.router.navigateByUrl('/');
-      },
-      (error: Error) => {
-        this.error = 'Autentificare eșuată. Verificați utilizatorul și parola.';
-        console.log(error.message);
-      }
-    );
+  onSubmit(form: NgForm): void {
+    if (form.valid) {
+      this.authService.login(this.user).subscribe(
+        (response: any) => {
+          this.router.navigateByUrl('/');
+          this.notificationsService.success(response.status, response.message, {
+            timeOut: 5000,
+          });
+        },
+        (error: any) => {
+          this.error = 'Login failed. Please check your credentials.';
+          this.notificationsService.error(error.status, error.message, {
+            timeOut: 5000,
+          });
+        }
+      );
+    }
   }
 
   togglePasswordVisibility(): void {

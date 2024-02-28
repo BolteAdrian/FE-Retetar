@@ -8,6 +8,7 @@ import { CategoryModalComponent } from '../category-modal/category-modal.compone
 import { DeleteModalComponent } from '../../modal/delete-modal/delete-modal.component';
 import { ICategory } from 'src/app/models/ICategory';
 import { ActivatedRoute } from '@angular/router';
+import { NotificationsService } from 'angular2-notifications';
 
 @Component({
   selector: 'app-category',
@@ -19,7 +20,7 @@ export class CategoryComponent {
     'id',
     'picture',
     'name',
-    'shortDescription',
+    'description',
     'actions',
   ];
   dataSource: MatTableDataSource<any> = new MatTableDataSource<any>();
@@ -30,7 +31,8 @@ export class CategoryComponent {
   constructor(
     private categoryService: CategoryService,
     public dialog: MatDialog,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private notificationsService: NotificationsService
   ) {}
 
   ngOnInit() {
@@ -68,33 +70,41 @@ export class CategoryComponent {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        // Dacă utilizatorul a apăsat "Save" în modal, poți face ceva cu datele salvate.
         console.log(result);
-        // În cazul adăugării sau editării, poți actualiza lista de categorii.
         if (mode == 'add') {
           this.categoryService.addCategory(result).subscribe(
             (response: any) => {
-              // Logică pentru gestionarea răspunsului cu succes de la serviciu.
-              console.log('Categorie adăugată cu succes:', response);
+              this.notificationsService.success(
+                response.status,
+                response.message,
+                {
+                  timeOut: 5000,
+                }
+              );
               location.reload();
             },
             (error: any) => {
-              // Logică pentru gestionarea erorii de la serviciu.
-              console.error('Eroare în timpul adăugării categoriei:', error);
-              // Aici poți adăuga orice logică suplimentară pentru gestionarea erorilor, cum ar fi afișarea unui mesaj de eroare către utilizator.
+              this.notificationsService.error(error.status, error.message, {
+                timeOut: 5000,
+              });
             }
           );
         } else {
           this.categoryService.updateCategory(data.id, result).subscribe(
             (response: any) => {
-              // Logică pentru gestionarea răspunsului cu succes de la serviciu.
-              console.log('Categorie modificată cu succes:', response);
+              this.notificationsService.success(
+                response.status,
+                response.message,
+                {
+                  timeOut: 5000,
+                }
+              );
               location.reload();
             },
             (error: any) => {
-              // Logică pentru gestionarea erorii de la serviciu.
-              console.error('Eroare în timpul modificării categoriei:', error);
-              // Aici poți adăuga orice logică suplimentară pentru gestionarea erorilor, cum ar fi afișarea unui mesaj de eroare către utilizator.
+              this.notificationsService.error(error.status, error.message, {
+                timeOut: 5000,
+              });
             }
           );
         }
@@ -109,17 +119,21 @@ export class CategoryComponent {
 
     dialogRef.afterClosed().subscribe((result: ICategory) => {
       if (result) {
-        // User confirmed delete, perform your delete logic here
         this.categoryService.deleteCategory(categoryId).subscribe(
           (response: any) => {
-            // Logică pentru gestionarea răspunsului cu succes de la serviciu.
-            console.log('Categorie stearsă cu succes:', response);
+            this.notificationsService.success(
+              response.status,
+              response.message,
+              {
+                timeOut: 5000,
+              }
+            );
             location.reload();
           },
           (error: any) => {
-            // Logică pentru gestionarea erorii de la serviciu.
-            console.error('Eroare în timpul stergerii categoriei:', error);
-            // Aici poți adăuga orice logică suplimentară pentru gestionarea erorilor, cum ar fi afișarea unui mesaj de eroare către utilizator.
+            this.notificationsService.error(error.status, error.message, {
+              timeOut: 5000,
+            });
           }
         );
       }

@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
+import { NotificationsService } from 'angular2-notifications';
 import { IUserAuth } from 'src/app/models/IUserAuth';
 import { AuthService } from 'src/app/services/auth/auth.service';
 
@@ -12,18 +14,30 @@ export class RegisterComponent {
   user: IUserAuth = { userName: '', email: '', password: '' }; // Inițializează utilizatorul cu datele introduse în formular
   error: string = '';
   showPassword = false;
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private notificationsService: NotificationsService
+  ) {}
 
-  onSubmit(): void {
-    this.authService.register(this.user).subscribe(
-      (response: any) => {
-        this.router.navigateByUrl('/');
-      },
-      (error: Error) => {
-        this.error = 'Înregistrare eșuată. Verificați utilizatorul și parola.';
-        console.log(error.message);
-      }
-    );
+  onSubmit(form: NgForm): void {
+    if (form.valid) {
+      this.authService.register(this.user).subscribe(
+        (response: any) => {
+          this.router.navigateByUrl('/login');
+          this.notificationsService.success(response.status, response.message, {
+            timeOut: 5000,
+          });
+        },
+        (error: any) => {
+          this.error =
+            'Înregistrare eșuată. Verificați utilizatorul și parola.';
+          this.notificationsService.error(error.status, error.message, {
+            timeOut: 5000,
+          });
+        }
+      );
+    }
   }
 
   togglePasswordVisibility(): void {

@@ -7,6 +7,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { IngredientService } from 'src/app/services/ingredient/ingredient.service';
 import { IIngredintQuantity } from 'src/app/models/IIngredientQuantity';
 import { ActivatedRoute } from '@angular/router';
+import { NotificationsService } from 'angular2-notifications';
 
 @Component({
   selector: 'app-ingredient-quantity-table',
@@ -29,7 +30,8 @@ export class IngredientQuantityTableComponent {
   constructor(
     private ingredientService: IngredientService,
     public dialog: MatDialog,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private notificationsService: NotificationsService
   ) {
     this.idIngredient = Number(this.route.snapshot.paramMap.get('id'));
   }
@@ -85,23 +87,23 @@ export class IngredientQuantityTableComponent {
 
     dialogRef.afterClosed().subscribe((result: IIngredintQuantity) => {
       if (result) {
-        // Dacă utilizatorul a apăsat "Save" în modal, poți face ceva cu datele salvate.
         console.log(result);
-
-        // În cazul adăugării sau editării, poți actualiza lista de categorii.
         if (mode == 'add') {
           this.ingredientService.addIngredientQuantities(result).subscribe(
             (response: any) => {
-              // Logică pentru gestionarea răspunsului cu succes de la serviciu.
-              console.log('Cantitate adăugată cu succes:', response);
+              this.notificationsService.success(
+                response.status,
+                response.message,
+                {
+                  timeOut: 5000,
+                }
+              );
               location.reload();
-              // Update local data instead of reloading the page
-              // this.ingredientService.updateLocalData(response); // Modify this line based on your service
             },
             (error: any) => {
-              // Logică pentru gestionarea erorii de la serviciu.
-              console.error('Eroare în timpul adăugării cantitatii:', error);
-              // Aici poți adăuga orice logică suplimentară pentru gestionarea erorilor, cum ar fi afișarea unui mesaj de eroare către utilizator.
+              this.notificationsService.error(error.status, error.message, {
+                timeOut: 5000,
+              });
             }
           );
         } else {
@@ -109,19 +111,19 @@ export class IngredientQuantityTableComponent {
             .updateIngredientQuantities(data.id, result)
             .subscribe(
               (response: any) => {
-                // Logică pentru gestionarea răspunsului cu succes de la serviciu.
-                console.log('Cantitate modificată cu succes:', response);
+                this.notificationsService.success(
+                  response.status,
+                  response.message,
+                  {
+                    timeOut: 5000,
+                  }
+                );
                 location.reload();
-                // Update local data instead of reloading the page
-                // this.ingredientService.updateLocalData(response); // Modify this line based on your service
               },
               (error: any) => {
-                // Logică pentru gestionarea erorii de la serviciu.
-                console.error(
-                  'Eroare în timpul modificării cantitatii:',
-                  error
-                );
-                // Aici poți adăuga orice logică suplimentară pentru gestionarea erorilor, cum ar fi afișarea unui mesaj de eroare către utilizator.
+                this.notificationsService.error(error.status, error.message, {
+                  timeOut: 5000,
+                });
               }
             );
         }
@@ -132,13 +134,14 @@ export class IngredientQuantityTableComponent {
   deleteIngredient(ingredientId: number): void {
     this.ingredientService.deleteIngredientQuantities(ingredientId).subscribe(
       (response: any) => {
-        // Logică pentru gestionarea răspunsului cu succes de la serviciu.
-        console.log('Ingredient sters cu succes:', response);
+        this.notificationsService.success(response.status, response.message, {
+          timeOut: 5000,
+        });
       },
       (error: any) => {
-        // Logică pentru gestionarea erorii de la serviciu.
-        console.error('Eroare în timpul stergerii ingredientului:', error);
-        // Aici poți adăuga orice logică suplimentară pentru gestionarea erorilor, cum ar fi afișarea unui mesaj de eroare către utilizator.
+        this.notificationsService.error(error.status, error.message, {
+          timeOut: 5000,
+        });
       }
     );
   }

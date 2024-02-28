@@ -1,5 +1,19 @@
-.register-container {
-  max-width: 320px; /* Adjust as needed */
+.register_container {
+  max-width: 320px;
   margin: 0 auto;
   padding: 20px;
+}
+
+.error_container {
+  position: absolute;
+  width: 15%;
+  right: 25%;
+}
+
+.register_input {
+  width: 100%;
+}
+
+.register_title {
+  margin-bottom: 15px;
 }

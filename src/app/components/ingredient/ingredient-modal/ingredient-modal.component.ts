@@ -7,7 +7,6 @@ import {
   FormControl,
 } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { map } from 'rxjs';
 import { CategoryService } from 'src/app/services/category/category.service';
 
 @Component({
@@ -28,7 +27,6 @@ export class IngredientModalComponent {
   ) {
     this.ingredientForm = this.formBuilder.group({
       name: ['', Validators.required],
-      shortDescription: [''],
       description: [''],
       picture: [''],
       selectedCategory: [''],

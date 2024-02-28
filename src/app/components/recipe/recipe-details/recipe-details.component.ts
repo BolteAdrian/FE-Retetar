@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NotificationsService } from 'angular2-notifications';
 import { DeleteModalComponent } from 'src/app/components/modal/delete-modal/delete-modal.component';
 import { RecipeService } from 'src/app/services/recipe/recipe.service';
 
@@ -17,7 +18,8 @@ export class RecipeDetailsComponent {
     private route: ActivatedRoute,
     private recipeService: RecipeService,
     private router: Router,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private notificationsService: NotificationsService
   ) {
     this.id = Number(this.route.snapshot.paramMap.get('id'));
   }
@@ -34,7 +36,7 @@ export class RecipeDetailsComponent {
     if (this.id !== null) {
       this.recipeService.getRecipeDetails(this.id).subscribe(
         (response: any) => {
-          console.log(response.recipe.result)
+          console.log(response.recipe.result);
           this.recipeDetails = response.recipe.result;
         },
         (error: any) => {
@@ -62,14 +64,19 @@ export class RecipeDetailsComponent {
         // User confirmed delete, perform your delete logic here
         this.recipeService.deleteRecipe(this.id).subscribe(
           (response: any) => {
-            // Logică pentru gestionarea răspunsului cu succes de la serviciu.
-            console.log('Reteta stearsă cu succes:', response);
+            this.notificationsService.success(
+              response.status,
+              response.message,
+              {
+                timeOut: 5000,
+              }
+            );
             location.reload();
           },
           (error: any) => {
-            // Logică pentru gestionarea erorii de la serviciu.
-            console.error('Eroare în timpul stergerii retetei:', error);
-            // Aici poți adăuga orice logică suplimentară pentru gestionarea erorilor, cum ar fi afișarea unui mesaj de eroare către utilizator.
+            this.notificationsService.error(error.status, error.message, {
+              timeOut: 5000,
+            });
           }
         );
       }

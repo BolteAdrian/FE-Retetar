@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
+import { NotificationsService } from 'angular2-notifications';
 import { AuthService } from 'src/app/services/auth/auth.service';
 
 @Component({
@@ -13,7 +14,8 @@ export class ChangePasswordDialogComponent {
 
   constructor(
     public dialogRef: MatDialogRef<ChangePasswordDialogComponent>,
-    protected authService: AuthService
+    protected authService: AuthService,
+    private notificationsService: NotificationsService
   ) {}
 
   updatePassword(): void {
@@ -22,10 +24,19 @@ export class ChangePasswordDialogComponent {
       NewPassword: this.newPassword,
     };
 
-    this.authService.updatePassword(model).subscribe((response: any) => {
-      // Dacă actualizarea a fost reușită, poți face orice acțiune suplimentară aici (cum ar fi afișarea unui mesaj de succes)
-      this.dialogRef.close();
-    });
+    this.authService.updatePassword(model).subscribe(
+      (response: any) => {
+        this.notificationsService.success(response.status, response.message, {
+          timeOut: 5000,
+        });
+        this.dialogRef.close();
+      },
+      (error: any) => {
+        this.notificationsService.error(error.status, error.message, {
+          timeOut: 5000,
+        });
+      }
+    );
   }
 
   closeDialog(): void {

@@ -1,5 +1,21 @@
 .login-container {
-  max-width: 320px; /* Adjust as needed */
+  max-width: 320px;
   margin: 0 auto;
   padding: 20px;
+}
+
+.login_title {
+  margin: 15px 0;
+}
+
+.login_input {
+  width: 100%;
+}
+
+.login_title {
+  margin-bottom: 15px;
+}
+
+.error {
+  margin-top: 20px;
 }

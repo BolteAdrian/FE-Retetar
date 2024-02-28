@@ -8,6 +8,7 @@ import { IngredientModalComponent } from '../ingredient-modal/ingredient-modal.c
 import { Router } from '@angular/router';
 import { DeleteModalComponent } from '../../modal/delete-modal/delete-modal.component';
 import { IIngredint } from 'src/app/models/IIngredint';
+import { NotificationsService } from 'angular2-notifications';
 
 @Component({
   selector: 'app-ingredient',
@@ -20,7 +21,7 @@ export class IngredientComponent {
     'picture',
     'name',
     'category',
-    'shortDescription',
+    'description',
     'actions',
   ];
   dataSource: MatTableDataSource<any> = new MatTableDataSource<any>();
@@ -31,7 +32,8 @@ export class IngredientComponent {
   constructor(
     private ingredientService: IngredientService,
     public dialog: MatDialog,
-    private router: Router
+    private router: Router,
+    private notificationsService: NotificationsService
   ) {}
 
   ngOnInit() {
@@ -72,30 +74,37 @@ export class IngredientComponent {
         if (mode == 'add') {
           this.ingredientService.addIngredient(result).subscribe(
             (response: any) => {
-              // Logică pentru gestionarea răspunsului cu succes de la serviciu.
-              console.log('Ingredient adăugată cu succes:', response);
+              this.notificationsService.success(
+                response.status,
+                response.message,
+                {
+                  timeOut: 5000,
+                }
+              );
               location.reload();
             },
             (error: any) => {
-              // Logică pentru gestionarea erorii de la serviciu.
-              console.error('Eroare în timpul adăugării categoriei:', error);
-              // Aici poți adăuga orice logică suplimentară pentru gestionarea erorilor, cum ar fi afișarea unui mesaj de eroare către utilizator.
+              this.notificationsService.error(error.status, error.message, {
+                timeOut: 5000,
+              });
             }
           );
         } else {
           this.ingredientService.updateIngredient(data.id, result).subscribe(
             (response: any) => {
-              // Logică pentru gestionarea răspunsului cu succes de la serviciu.
-              console.log('Ingredient modificată cu succes:', response);
+              this.notificationsService.success(
+                response.status,
+                response.message,
+                {
+                  timeOut: 5000,
+                }
+              );
               location.reload();
             },
             (error: any) => {
-              // Logică pentru gestionarea erorii de la serviciu.
-              console.error(
-                'Eroare în timpul modificării ingredientului:',
-                error
-              );
-              // Aici poți adăuga orice logică suplimentară pentru gestionarea erorilor, cum ar fi afișarea unui mesaj de eroare către utilizator.
+              this.notificationsService.error(error.status, error.message, {
+                timeOut: 5000,
+              });
             }
           );
         }
@@ -110,17 +119,21 @@ export class IngredientComponent {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        // User confirmed delete, perform your delete logic here
         this.ingredientService.deleteIngredient(categoryId).subscribe(
           (response: any) => {
-            // Logică pentru gestionarea răspunsului cu succes de la serviciu.
-            console.log('Ingredient stearsă cu succes:', response);
+            this.notificationsService.success(
+              response.status,
+              response.message,
+              {
+                timeOut: 5000,
+              }
+            );
             location.reload();
           },
           (error: any) => {
-            // Logică pentru gestionarea erorii de la serviciu.
-            console.error('Eroare în timpul stergerii ingredientului:', error);
-            // Aici poți adăuga orice logică suplimentară pentru gestionarea erorilor, cum ar fi afișarea unui mesaj de eroare către utilizator.
+            this.notificationsService.error(error.status, error.message, {
+              timeOut: 5000,
+            });
           }
         );
       }

@@ -41,6 +41,7 @@ import { DeleteModalComponent } from './components/modal/delete-modal/delete-mod
 import { ConfirmationModalComponent } from './components/modal/confirmation-modal/confirmation-modal.component';
 import { ChangeEmailDialogComponent } from './components/modal/change-email-dialog/change-email-dialog.component';
 import { ChangePasswordDialogComponent } from './components/modal/change-password-dialog/change-password-dialog.component';
+import { NotificationsService, SimpleNotificationsModule } from 'angular2-notifications';
 
 @NgModule({
   declarations: [
@@ -66,6 +67,7 @@ import { ChangePasswordDialogComponent } from './components/modal/change-passwor
   imports: [
     BrowserModule,
     AppRoutingModule,
+    SimpleNotificationsModule.forRoot(),
     FormsModule,
     HttpClientModule,
     BrowserAnimationsModule,

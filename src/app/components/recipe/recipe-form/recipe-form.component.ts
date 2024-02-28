@@ -7,7 +7,7 @@ import {
   FormControl,
 } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { map } from 'rxjs';
+import { NotificationsService } from 'angular2-notifications';
 import { CategoryService } from 'src/app/services/category/category.service';
 import { IngredientService } from 'src/app/services/ingredient/ingredient.service';
 import { RecipeService } from 'src/app/services/recipe/recipe.service';
@@ -32,7 +32,8 @@ export class RecipeFormComponent {
     private ingredientService: IngredientService,
     private categoryService: CategoryService,
     private recipeService: RecipeService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private notificationsService: NotificationsService
   ) {
     this.recipeForm = this.fb.group({
       name: ['', Validators.required],
@@ -50,7 +51,6 @@ export class RecipeFormComponent {
     this.getCategories();
 
     // Verifică dacă există un parametru 'id' în URL pentru a decide între adăugare și editare
-
     if (this.recipeId) {
       // Pagină de editare
       this.loadRecipeData(this.recipeId);
@@ -61,7 +61,6 @@ export class RecipeFormComponent {
     this.recipeService.getRecipeDetails(Number(recipeId)).subscribe(
       (response: any) => {
         // Completează formularul cu datele rețetei existente pentru editare
-
         const recipeDetails = response.recipe.result;
         this.recipeForm.patchValue({
           name: recipeDetails.name,
@@ -195,23 +194,33 @@ export class RecipeFormComponent {
         .updateRecipe(Number(this.recipeId), recipeData)
         .subscribe(
           (response: any) => {
-            // Handle server response or success
-            console.log(response);
+            this.notificationsService.success(
+              response.status,
+              response.message,
+              {
+                timeOut: 5000,
+              }
+            );
             location.reload();
           },
           (error: any) => {
-            console.error(error);
+            this.notificationsService.error(error.status, error.message, {
+              timeOut: 5000,
+            });
           }
         );
     } else {
       this.recipeService.addRecipe(recipeData).subscribe(
         (response: any) => {
-          // Handle server response or success
-          console.log(response);
+          this.notificationsService.success(response.status, response.message, {
+            timeOut: 5000,
+          });
           location.reload();
         },
         (error: any) => {
-          console.error(error);
+          this.notificationsService.error(error.status, error.message, {
+            timeOut: 5000,
+          });
         }
       );
     }

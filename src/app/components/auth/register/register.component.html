@@ -1,9 +1,16 @@
 <div class="container">
-  <div class="mat-card register-container">
-    <mat-card-title>Register</mat-card-title>
+  <div class="mat-card register_container">
+    <mat-card-title class="register_title">Register</mat-card-title>
     <mat-card-content>
-      <form (ngSubmit)="onSubmit()">
-        <mat-form-field appearance="fill">
+      <mat-error
+        class="error_container"
+        *ngIf="userName.invalid && (userName.dirty || userName.touched)"
+      >
+        Username must start with a letter, can contain only letters, numbers,
+        hyphens, and underscores, and must be at least 6 characters long.
+      </mat-error>
+      <form (ngSubmit)="onSubmit(registerForm)" #registerForm="ngForm">
+        <mat-form-field appearance="fill" class="register_input">
           <mat-label>Username</mat-label>
           <input
             matInput
@@ -12,9 +19,12 @@
             [(ngModel)]="user.userName"
             name="userName"
             required
+            pattern="[a-zA-Z][-_a-zA-Z0-9]{5,}"
+            title="Username must start with a letter, can contain only letters, numbers, hyphens, and underscores, and must be at least 6 characters long."
+            #userName="ngModel"
           />
         </mat-form-field>
-        <mat-form-field appearance="fill">
+        <mat-form-field appearance="fill" class="register_input">
           <mat-label>Email</mat-label>
           <input
             matInput
@@ -25,7 +35,7 @@
             required
           />
         </mat-form-field>
-        <mat-form-field appearance="fill">
+        <mat-form-field appearance="fill" class="register_input">
           <mat-label>Password</mat-label>
           <input
             matInput
@@ -34,7 +44,16 @@
             [(ngModel)]="user.password"
             name="password"
             required
+            pattern="(?=.*\d)(?=.*[A-Z])(?=.*\W).{8,}"
+            title="Password must be at least 8 characters long, contain at least one uppercase letter, one digit, and one special character."
+            #password="ngModel"
           />
+          <mat-error
+            *ngIf="password.invalid && (password.dirty || password.touched)"
+          >
+            Password must be at least 8 characters long, contain at least one
+            uppercase letter, one digit, and one special character.
+          </mat-error>
           <mat-icon-button matSuffix (click)="togglePasswordVisibility()">
             <mat-icon *ngIf="!showPassword">visibility_off</mat-icon>
             <mat-icon *ngIf="showPassword">visibility</mat-icon>

@@ -5,6 +5,7 @@ import { ConfirmationModalComponent } from '../modal/confirmation-modal/confirma
 import { MatDialog } from '@angular/material/dialog';
 import { ChangeEmailDialogComponent } from '../modal/change-email-dialog/change-email-dialog.component';
 import { ChangePasswordDialogComponent } from '../modal/change-password-dialog/change-password-dialog.component';
+import { NotificationsService } from 'angular2-notifications';
 
 @Component({
   selector: 'app-navbar',
@@ -17,7 +18,8 @@ export class NavbarComponent {
   constructor(
     protected authService: AuthService,
     private router: Router,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private notificationsService: NotificationsService
   ) {}
 
   ngOnInit() {}
@@ -34,6 +36,9 @@ export class NavbarComponent {
         // Dacă utilizatorul a confirmat, execută delogarea
         this.authService.logout();
         this.router.navigateByUrl('/');
+        this.notificationsService.success(result, 'Logout successful', {
+          timeOut: 5000,
+        });
       }
     });
   }

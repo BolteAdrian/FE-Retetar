@@ -17,7 +17,6 @@ export class CategoryModalComponent {
   ) {
     this.categoryForm = this.formBuilder.group({
       name: ['', Validators.required],
-      shortDescription: [''],
       description: [''],
       picture: [''],
       isRecipe: [false],
