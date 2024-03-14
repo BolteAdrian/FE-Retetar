@@ -41,7 +41,8 @@ import { DeleteModalComponent } from './components/modal/delete-modal/delete-mod
 import { ConfirmationModalComponent } from './components/modal/confirmation-modal/confirmation-modal.component';
 import { ChangeEmailDialogComponent } from './components/modal/change-email-dialog/change-email-dialog.component';
 import { ChangePasswordDialogComponent } from './components/modal/change-password-dialog/change-password-dialog.component';
-import { NotificationsService, SimpleNotificationsModule } from 'angular2-notifications';
+import { SimpleNotificationsModule } from 'angular2-notifications';
+import { Page404Component } from './components/page404/page404.component';
 
 @NgModule({
   declarations: [
@@ -63,6 +64,7 @@ import { NotificationsService, SimpleNotificationsModule } from 'angular2-notifi
     ConfirmationModalComponent,
     ChangeEmailDialogComponent,
     ChangePasswordDialogComponent,
+    Page404Component,
   ],
   imports: [
     BrowserModule,

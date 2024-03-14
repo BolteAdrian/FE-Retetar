@@ -1,13 +1,7 @@
 import { Component, Inject } from '@angular/core';
-import {
-  FormGroup,
-  FormBuilder,
-  Validators,
-  FormArray,
-  FormControl,
-} from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { CategoryService } from 'src/app/services/category/category.service';
+import { NotificationsService } from 'angular2-notifications';
 
 @Component({
   selector: 'app-ingredient-modal',
@@ -16,14 +10,13 @@ import { CategoryService } from 'src/app/services/category/category.service';
 })
 export class IngredientModalComponent {
   ingredientForm: FormGroup;
-  categories: any[] = [];
-  selectedCategory: any = null;
+  selectedFile: File | null = null;
 
   constructor(
     public dialogRef: MatDialogRef<IngredientModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private formBuilder: FormBuilder,
-    private categoryService: CategoryService
+    private notificationsService: NotificationsService
   ) {
     this.ingredientForm = this.formBuilder.group({
       name: ['', Validators.required],
@@ -33,16 +26,8 @@ export class IngredientModalComponent {
     });
 
     // If editing, populate the form with existing data
-    if (data && data.category) {
-      this.ingredientForm.patchValue(data.category);
-      this.ingredientForm
-        .get('selectedCategory')
-        ?.setValue(data.category.categoryId);
-
-      // Setează selectedCategory în funcție de data.category
-      this.selectedCategory = this.categories.find(
-        (category) => category.id === data.category.categoryId
-      );
+    if (data) {
+      this.ingredientForm.patchValue(data.ingredient);
     }
   }
 
@@ -50,65 +35,36 @@ export class IngredientModalComponent {
     this.dialogRef.close();
   }
 
-  ngOnInit() {
-    this.getCategories();
-  }
-
-  getCategories() {
-    this.categoryService.getCategoriesByType(false).subscribe(
-      (response: any) => {
-        this.categories = response.data.result;
-        this.populateCategories();
-      },
-      (error: any) => {
-        console.error(error);
-      }
-    );
-  }
-
-  populateCategories() {
-    this.categories.forEach(() => {
-      const control = new FormControl(false);
-      (this.ingredientForm.controls['categories'] as FormArray).push(control);
-    });
-  }
-
-  onCategoryChange(event: any): void {
-    const selectedCategoryId = event.value;
-    this.selectedCategory = this.categories.find(
-      (category) => category.id === selectedCategoryId
-    );
-  }
-
-  removeCategory(): void {
-    this.selectedCategory = null;
-  }
+  ngOnInit() {}
 
   onFileSelected(event: any): void {
-    const file: File = event.target.files[0];
+    this.selectedFile = event.target.files[0];
 
-    // Verifică dacă a fost selectat un fișier
-    if (file) {
+    if (this.selectedFile) {
       const reader = new FileReader();
 
       reader.onload = (e: any) => {
-        // Transformă imaginea în Base64
         const base64Image = e.target.result;
-
-        // Setează codul Base64 în câmpul 'picture' al formularului
         this.ingredientForm.get('picture')?.setValue(base64Image);
       };
 
-      reader.readAsDataURL(file);
+      reader.readAsDataURL(this.selectedFile);
     }
   }
 
   onSaveClick(): void {
     if (this.ingredientForm.valid) {
-      let formData = this.ingredientForm.value;
-      formData.categoryId = formData.selectedCategory;
-      // Add any additional logic to handle form data as needed
+      const formData = this.ingredientForm.value;
+
       this.dialogRef.close(formData);
+    } else {
+      this.notificationsService.error(
+        'Error',
+        'Please fill all the required fields',
+        {
+          timeOut: 5000,
+        }
+      );
     }
   }
 }

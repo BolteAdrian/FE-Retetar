@@ -3,11 +3,18 @@
     <mat-card-title class="register_title">Register</mat-card-title>
     <mat-card-content>
       <mat-error
-        class="error_container"
+        class="error_user_container"
         *ngIf="userName.invalid && (userName.dirty || userName.touched)"
       >
         Username must start with a letter, can contain only letters, numbers,
         hyphens, and underscores, and must be at least 6 characters long.
+      </mat-error>
+      <mat-error
+        class="error_password_container"
+        *ngIf="password.invalid && (password.dirty || password.touched)"
+      >
+        Password must be at least 8 characters long, contain at least one
+        uppercase letter, one digit, and one special character.
       </mat-error>
       <form (ngSubmit)="onSubmit(registerForm)" #registerForm="ngForm">
         <mat-form-field appearance="fill" class="register_input">
@@ -48,18 +55,24 @@
             title="Password must be at least 8 characters long, contain at least one uppercase letter, one digit, and one special character."
             #password="ngModel"
           />
-          <mat-error
-            *ngIf="password.invalid && (password.dirty || password.touched)"
-          >
-            Password must be at least 8 characters long, contain at least one
-            uppercase letter, one digit, and one special character.
-          </mat-error>
           <mat-icon-button matSuffix (click)="togglePasswordVisibility()">
             <mat-icon *ngIf="!showPassword">visibility_off</mat-icon>
             <mat-icon *ngIf="showPassword">visibility</mat-icon>
           </mat-icon-button>
         </mat-form-field>
-        <button mat-raised-button color="primary" type="submit">
+        <button
+          mat-raised-button
+          color="primary"
+          type="submit"
+          class="btn btn-primary"
+          [disabled]="isLoading"
+        >
+          <i
+            class="fa"
+            [ngClass]="{
+              'fas fa-spin fa-spinner': isLoading,
+            }"
+          ></i>
           Register
         </button>
         <div *ngIf="error" class="error">{{ error }}</div>

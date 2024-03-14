@@ -1,9 +1,44 @@
-.filter-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
+.container {
+  padding: 10px;
 
-.filter-field {
-  width: 200px;
+  .title_container {
+    padding: 10px;
+    font-size: 30px;
+    font-weight: 700;
+    margin-bottom: 30px;
+  }
+
+  .back_button_container {
+    padding: 10px 0;
+  }
+
+  .filter-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+
+    .filter-field {
+      width: 200px;
+      display: -webkit-box;
+    }
+
+    .add-quantity-button {
+      margin-left: 20px;
+    }
+  }
+
+  .quantities_container {
+    width: 100%;
+    overflow-x: auto;
+    padding: 0 30px;
+
+    .quantity-row {
+      cursor: pointer;
+    }
+
+    .action_column {
+      width: 5%;
+    }
+  }
 }

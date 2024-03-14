@@ -16,39 +16,25 @@
       <mat-label>Description</mat-label>
       <textarea matInput formControlName="description" required></textarea>
     </mat-form-field>
-
-    <input type="file" class="file-upload" (change)="onFileSelected($event)" />
-
-    <mat-form-field class="form-field">
-      <mat-label>Categories</mat-label>
-      <mat-select
-        formControlName="selectedCategory"
-        (selectionChange)="onCategoryChange($event)"
-      >
-        <mat-option *ngFor="let category of categories" [value]="category.id">{{
-          category.name
-        }}</mat-option>
-      </mat-select>
-    </mat-form-field>
-
-    <div *ngIf="selectedCategory" class="selected-category-container">
-      <div class="selected-category">
-        {{ selectedCategory.name }}
-        <button
-          mat-icon-button
-          class="remove-category-button"
-          (click)="removeCategory()"
-        >
-          <mat-icon aria-label="Remove category">close</mat-icon>
-        </button>
-      </div>
+    <div class="input_file_container">
+      <button type="button" mat-raised-button (click)="fileInput.click()">
+        Choose File
+      </button>
+      <input
+        hidden
+        (change)="onFileSelected($event)"
+        #fileInput
+        type="file"
+        accept="image/*"
+      />
+      <span class="file-name">{{ selectedFile?.name }}</span>
     </div>
   </form>
 </mat-dialog-content>
 
 <mat-dialog-actions class="dialog-actions" align="end">
   <button mat-button class="cancel-button" (click)="onNoClick()">Cancel</button>
-  <button mat-button color="accent" class="save-button" (click)="onSaveClick()">
+  <button mat-raised-button color="primary" (click)="onSaveClick()">
     Save
   </button>
 </mat-dialog-actions>

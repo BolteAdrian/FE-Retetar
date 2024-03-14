@@ -10,6 +10,7 @@ import { RecipeDetailsComponent } from './components/recipe/recipe-details/recip
 import { AuthGuard } from './components/auth/auth.guard';
 import { RecipeFormComponent } from './components/recipe/recipe-form/recipe-form.component';
 import { IngredientQuantityTableComponent } from './components/ingredient/ingredient-quantity/ingredient-quantity-table/ingredient-quantity-table.component';
+import { Page404Component } from './components/page404/page404.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -19,12 +20,17 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
-    path: 'ingredient',
+    path: 'category',
+    component: CategoryComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'ingredient/:category/:id',
     component: IngredientComponent,
     canActivate: [AuthGuard],
   },
   {
-    path: 'ingredient/:id/quantity',
+    path: 'ingredient/:categoryId/:id/:ingredient',
     component: IngredientQuantityTableComponent,
     canActivate: [AuthGuard],
   },
@@ -33,7 +39,11 @@ const routes: Routes = [
     component: IngredientQuantityTableComponent,
     canActivate: [AuthGuard],
   },
-  { path: 'recipe', component: RecipeComponent, canActivate: [AuthGuard] },
+  {
+    path: 'recipe/:category/:id',
+    component: RecipeComponent,
+    canActivate: [AuthGuard],
+  },
   {
     path: 'recipe/:id',
     component: RecipeDetailsComponent,
@@ -51,6 +61,7 @@ const routes: Routes = [
   },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
+  { path: '**', component: Page404Component },
 ];
 
 @NgModule({

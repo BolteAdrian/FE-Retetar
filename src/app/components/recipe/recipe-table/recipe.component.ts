@@ -3,7 +3,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { RecipeService } from 'src/app/services/recipe/recipe.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-recipe',
@@ -19,18 +19,23 @@ export class RecipeComponent implements OnInit {
     'shortDescription',
   ];
   dataSource: MatTableDataSource<any> = new MatTableDataSource<any>();
-
+  categoryId: number = Number(this.route.snapshot.paramMap.get('id'));
+  categoryName: string | null = this.route.snapshot.paramMap.get('category');
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private recipeService: RecipeService, private router: Router) {}
+  constructor(
+    private recipeService: RecipeService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit() {
     this.getRecipes();
   }
 
   getRecipes() {
-    this.recipeService.getRecipes().subscribe(
+    this.recipeService.getRecipesByCategory(this.categoryId).subscribe(
       (response: any) => {
         console.log(response.recipes.result);
         this.dataSource = new MatTableDataSource(response.recipes.result);
@@ -62,5 +67,9 @@ export class RecipeComponent implements OnInit {
 
   goToCategoryManagement(type: string) {
     this.router.navigateByUrl('/category/' + type);
+  }
+
+  goBack() {
+    this.router.navigate(['/']);
   }
 }

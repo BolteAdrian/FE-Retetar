@@ -4,10 +4,17 @@
   padding: 20px;
 }
 
-.error_container {
+.error_user_container {
   position: absolute;
   width: 15%;
   right: 25%;
+}
+
+.error_password_container {
+  position: absolute;
+  width: 15%;
+  right: 25%;
+  top: 20%;
 }
 
 .register_input {

@@ -21,6 +21,7 @@
     "@angular/platform-browser-dynamic": "^16.0.0",
     "@angular/router": "^16.0.0",
     "@auth0/angular-jwt": "^5.2.0",
+    "@fortawesome/fontawesome-free": "^6.5.1",
     "@tinymce/tinymce-angular": "^7.0.0",
     "angular2-notifications": "^16.0.1",
     "ngx-material-timepicker": "^13.1.1",

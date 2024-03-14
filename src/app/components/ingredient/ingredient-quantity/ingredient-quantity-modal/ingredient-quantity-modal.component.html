@@ -12,22 +12,40 @@
       <input matInput formControlName="amount" required />
     </mat-form-field>
 
-    <mat-form-field class="form-field">
+    <mat-form-field appearance="fill" class="form-field">
       <mat-label>Unit</mat-label>
-      <input matInput formControlName="unit" required />
+      <mat-select formControlName="unit" required>
+        <mat-option *ngFor="let unitOption of unit" [value]="unitOption">{{
+          unitOption
+        }}</mat-option>
+      </mat-select>
     </mat-form-field>
 
     <mat-form-field class="form-field">
       <mat-label>Expiring Date</mat-label>
-      <input matInput [matDatepicker]="expiringDatePicker" formControlName="expiringDate" />
-      <mat-datepicker-toggle matSuffix [for]="expiringDatePicker"></mat-datepicker-toggle>
+      <input
+        matInput
+        [matDatepicker]="expiringDatePicker"
+        formControlName="expiringDate"
+      />
+      <mat-datepicker-toggle
+        matSuffix
+        [for]="expiringDatePicker"
+      ></mat-datepicker-toggle>
       <mat-datepicker #expiringDatePicker></mat-datepicker>
     </mat-form-field>
 
     <mat-form-field class="form-field">
       <mat-label>Date Of Purchase</mat-label>
-      <input matInput [matDatepicker]="dateOfPurchasePicker" formControlName="dateOfPurchase" />
-      <mat-datepicker-toggle matSuffix [for]="dateOfPurchasePicker"></mat-datepicker-toggle>
+      <input
+        matInput
+        [matDatepicker]="dateOfPurchasePicker"
+        formControlName="dateOfPurchase"
+      />
+      <mat-datepicker-toggle
+        matSuffix
+        [for]="dateOfPurchasePicker"
+      ></mat-datepicker-toggle>
       <mat-datepicker #dateOfPurchasePicker></mat-datepicker>
     </mat-form-field>
   </form>
@@ -35,5 +53,7 @@
 
 <mat-dialog-actions class="dialog-actions" align="end">
   <button mat-button class="cancel-button" (click)="onNoClick()">Cancel</button>
-  <button mat-button color="accent" class="save-button" (click)="onSaveClick()">Save</button>
+  <button mat-raised-button color="primary" (click)="onSaveClick()">
+    Save
+  </button>
 </mat-dialog-actions>

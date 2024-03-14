@@ -1,6 +1,8 @@
 import { Component, Inject } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { NotificationsService } from 'angular2-notifications';
+import { unit } from 'src/app/utils/constants/constants';
 
 @Component({
   selector: 'app-ingredient-quantity-modal',
@@ -9,19 +11,21 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 })
 export class IngredientQuantityModalComponent {
   ingredientQuantityForm: FormGroup;
-
+  unit : string[] = unit;
   constructor(
     public dialogRef: MatDialogRef<IngredientQuantityModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private notificationsService: NotificationsService
   ) {
-    const idIngredient = this.data.idIngredient;
+    const ingredientId = this.data.ingredientId;
+ 
     this.ingredientQuantityForm = this.formBuilder.group({
       amount: ['', Validators.required],
       unit: [''],
       expiringDate: [''],
       dateOfPurchase: [''],
-      ingredientId: idIngredient,
+      ingredientId: ingredientId,
     });
 
     // If editing, populate the form with existing data
@@ -39,6 +43,14 @@ export class IngredientQuantityModalComponent {
       const formData = this.ingredientQuantityForm.value;
       // Add any additional logic to handle form data as needed
       this.dialogRef.close(formData);
+    } else {
+      this.notificationsService.error(
+        'Error',
+        'Please fill all the required fields',
+        {
+          timeOut: 5000,
+        }
+      );
     }
   }
 }

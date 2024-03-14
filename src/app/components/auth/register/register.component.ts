@@ -14,6 +14,8 @@ export class RegisterComponent {
   user: IUserAuth = { userName: '', email: '', password: '' }; // Inițializează utilizatorul cu datele introduse în formular
   error: string = '';
   showPassword = false;
+  isLoading = false;
+
   constructor(
     private authService: AuthService,
     private router: Router,
@@ -22,14 +24,17 @@ export class RegisterComponent {
 
   onSubmit(form: NgForm): void {
     if (form.valid) {
+      this.isLoading = true;
       this.authService.register(this.user).subscribe(
         (response: any) => {
+          this.isLoading = false;
           this.router.navigateByUrl('/login');
           this.notificationsService.success(response.status, response.message, {
             timeOut: 5000,
           });
         },
         (error: any) => {
+          this.isLoading = false;
           this.error =
             'Înregistrare eșuată. Verificați utilizatorul și parola.';
           this.notificationsService.error(error.status, error.message, {

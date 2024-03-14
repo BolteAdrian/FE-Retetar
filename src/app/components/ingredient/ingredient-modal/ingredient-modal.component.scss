@@ -23,15 +23,12 @@
 }
 
 .selected-category {
-  display: inline-block;
-  padding: 8px;
+  display: flex;
+  padding: 7px;
   background-color: #e0e0e0;
-  border-radius: 4px;
-  margin-right: 8px;
-}
-
-.remove-category-button {
-  margin-left: 8px;
+  border-radius: 25px;
+  align-items: center;
+  width: fit-content;
 }
 
 .dialog-actions {
@@ -42,7 +39,10 @@
   color: rgba(0, 0, 0, 0.54);
 }
 
-.save-button {
-  color: #fff;
-  background-color: #1976d2;
+.file-name {
+  margin-left: 1rem;
+}
+
+.input_file_container {
+  margin: 0 0 1rem;
 }

@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { ISearchOptions } from 'src/app/models/ISearchOptions';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -14,9 +15,13 @@ export class IngredientService {
     return this.http.get<any>(`${this.apiUrl}/Ingredient/`);
   }
 
-  // getIngredients(options: any): Observable<any> {
-  //   return this.http.get<any>(`${this.apiUrl}/Ingredient`, { params: options });
-  // }
+  getIngredientsPaginated(options: ISearchOptions): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/Ingredient/search`, options);
+  }
+
+  getIngredientsByCategory(id: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/Ingredient/category/${id}`);
+  }
 
   getIngredientById(id: number): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/Ingredient/${id}`);
@@ -34,18 +39,18 @@ export class IngredientService {
     return this.http.delete<any>(`${this.apiUrl}/Ingredient/${id}`);
   }
 
-  // getAllIngredientQuantitiesPaginated(options: any): Observable<any> {
-  //   return this.http.get<any>(`${this.apiUrl}/IngredientQuantities`, {
-  //     params: options,
-  //   });
-  // }
-
-  getAllIngredientQuantitiesPaginated(): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/IngredientQuantities`);
+  getAllIngredientQuantitiesPaginated(
+    options: ISearchOptions
+  ): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/IngredientQuantities`, {
+      options,
+    });
   }
 
   getAllQuantities(ingredientId: number): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/IngredientQuantities/all/${ingredientId}`);
+    return this.http.get<any>(
+      `${this.apiUrl}/IngredientQuantities/all/${ingredientId}`
+    );
   }
 
   getIngredientQuantitiesById(id: number): Observable<any> {

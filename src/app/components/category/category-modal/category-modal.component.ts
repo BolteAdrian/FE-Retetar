@@ -1,6 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { NotificationsService } from 'angular2-notifications';
 
 @Component({
   selector: 'app-category-modal',
@@ -9,17 +10,20 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 })
 export class CategoryModalComponent {
   categoryForm: FormGroup;
+  selectedFile: File | null = null;
 
   constructor(
     public dialogRef: MatDialogRef<CategoryModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private formBuilder: FormBuilder
+
+    private formBuilder: FormBuilder,
+    private notificationsService: NotificationsService
   ) {
     this.categoryForm = this.formBuilder.group({
       name: ['', Validators.required],
       description: [''],
       picture: [''],
-      isRecipe: [false],
+      isRecipe: data.type,
     });
 
     // If editing, populate the form with existing data
@@ -33,29 +37,29 @@ export class CategoryModalComponent {
   }
 
   onFileSelected(event: any): void {
-    const file: File = event.target.files[0];
+    this.selectedFile = event.target.files[0];
 
-    // Verifică dacă a fost selectat un fișier
-    if (file) {
+    if (this.selectedFile) {
       const reader = new FileReader();
 
       reader.onload = (e: any) => {
-        // Transformă imaginea în Base64
         const base64Image = e.target.result;
 
-        // Setează codul Base64 în câmpul 'picture' al formularului
         this.categoryForm.get('picture')?.setValue(base64Image);
       };
 
-      reader.readAsDataURL(file);
+      reader.readAsDataURL(this.selectedFile);
     }
   }
 
   onSaveClick(): void {
     if (this.categoryForm.valid) {
       const formData = this.categoryForm.value;
-      // Add any additional logic to handle form data as needed
       this.dialogRef.close(formData);
+    } else {
+      this.notificationsService.error('Error', 'Please fill the name field', {
+        timeOut: 5000,
+      });
     }
   }
 }

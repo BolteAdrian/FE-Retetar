@@ -11,6 +11,7 @@ import { NotificationsService } from 'angular2-notifications';
 import { CategoryService } from 'src/app/services/category/category.service';
 import { IngredientService } from 'src/app/services/ingredient/ingredient.service';
 import { RecipeService } from 'src/app/services/recipe/recipe.service';
+import { unit } from 'src/app/utils/constants/constants';
 
 @Component({
   selector: 'app-recipe-form',
@@ -26,7 +27,9 @@ export class RecipeFormComponent {
   selectedIngredients: any[] = [];
   selectedCategoriesIds: any[] = [];
   selectedCategories: any[] = [];
+  unit = unit;
   recipeId: string | null = this.route.snapshot.paramMap.get('id');
+  selectedFile: File | null = null;
   constructor(
     private fb: FormBuilder,
     private ingredientService: IngredientService,
@@ -227,21 +230,17 @@ export class RecipeFormComponent {
   }
 
   onFileSelected(event: any): void {
-    const file: File = event.target.files[0];
+    this.selectedFile = event.target.files[0];
 
-    // Verifică dacă a fost selectat un fișier
-    if (file) {
+    if (this.selectedFile) {
       const reader = new FileReader();
 
       reader.onload = (e: any) => {
-        // Transformă imaginea în Base64
         const base64Image = e.target.result;
-
-        // Setează codul Base64 în câmpul 'picture' al formularului
         this.recipeForm.get('picture')?.setValue(base64Image);
       };
 
-      reader.readAsDataURL(file);
+      reader.readAsDataURL(this.selectedFile);
     }
   }
 

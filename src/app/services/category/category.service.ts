@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { ISearchOptions } from 'src/app/models/ISearchOptions';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -18,9 +19,9 @@ export class CategoryService {
     return this.http.get<any>(`${this.apiUrl}/Category/type/${isRecipe}`);
   }
 
-  // getAllCategoriesPaginated(options: any): Observable<any> {
-  //   return this.http.get<any>(`${this.apiUrl}/Category`, { params: options });
-  // }
+  getAllCategoriesPaginated(options: ISearchOptions): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/Category/search`, options);
+  }
 
   getCategoryById(id: number): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/Category/${id}`);

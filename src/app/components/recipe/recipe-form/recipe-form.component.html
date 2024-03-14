@@ -7,8 +7,6 @@
           <input matInput formControlName="name" required />
         </mat-form-field>
 
-        <input type="file" (change)="onFileSelected($event)" />
-
         <mat-form-field appearance="fill">
           <mat-label>Short Description</mat-label>
           <textarea
@@ -17,6 +15,20 @@
             required
           ></textarea>
         </mat-form-field>
+
+        <div class="input_file_container">
+          <button type="button" mat-raised-button (click)="fileInput.click()">
+            Choose File
+          </button>
+          <input
+            hidden
+            (change)="onFileSelected($event)"
+            #fileInput
+            type="file"
+            accept="image/*"
+          />
+          <span class="file-name">{{ selectedFile?.name }}</span>
+        </div>
 
         <div class="form-group">
           <label for="description">Description:</label>
@@ -112,12 +124,13 @@
 
             <mat-form-field appearance="fill">
               <mat-label>Unit</mat-label>
-              <input
-                matInput
-                type="text"
-                formControlName="selectedIngredientUnit"
-                required
-              />
+              <mat-select formControlName="selectedIngredientUnit" required>
+                <mat-option
+                  *ngFor="let unitOption of unit"
+                  [value]="unitOption"
+                  >{{ unitOption }}</mat-option
+                >
+              </mat-select>
             </mat-form-field>
 
             <button

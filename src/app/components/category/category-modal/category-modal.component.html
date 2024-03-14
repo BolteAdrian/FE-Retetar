@@ -10,21 +10,38 @@
     <mat-form-field class="form-field">
       <mat-label>Name</mat-label>
       <input matInput formControlName="name" required />
+      <mat-error *ngIf="categoryForm.get('name') === null">
+        Name is required
+      </mat-error>
     </mat-form-field>
 
     <mat-form-field class="form-field">
       <mat-label>Description</mat-label>
-      <textarea matInput formControlName="description" required></textarea>
+      <textarea matInput formControlName="description"></textarea>
     </mat-form-field>
 
-    <input type="file" (change)="onFileSelected($event)" />
-    <input type="checkbox" formControlName="isRecipe" /> Is Recipe
+    <button type="button" mat-raised-button (click)="fileInput.click()">
+      Choose File
+    </button>
+    <input
+      hidden
+      (change)="onFileSelected($event)"
+      #fileInput
+      type="file"
+      accept="image/*"
+    />
+    <span class="file-name">{{ selectedFile?.name }}</span>
   </form>
 </mat-dialog-content>
 
 <mat-dialog-actions class="dialog-actions" align="end">
   <button mat-button class="cancel-button" (click)="onNoClick()">Cancel</button>
-  <button mat-button color="accent" class="save-button" (click)="onSaveClick()">
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="onSaveClick()"
+    [disabled]="categoryForm.get('name') == null"
+  >
     Save
   </button>
 </mat-dialog-actions>

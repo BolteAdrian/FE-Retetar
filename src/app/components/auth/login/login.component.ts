@@ -13,6 +13,7 @@ export class LoginComponent {
   user: IUserAuth = { email: '', password: '' };
   error: string = '';
   showPassword = false;
+  isLoading = false;
 
   constructor(
     private authService: AuthService,
@@ -22,14 +23,17 @@ export class LoginComponent {
 
   onSubmit(form: NgForm): void {
     if (form.valid) {
+      this.isLoading = true;
       this.authService.login(this.user).subscribe(
         (response: any) => {
+          this.isLoading = false;
           this.router.navigateByUrl('/');
           this.notificationsService.success(response.status, response.message, {
             timeOut: 5000,
           });
         },
         (error: any) => {
+          this.isLoading = false;
           this.error = 'Login failed. Please check your credentials.';
           this.notificationsService.error(error.status, error.message, {
             timeOut: 5000,

@@ -30,9 +30,22 @@
             }}</mat-icon>
           </mat-icon-button>
         </mat-form-field>
-
-        <button mat-raised-button color="primary" type="submit">Login</button>
-        <button mat-button (click)="forgotPassword()">Forgot Password</button>
+        <button
+          mat-raised-button
+          color="primary"
+          type="submit"
+          class="btn btn-primary"
+          [disabled]="isLoading"
+        >
+          <i
+            class="fa"
+            [ngClass]="{
+              'fas fa-spin fa-spinner': isLoading,
+            }"
+          ></i>
+          Login
+        </button>
+        <!-- <button mat-button (click)="forgotPassword()">Forgot Password</button> -->
         <div *ngIf="error" class="error">{{ error }}</div>
       </form>
     </mat-card-content>
