@@ -1,90 +1,85 @@
 <div class="container">
-  <form [formGroup]="recipeForm" (ngSubmit)="onSubmit()">
-    <div class="recipe_form__container">
+  <mat-card class="recipe_form__container">
+    <div class="buttons_container">
+      <button mat-button color="primary" (click)="goBack()">Back</button>
+      <button mat-raised-button color="primary" (click)="onSubmit()">
+        Save
+      </button>
+    </div>
+    <form [formGroup]="recipeForm" (ngSubmit)="onSubmit()">
       <div class="recipe_inputs__container">
-        <mat-form-field appearance="fill">
-          <mat-label>Name</mat-label>
-          <input matInput formControlName="name" required />
-        </mat-form-field>
+        <div class="left_container">
+          <div class="input_field">
+            <mat-form-field appearance="fill" class="input_field">
+              <mat-label>Name</mat-label>
+              <input matInput fullwidth formControlName="name" required />
+            </mat-form-field>
 
-        <mat-form-field appearance="fill">
+            <div class="input_file_container">
+              <button
+                type="button"
+                mat-raised-button
+                (click)="fileInput.click()"
+              >
+                Choose File
+              </button>
+              <input
+                hidden
+                (change)="onFileSelected($event)"
+                #fileInput
+                type="file"
+                accept="image/*"
+              />
+              <span class="file-name">{{ selectedFile?.name }}</span>
+            </div>
+          </div>
+          <div class="input_field">
+            <mat-form-field appearance="fill" class="input_field">
+              <mat-label>Categories</mat-label>
+              <mat-select formArrayName="categories" multiple>
+                <mat-option
+                  *ngFor="let category of categories; let i = index"
+                  [value]="category.id"
+                  (click)="onCategorySelectionChange(category)"
+                >
+                  {{ category.name }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <div
+              *ngIf="selectedCategories.length > 0"
+              class="selected_category__container"
+            >
+              <div
+                *ngFor="let category of selectedCategories; let i = index"
+                class="selected_category"
+              >
+                {{ category.name }}
+                <button mat-icon-button (click)="removeCategory(i)">
+                  <mat-icon>x</mat-icon>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <mat-form-field appearance="fill" class="shortDescription_container">
           <mat-label>Short Description</mat-label>
           <textarea
             matInput
             formControlName="shortDescription"
             required
+            class="shortDescription_input"
           ></textarea>
         </mat-form-field>
-
-        <div class="input_file_container">
-          <button type="button" mat-raised-button (click)="fileInput.click()">
-            Choose File
-          </button>
-          <input
-            hidden
-            (change)="onFileSelected($event)"
-            #fileInput
-            type="file"
-            accept="image/*"
-          />
-          <span class="file-name">{{ selectedFile?.name }}</span>
-        </div>
-
-        <div class="form-group">
-          <label for="description">Description:</label>
-          <editor
-            apiKey="c8qwc5cv96qiwizuswzet80gvul391n2juf3v14t1vs4rcem"
-            id="description"
-            formControlName="description"
-            required
-          ></editor>
-        </div>
-
-        <div class="form-group">
-          <label for="cookingInstructions">Cooking Instructions:</label>
-          <editor
-            apiKey="c8qwc5cv96qiwizuswzet80gvul391n2juf3v14t1vs4rcem"
-            id="cookingInstructions"
-            formControlName="cookingInstructions"
-            required
-          ></editor>
-        </div>
-
-        <button mat-raised-button color="primary" type="submit">
-          Add Recipe
-        </button>
-      </div>
-      <div>
-        <mat-form-field appearance="fill">
-          <mat-label>Categories</mat-label>
-          <mat-select formArrayName="categories" multiple>
-            <mat-option
-              *ngFor="let category of categories; let i = index"
-              [value]="category.id"
-              (click)="onCategorySelectionChange(category)"
-            >
-              {{ category.name }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-
-        <div
-          *ngIf="selectedCategories.length > 0"
-          class="selected_category__container"
-        >
-          <div
-            *ngFor="let category of selectedCategories; let i = index"
-            class="selected_category"
-          >
-            {{ category.name }}
-            <button mat-icon-button (click)="removeCategory(i)">
-              <mat-icon>close</mat-icon>
-            </button>
-          </div>
-        </div>
       </div>
       <div class="recipe_ingredients__container">
-        <button mat-raised-button type="button" (click)="addIngredientField()">
+        <button
+          mat-raised-button
+          type="button"
+          (click)="addIngredientField()"
+          class="recipe_ingredients_button"
+        >
           Add Ingredient
         </button>
 
@@ -95,7 +90,7 @@
           <div
             *ngFor="let ingredientField of selectedIngredients; let i = index"
             [formGroupName]="i"
-            class="ingredient-field"
+            class="ingredient_row"
           >
             <mat-form-field appearance="fill">
               <mat-label>Ingredients</mat-label>
@@ -119,12 +114,17 @@
                 type="number"
                 formControlName="selectedIngredientQuantity"
                 placeholder="Quantity"
+                (input)="onIngredientQuantityChanged($event.target, i)"
               />
             </mat-form-field>
 
             <mat-form-field appearance="fill">
               <mat-label>Unit</mat-label>
-              <mat-select formControlName="selectedIngredientUnit" required>
+              <mat-select
+                formControlName="selectedIngredientUnit"
+                (selectionChange)="onIngredientUnitChanged($event, i)"
+                required
+              >
                 <mat-option
                   *ngFor="let unitOption of unit"
                   [value]="unitOption"
@@ -132,11 +132,11 @@
                 >
               </mat-select>
             </mat-form-field>
-
             <button
               mat-raised-button
               type="button"
               color="warn"
+              class="removeButton"
               (click)="removeIngredientField(i)"
             >
               Remove
@@ -144,6 +144,26 @@
           </div>
         </div>
       </div>
-    </div>
-  </form>
+      <div class="recipe_description_container">
+        <div class="form-group">
+          <label for="description">Description:</label>
+          <editor
+            apiKey="c8qwc5cv96qiwizuswzet80gvul391n2juf3v14t1vs4rcem"
+            id="description"
+            formControlName="description"
+            required
+          ></editor>
+        </div>
+
+        <div class="form-group">
+          <label for="cookingInstructions">Cooking Instructions:</label>
+          <editor
+            apiKey="c8qwc5cv96qiwizuswzet80gvul391n2juf3v14t1vs4rcem"
+            id="cookingInstructions"
+            formControlName="cookingInstructions"
+            required
+          ></editor>
+        </div>
+      </div></form
+  ></mat-card>
 </div>

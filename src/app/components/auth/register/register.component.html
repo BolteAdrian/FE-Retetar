@@ -26,7 +26,7 @@
             [(ngModel)]="user.userName"
             name="userName"
             required
-            pattern="[a-zA-Z][-_a-zA-Z0-9]{5,}"
+            pattern="^[a-zA-Z][-_a-zA-Z0-9]{4,}$"
             title="Username must start with a letter, can contain only letters, numbers, hyphens, and underscores, and must be at least 6 characters long."
             #userName="ngModel"
           />

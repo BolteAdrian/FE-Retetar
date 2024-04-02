@@ -12,14 +12,22 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
-
+    @media (max-width: 900px) {
+      margin-bottom: 0px;
+    }
     .filter-field {
       width: 200px;
       display: -webkit-box;
+      @media (max-width: 900px) {
+        display: unset;
+      }
     }
 
     .add-category-button {
       margin-left: 20px;
+      @media (max-width: 900px) {
+        padding: revert;
+      }
     }
   }
 
@@ -53,6 +61,14 @@
 
       .category-details {
         margin-top: 10px;
+        h2 {
+          width: 100%;
+          overflow-x: auto;
+        }
+        p {
+          height: 100px;
+          overflow-y: auto;
+        }
       }
     }
   }

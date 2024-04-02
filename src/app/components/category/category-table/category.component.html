@@ -69,7 +69,9 @@
       <p>Nu există categorii disponibile momentan.</p>
     </ng-template>
   </div>
-
+  <div *ngIf="isLoading" class="loading-circle-container">
+    <mat-spinner diameter="100"></mat-spinner>
+  </div>
   <mat-paginator
     class="paginator"
     [length]="dataSource.data.length"

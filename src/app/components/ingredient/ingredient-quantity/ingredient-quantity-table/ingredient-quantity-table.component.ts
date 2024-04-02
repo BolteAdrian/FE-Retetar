@@ -6,10 +6,14 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { IngredientService } from 'src/app/services/ingredient/ingredient.service';
 import { IIngredintQuantity } from 'src/app/models/IIngredientQuantity';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { NotificationsService } from 'angular2-notifications';
 import { ISearchOptions } from 'src/app/models/ISearchOptions';
 import { DeleteModalComponent } from 'src/app/components/modal/delete-modal/delete-modal.component';
+import * as XLSX from 'xlsx';
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-ingredient-quantity-table',
@@ -17,6 +21,8 @@ import { DeleteModalComponent } from 'src/app/components/modal/delete-modal/dele
   styleUrls: ['./ingredient-quantity-table.component.scss'],
 })
 export class IngredientQuantityTableComponent {
+  isLoading: boolean = true;
+  showExportMenu: boolean = false;
   options: ISearchOptions = {
     pageNumber: 1,
     pageSize: 5,
@@ -28,6 +34,8 @@ export class IngredientQuantityTableComponent {
     'id',
     'amount',
     'unit',
+    'price',
+    'currency',
     'expiringDate',
     'dateOfPurchase',
     'actions',
@@ -43,7 +51,6 @@ export class IngredientQuantityTableComponent {
     private ingredientService: IngredientService,
     public dialog: MatDialog,
     private route: ActivatedRoute,
-    private router: Router,
     private notificationsService: NotificationsService,
     private cdr: ChangeDetectorRef
   ) {}
@@ -52,7 +59,88 @@ export class IngredientQuantityTableComponent {
     this.getIngredientQuantities();
   }
 
+  toggleExportMenu(): void {
+    this.showExportMenu = !this.showExportMenu;
+  }
+
+  exportToCSV(): void {
+    const filename = 'ingredient_quantities.csv';
+    const csvData = this.convertToCSV(this.dataSource.filteredData);
+    const blob = new Blob([csvData], { type: 'text/csv;charset=utf-8;' });
+    saveAs(blob, filename);
+    this.showExportMenu = false;
+  }
+
+  convertToCSV(data: any[]): string {
+    // Exclude the last two columns from the header
+    const header = Object.keys(data[0]).slice(0, -2);
+    const csv = data.map((row) =>
+      header.map((fieldName) => JSON.stringify(row[fieldName])).join(',')
+    );
+    csv.unshift(header.join(','));
+    return csv.join('\r\n');
+  }
+
+  exportToXLSX(): void {
+    const filteredData = this.dataSource.filteredData.map((item) => {
+      // Exclude the last two columns from each row
+      const { ingredientId, ingredient, ...rest } = item;
+      return rest;
+    });
+
+    const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(filteredData);
+    const workbook: XLSX.WorkBook = {
+      Sheets: { data: worksheet },
+      SheetNames: ['data'],
+    };
+    const excelBuffer: any = XLSX.write(workbook, {
+      bookType: 'xlsx',
+      type: 'array',
+    });
+    saveAs(
+      new Blob([excelBuffer], { type: 'application/octet-stream' }),
+      'ingredient_quantities.xlsx'
+    );
+    this.showExportMenu = false;
+  }
+
+  exportToPDF(): void {
+    const doc = new jsPDF();
+    autoTable(doc, {
+      html: 'table',
+      columns: [
+        { header: 'Id', dataKey: 'id' },
+        { header: 'Amount', dataKey: 'amount' },
+        { header: 'Unit', dataKey: 'unit' },
+        { header: 'Price/Unit', dataKey: 'price' },
+        { header: 'Currency', dataKey: 'currency' },
+        { header: 'Expiring Date', dataKey: 'expiringDate' },
+        { header: 'Date Of Purchase', dataKey: 'dateOfPurchase' },
+      ],
+    });
+    doc.save('ingredient_quantities.pdf');
+    this.showExportMenu = false;
+  }
+
+  isExpiringSoon(expirationDateString: string): boolean {
+    const expirationDate = new Date(expirationDateString);
+    const today = new Date();
+    const oneMonthFromNow = new Date(
+      today.getFullYear(),
+      today.getMonth() + 1,
+      today.getDate()
+    );
+    return expirationDate <= oneMonthFromNow && expirationDate > today;
+  }
+
+  isExpired(expirationDateString: string): boolean {
+    const expirationDate = new Date(expirationDateString);
+    const today = new Date();
+    return expirationDate < today;
+  }
+
   getIngredientQuantities() {
+    this.isLoading = true;
     if (this.ingredientId) {
       this.ingredientService.getAllQuantities(this.ingredientId).subscribe(
         (response: any) => {
@@ -61,9 +149,11 @@ export class IngredientQuantityTableComponent {
           );
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;
+          this.isLoading = false;
         },
         (error: any) => {
           console.error(error);
+          this.isLoading = false;
         }
       );
     } else {
@@ -189,6 +279,6 @@ export class IngredientQuantityTableComponent {
   }
 
   goBack() {
-    this.router.navigate(['/ingredient/' + this.categoryId]);
+    window.history.back();
   }
 }

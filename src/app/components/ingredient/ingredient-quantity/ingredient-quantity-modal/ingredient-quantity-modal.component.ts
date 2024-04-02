@@ -2,7 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { NotificationsService } from 'angular2-notifications';
-import { unit } from 'src/app/utils/constants/constants';
+import { currency, unit } from 'src/app/utils/constants/constants';
 
 @Component({
   selector: 'app-ingredient-quantity-modal',
@@ -11,7 +11,8 @@ import { unit } from 'src/app/utils/constants/constants';
 })
 export class IngredientQuantityModalComponent {
   ingredientQuantityForm: FormGroup;
-  unit : string[] = unit;
+  unit: string[] = unit;
+  currency: string[] = currency;
   constructor(
     public dialogRef: MatDialogRef<IngredientQuantityModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -19,12 +20,14 @@ export class IngredientQuantityModalComponent {
     private notificationsService: NotificationsService
   ) {
     const ingredientId = this.data.ingredientId;
- 
+
     this.ingredientQuantityForm = this.formBuilder.group({
       amount: ['', Validators.required],
-      unit: [''],
-      expiringDate: [''],
-      dateOfPurchase: [''],
+      unit: ['', Validators.required],
+      price: ['', Validators.required],
+      currency: ['', Validators.required],
+      expiringDate: ['', Validators.required],
+      dateOfPurchase: ['', Validators.required],
       ingredientId: ingredientId,
     });
 

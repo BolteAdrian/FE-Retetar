@@ -175,6 +175,10 @@ export class RecipeFormComponent {
     }
   }
 
+  goBack() {
+    window.history.back();
+  }
+
   onSubmit() {
     const recipeData = {
       Recipe: {
@@ -295,30 +299,15 @@ export class RecipeFormComponent {
             this.recipeForm.get('selectedIngredients')?.value[index]
               ?.selectedIngredientUnit || '', // Adăugat pentru a prelua valoarea 'unit'
         };
-
-        const quantityControl = (
-          this.recipeForm.get('selectedIngredients') as FormArray
-        )
-          .at(index)
-          .get('selectedIngredientQuantity');
-        const unitControl = (
-          this.recipeForm.get('selectedIngredients') as FormArray
-        )
-          .at(index)
-          .get('selectedIngredientUnit');
-
-        if (quantityControl) {
-          quantityControl.valueChanges.subscribe((value) => {
-            this.selectedIngredients[index].quantity = value || 0;
-          });
-        }
-
-        if (unitControl) {
-          unitControl.valueChanges.subscribe((value) => {
-            this.selectedIngredients[index].unit = value || '';
-          });
-        }
       }
     }
+  }
+
+  onIngredientQuantityChanged(event: any, index: number) {
+    this.selectedIngredients[index].quantity = event.value;
+  }
+
+  onIngredientUnitChanged(event: any, index: number) {
+    this.selectedIngredients[index].unit = event.value;
   }
 }

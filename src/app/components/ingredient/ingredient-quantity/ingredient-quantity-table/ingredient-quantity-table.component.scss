@@ -1,6 +1,34 @@
 .container {
   padding: 10px;
 
+  .actions_container {
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    gap: 10px;
+    margin-bottom: 10px;
+
+    .export-dropdown {
+      position: relative;
+      display: inline-block;
+    }
+
+    .export-menu {
+      position: absolute;
+      top: calc(100% + 5px);
+      left: 0;
+      background-color: #fff;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      z-index: 1;
+    }
+
+    .export-menu button {
+      display: block;
+      width: 100%;
+      text-align: left;
+    }
+  }
+
   .title_container {
     padding: 10px;
     font-size: 30px;
@@ -17,14 +45,20 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
-
+    @media (max-width: 900px) {
+      margin-bottom: 0px;
+    }
     .filter-field {
       width: 200px;
       display: -webkit-box;
+      @media (max-width: 900px) {
+        display: unset;
+      }
     }
 
     .add-quantity-button {
       margin-left: 20px;
+      max-width: 100%;
     }
   }
 
@@ -40,5 +74,18 @@
     .action_column {
       width: 5%;
     }
+  }
+
+  .status-icon {
+    vertical-align: middle;
+    margin-right: 5px;
+  }
+
+  .expiring-soon {
+    color: orange;
+  }
+
+  .expired {
+    color: red;
   }
 }

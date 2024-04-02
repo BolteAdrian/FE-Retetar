@@ -1,42 +1,67 @@
 <div class="container">
-  <div class="recipe-details">
-    <div class="recipe-details__actions">
-      <div class="recipe-details__quantity">
-        <div>Max amount: {{ recipeAmount }}</div>
-        <label for="quantity_to_use" class="recipe-details__quantity-label"
-          >Quantity used:</label
+  <div class="buttons_container">
+    <button mat-button color="primary" (click)="goBack()">Back</button>
+    <div>
+      <button
+        mat-button
+        [matMenuTriggerFor]="menu"
+        mat-raised-button
+        color="primary"
+      >
+        Actions
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="goToRecipeUpdate()">Edit Recipe</button>
+        <button mat-menu-item (click)="openDeleteConfirmation()">
+          Delete Recipe
+        </button>
+        <button mat-menu-item (click)="exportToPDF()">Export PDF</button>
+        <button
+          mat-menu-item
+          printSectionId="recipe-details"
+          ngxPrint
+          styleSheetFile="src/assets/css/print-table.css"
         >
-        <input
-          type="number"
-          id="quantity_to_use"
-          name="quantity_to_use"
-          min="1"
-          step="1"
-          class="recipe-details__quantity-input"
+          Print Recipe
+        </button>
+      </mat-menu>
+    </div>
+  </div>
+  <mat-card>
+    <div class="recipe-details__quantity">
+      <div>Max amount: {{ recipeAmount?.maximumPossibleRecipes }}</div>
+      <div>Price/Max amount: {{ recipeAmount?.priceAllRecipes }}</div>
+      <div>Price/Unit: {{ recipeAmount?.priceUnitRecipe }}</div>
+      <form (ngSubmit)="onSubmit()" [formGroup]="quantityForm">
+        <mat-form-field class="recipe-details__quantity__input">
+          <mat-label>Quantity used</mat-label>
+          <input
+            matInput
+            type="number"
+            maxlength="5"
+            placeholder="Ex. 50"
+            value="0"
+            formControlName="quantity_to_use"
+            required
+          />
+        </mat-form-field>
+        <button mat-raised-button color="primary" type="submit">Submit</button>
+        <p>{{ missingIngredients }}</p>
+      </form>
+    </div>
+  </mat-card>
+  <mat-card class="recipe-details" id="recipe-details">
+    <div class="recipe-details__info">
+      <div class="recipe-details__picture">
+        <img
+          [src]="
+            recipeDetails.picture
+              ? recipeDetails.picture
+              : './../../../../assets/images/recipe-default.png'
+          "
         />
       </div>
-      <div>
-        <button
-          mat-button
-          [matMenuTriggerFor]="menu"
-          class="recipe-details__menu"
-        >
-          Actions
-        </button>
-        <mat-menu #menu="matMenu">
-          <button mat-menu-item (click)="goToRecipeUpdate()">
-            Edit Recipe
-          </button>
-          <button mat-menu-item (click)="openDeleteConfirmation()">
-            Delete Recipe
-          </button>
-        </mat-menu>
-      </div>
-    </div>
-
-    <div class="recipe-details__info">
-      <img [src]="recipeDetails?.picture" class="recipe-details__picture" />
-      <div class="recipe-details__title">{{ recipeDetails?.name }}</div>
+      <h2 class="recipe-details__title">{{ recipeDetails?.name }}</h2>
       <div class="recipe-details__section">
         <h2 class="recipe-details__subtitle">Categories</h2>
         <ul class="recipe-details__category-list">
@@ -75,5 +100,5 @@
         </div>
       </div>
     </div>
-  </div>
+  </mat-card>
 </div>

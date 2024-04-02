@@ -9,7 +9,7 @@
   <form [formGroup]="ingredientQuantityForm">
     <mat-form-field class="form-field">
       <mat-label>Amount</mat-label>
-      <input matInput formControlName="amount" required />
+      <input matInput type="number" formControlName="amount" required />
     </mat-form-field>
 
     <mat-form-field appearance="fill" class="form-field">
@@ -18,6 +18,22 @@
         <mat-option *ngFor="let unitOption of unit" [value]="unitOption">{{
           unitOption
         }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="form-field">
+      <mat-label>Price/Unit</mat-label>
+      <input matInput formControlName="price" required />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="form-field">
+      <mat-label>Currency</mat-label>
+      <mat-select formControlName="currency" required>
+        <mat-option
+          *ngFor="let currencyOption of currency"
+          [value]="currencyOption"
+          >{{ currencyOption }}</mat-option
+        >
       </mat-select>
     </mat-form-field>
 

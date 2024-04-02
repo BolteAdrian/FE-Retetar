@@ -11,6 +11,7 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./recipe.component.scss'],
 })
 export class RecipeComponent implements OnInit {
+  isLoading: boolean = true;
   displayedColumns: string[] = [
     'id',
     'picture',
@@ -35,15 +36,17 @@ export class RecipeComponent implements OnInit {
   }
 
   getRecipes() {
+    this.isLoading = true;
     this.recipeService.getRecipesByCategory(this.categoryId).subscribe(
       (response: any) => {
-        console.log(response.recipes.result);
         this.dataSource = new MatTableDataSource(response.recipes.result);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
+        this.isLoading = false;
       },
       (error: any) => {
         console.error(error);
+        this.isLoading = false;
       }
     );
   }
@@ -70,6 +73,6 @@ export class RecipeComponent implements OnInit {
   }
 
   goBack() {
-    this.router.navigate(['/']);
+    this.router.navigate(['/category/1']);
   }
 }

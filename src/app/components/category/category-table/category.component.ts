@@ -18,6 +18,7 @@ import { ISearchOptions } from 'src/app/models/ISearchOptions';
   styleUrls: ['./category.component.scss'],
 })
 export class CategoryComponent {
+  isLoading: boolean = true;
   displayedCategories: ICategory[] = [];
 
   dataSource: MatTableDataSource<ICategory> =
@@ -42,15 +43,18 @@ export class CategoryComponent {
   }
 
   getCategories() {
+    this.isLoading = true;
     this.isRecipe = !!this.route.snapshot.paramMap.get('type');
     this.categoryService.getCategoriesByType(this.isRecipe).subscribe(
       (response: any) => {
         this.dataSource = new MatTableDataSource(response.data.result);
         this.updateDisplayedCategories();
         this.dataSource.paginator = this.paginator;
+        this.isLoading = false;
       },
       (error: any) => {
         console.error(error);
+        this.isLoading = false;
       }
     );
   }
@@ -134,7 +138,7 @@ export class CategoryComponent {
               if (index !== -1) {
                 this.dataSource.data[index] = result;
               }
-
+              this.getCategories();
               this.dataSource._updateChangeSubscription();
               this.cdr.detectChanges();
             },
@@ -184,6 +188,9 @@ export class CategoryComponent {
               (category) => category.id !== categoryId
             );
             this.dataSource.data = categories;
+            this.getCategories();
+            this.dataSource._updateChangeSubscription();
+            this.cdr.detectChanges();
           },
           (error: any) => {
             this.notificationsService.error(error.name, error.message, {

@@ -17,6 +17,7 @@ import { ISearchOptions } from 'src/app/models/ISearchOptions';
   styleUrls: ['./ingredient.component.scss'],
 })
 export class IngredientComponent {
+  isLoading: boolean = true;
   options: ISearchOptions = {
     pageNumber: 1,
     pageSize: 5,
@@ -54,14 +55,17 @@ export class IngredientComponent {
   }
 
   getIngredients() {
+    this.isLoading = true;
     this.ingredientService.getIngredientsByCategory(this.categoryId).subscribe(
       (response: any) => {
         this.dataSource = new MatTableDataSource(response.ingredients);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
+        this.isLoading = false;
       },
       (error: any) => {
         console.error(error);
+        this.isLoading = false;
       }
     );
   }

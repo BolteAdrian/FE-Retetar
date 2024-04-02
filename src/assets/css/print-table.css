@@ -1,0 +1,54 @@
+/* Define styles for the container */
+.container {
+  /* Set width and margin for printing */
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* Hide non-essential elements during printing */
+.back_button_container,
+.title_container,
+.filter-container,
+.add-quantity-button {
+  display: none;
+}
+
+/* Customize the table for printing */
+.mat-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.mat-header-cell,
+.mat-cell {
+  border: 1px solid #000;
+  padding: 8px;
+}
+
+.mat-header-row,
+.mat-row {
+  border: 1px solid #000;
+}
+
+.mat-header-row th,
+.mat-row td {
+  text-align: left;
+}
+
+/* Add styles for no data row */
+.mat-row.mat-no-data td {
+  text-align: center;
+}
+
+/* Customize paginator for printing */
+.mat-paginator {
+  margin-top: 20px;
+  width: 100%;
+  text-align: center;
+}
+
+/* Add styles for loading spinner */
+.loading-circle-container {
+  text-align: center;
+  margin-top: 20px;
+}

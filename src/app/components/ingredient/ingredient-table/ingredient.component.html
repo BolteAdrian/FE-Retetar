@@ -2,7 +2,9 @@
   <div class="back_button_container">
     <button mat-button color="primary" (click)="goBack()">Back</button>
   </div>
-  <div class="title_container">Category {{ categoryName }}</div>
+  <div class="title_container">
+    <span *ngIf="categoryId !== 2">Category</span> {{ categoryName }}
+  </div>
   <div class="filter-container">
     <mat-form-field class="filter-field">
       <mat-label>Filter</mat-label>
@@ -90,7 +92,9 @@
         </td>
       </tr>
     </table>
-
+    <div *ngIf="isLoading" class="loading-circle-container">
+      <mat-spinner diameter="100"></mat-spinner>
+    </div>
     <mat-paginator
       [pageSizeOptions]="[5, 10, 25, 100]"
       aria-label="Select page of users"

@@ -43,6 +43,8 @@ import { ChangeEmailDialogComponent } from './components/modal/change-email-dial
 import { ChangePasswordDialogComponent } from './components/modal/change-password-dialog/change-password-dialog.component';
 import { SimpleNotificationsModule } from 'angular2-notifications';
 import { Page404Component } from './components/page404/page404.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { NgxPrintModule } from 'ngx-print';
 
 @NgModule({
   declarations: [
@@ -86,10 +88,12 @@ import { Page404Component } from './components/page404/page404.component';
     MatSelectModule,
     MatIconModule,
     EditorModule,
+    MatProgressSpinnerModule,
     MatCheckboxModule,
     MatNativeDateModule,
     NgxMaterialTimepickerModule,
     MatDatepickerModule,
+    NgxPrintModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: () => {
