@@ -28,6 +28,10 @@ export class RecipeService {
     return this.http.get<any>(`${this.apiUrl}/Recipe/${id}`);
   }
 
+  getPreparedRecipesAndIngredients(): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/Recipe/prepared-recipes`);
+  }
+
   addRecipe(recipe: any): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/Recipe`, recipe);
   }

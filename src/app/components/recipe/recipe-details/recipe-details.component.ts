@@ -8,6 +8,8 @@ import { IRecipeAmount } from 'src/app/models/IRecipeAmount';
 import { RecipeService } from 'src/app/services/recipe/recipe.service';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
+import { EmailModalComponent } from '../../modal/email-modal/email-modal.component';
+import { CurrencyConversionService } from 'src/app/services/currency-conversion/currency-conversion.service';
 
 @Component({
   selector: 'app-recipe-details',
@@ -27,7 +29,8 @@ export class RecipeDetailsComponent {
     private recipeService: RecipeService,
     private router: Router,
     public dialog: MatDialog,
-    private notificationsService: NotificationsService
+    private notificationsService: NotificationsService,
+    private currencyConversionService: CurrencyConversionService
   ) {
     this.id = Number(this.route.snapshot.paramMap.get('id'));
     this.quantityForm = this.fb.group({
@@ -37,6 +40,10 @@ export class RecipeDetailsComponent {
 
   ngOnInit() {
     this.getRecipeDetails();
+  }
+
+  convertPrice(value: number, fromCurrency: string): number {
+    return this.currencyConversionService.convertPrice(value, fromCurrency);
   }
 
   exportToPDF(): void {
@@ -142,6 +149,18 @@ export class RecipeDetailsComponent {
           }
         );
       }
+    });
+  }
+
+  openEmailModal() {
+    const dialogRef = this.dialog.open(EmailModalComponent, {
+      width: '400px',
+      data: {}, // You can pass any data to the modal if needed
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log('The email modal was closed');
+      // You can handle any actions after the modal is closed here
     });
   }
 }

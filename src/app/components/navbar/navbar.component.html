@@ -3,28 +3,69 @@
     <img src="./../../assets/images/chef.png" alt="site icon" />
     <h2><a href="" class="navbar__title">The Recipe</a></h2>
   </div>
-  <div
-    class="navbar__col-md-3 navbar__login"
-    *ngIf="authService.isAuthenticated()"
-  >
-    <button mat-button [matMenuTriggerFor]="menu" class="navbar__menu">
-      Menu
-    </button>
-    <mat-menu #menu="matMenu">
-      <button mat-menu-item (click)="changePassword()">Change Password</button>
-      <button mat-menu-item (click)="changeEmail()">Change Email</button>
-      <button mat-menu-item (click)="logout()">Logout</button>
-    </mat-menu>
-  </div>
-  <div
-    class="navbar__col-md-3 navbar__login"
-    *ngIf="!authService.isAuthenticated()"
-  >
-    <a href="/login" class="navbar__register-login-btn btn btn-default"
-      >Login</a
+  <div class="navbar__settings">
+    <!-- <div class="navbar__setting">
+      <label class="switch">
+        <input
+          type="checkbox"
+          [checked]="settings.value.nightMode"
+          (change)="toggleTheme()"
+        />
+        <span class="slider round"></span>
+      </label>
+      <span class="navbar__label">Night Mode</span>
+    </div> -->
+    <div class="navbar__setting">
+      <select
+        [formControl]="currencyControl"
+        (change)="setCurrency($event.target)"
+      >
+        <option value="" disabled>Select Currency</option>
+        <option
+          *ngFor="let currencyOption of currencyOptions"
+          [value]="currencyOption"
+        >
+          {{ currencyOption }}
+        </option>
+      </select>
+    </div>
+    <div class="navbar__setting">
+      <select
+        [formControl]="languageControl"
+        (change)="setLanguage($event.target)"
+      >
+        <option value="" disabled>Select Language</option>
+        <option *ngFor="let lang of languages" [value]="lang.code">
+          {{ lang.name }}
+        </option>
+      </select>
+    </div>
+
+    <div
+      class="navbar__col-md-3 navbar__login"
+      *ngIf="authService.isAuthenticated()"
     >
-    <a href="/register" class="navbar__register-login-btn btn btn-default"
-      >Register</a
+      <button mat-button [matMenuTriggerFor]="menu" class="navbar__menu">
+        My Account
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="changePassword()">
+          Change Password
+        </button>
+        <button mat-menu-item (click)="changeEmail()">Change Email</button>
+        <button mat-menu-item (click)="logout()">Logout</button>
+      </mat-menu>
+    </div>
+    <div
+      class="navbar__col-md-3 navbar__login"
+      *ngIf="!authService.isAuthenticated()"
     >
+      <a href="/login" class="navbar__register-login-btn btn btn-default"
+        >Login</a
+      >
+      <a href="/register" class="navbar__register-login-btn btn btn-default"
+        >Register</a
+      >
+    </div>
   </div>
 </nav>

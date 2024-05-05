@@ -2,12 +2,7 @@
   <div class="buttons_container">
     <button mat-button color="primary" (click)="goBack()">Back</button>
     <div>
-      <button
-        mat-button
-        [matMenuTriggerFor]="menu"
-        mat-raised-button
-        color="primary"
-      >
+      <button mat-raised-button [matMenuTriggerFor]="menu" color="primary">
         Actions
       </button>
       <mat-menu #menu="matMenu">
@@ -15,6 +10,7 @@
         <button mat-menu-item (click)="openDeleteConfirmation()">
           Delete Recipe
         </button>
+        <button mat-menu-item (click)="openEmailModal()">Send Email</button>
         <button mat-menu-item (click)="exportToPDF()">Export PDF</button>
         <button
           mat-menu-item
@@ -30,8 +26,14 @@
   <mat-card>
     <div class="recipe-details__quantity">
       <div>Max amount: {{ recipeAmount?.maximumPossibleRecipes }}</div>
-      <div>Price/Max amount: {{ recipeAmount?.priceAllRecipes }}</div>
-      <div>Price/Unit: {{ recipeAmount?.priceUnitRecipe }}</div>
+      <div>
+        Price/Max amount:
+        {{ convertPrice(recipeAmount?.priceAllRecipes || 0, "RON") }}
+      </div>
+      <div>
+        Price/Unit:
+        {{ convertPrice(recipeAmount?.priceUnitRecipe || 0, "RON") }}
+      </div>
       <form (ngSubmit)="onSubmit()" [formGroup]="quantityForm">
         <mat-form-field class="recipe-details__quantity__input">
           <mat-label>Quantity used</mat-label>

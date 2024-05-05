@@ -1,0 +1,50 @@
+<h2 mat-dialog-title>
+  Send Email
+  <button mat-icon-button mat-dialog-close class="close-button">
+    <mat-icon aria-label="Close dialog">close</mat-icon>
+  </button>
+</h2>
+<mat-dialog-content class="dialog-content">
+  <!-- Email form fields -->
+  <div class="form-group">
+    <mat-form-field appearance="fill">
+      <mat-label>Recipient Email</mat-label>
+      <input matInput type="email" [(ngModel)]="emailData.email" />
+    </mat-form-field>
+  </div>
+  <div class="form-group">
+    <mat-form-field appearance="fill">
+      <mat-label>Subject</mat-label>
+      <input matInput type="text" [(ngModel)]="emailData.subject" />
+    </mat-form-field>
+  </div>
+  <div class="form-group">
+    <mat-form-field appearance="fill">
+      <mat-label>Message</mat-label>
+      <textarea matInput rows="5" [(ngModel)]="emailData.message"></textarea>
+    </mat-form-field>
+  </div>
+  <div class="form-group">
+    <button type="button" mat-raised-button (click)="fileInput.click()">
+      Choose File
+    </button>
+    <input
+      hidden
+      (change)="onFileSelected($event)"
+      #fileInput
+      type="file"
+    />
+    <span class="file-name">{{ selectedFile?.name }}</span>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions class="dialog-actions" align="end">
+  <button mat-button (click)="dialogRef.close()">Cancel</button>
+  <button
+    mat-raised-button
+    color="primary"
+    [disabled]="emailData.email == '' || emailData.subject == ''"
+    (click)="sendEmailWithAttachment()"
+  >
+    Send
+  </button>
+</mat-dialog-actions>

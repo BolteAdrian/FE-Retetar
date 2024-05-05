@@ -82,6 +82,10 @@ export class CategoryComponent {
     this.getCategories(); // Reload categories based on new page
   }
 
+  goToStatistics(): void {
+    this.router.navigateByUrl('/prepared-recipe-history');
+  }
+
   buildSearchOptions(): ISearchOptions {
     return {
       pageNumber: this.paginator.pageIndex + 1,

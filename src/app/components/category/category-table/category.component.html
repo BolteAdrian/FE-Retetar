@@ -12,15 +12,24 @@
         #input
       />
     </mat-form-field>
-
-    <button
-      mat-raised-button
-      color="primary"
-      class="add-category-button"
-      (click)="openOperationModal('add', null)"
-    >
-      Add Category
-    </button>
+    <div  class="actions-container">
+      <button
+        mat-raised-button
+        color="primary"
+        class="recipe-button"
+        (click)="goToStatistics()"
+      >
+        Statistics
+      </button>
+      <button
+        mat-raised-button
+        color="primary"
+        class="add-category-button"
+        (click)="openOperationModal('add', null)"
+      >
+        Add Category
+      </button>
+    </div>
   </div>
 
   <div class="grid-container">

@@ -45,6 +45,8 @@ import { SimpleNotificationsModule } from 'angular2-notifications';
 import { Page404Component } from './components/page404/page404.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { NgxPrintModule } from 'ngx-print';
+import { EmailModalComponent } from './components/modal/email-modal/email-modal.component';
+import { PreparedRecipeHistoryComponent } from './components/prepared-recipe-history/prepared-recipe-history.component';
 
 @NgModule({
   declarations: [
@@ -67,6 +69,8 @@ import { NgxPrintModule } from 'ngx-print';
     ChangeEmailDialogComponent,
     ChangePasswordDialogComponent,
     Page404Component,
+    EmailModalComponent,
+    PreparedRecipeHistoryComponent,
   ],
   imports: [
     BrowserModule,

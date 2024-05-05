@@ -1,4 +1,15 @@
 /* Define styles for the container */
+
+@media print {
+  .action {
+    display: none !important;
+  }
+
+  .action_column {
+    display: none !important;
+  }
+}
+
 .container {
   /* Set width and margin for printing */
   width: 100%;

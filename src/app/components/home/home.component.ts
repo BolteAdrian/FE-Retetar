@@ -14,6 +14,10 @@ export class HomeComponent {
     this.router.navigateByUrl('/category/1');
   }
 
+  goToStatistics(): void {
+    this.router.navigateByUrl('/prepared-recipe-history');
+  }
+
   goToIngredientManagement(): void {
     this.router.navigateByUrl('/category');
   }

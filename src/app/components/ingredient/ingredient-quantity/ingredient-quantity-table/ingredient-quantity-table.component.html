@@ -4,26 +4,25 @@
   </div>
   <div class="title_container">Quantity {{ ingredintName }}</div>
 
-  <div class="actions_container">
-    <button
-      mat-raised-button
-      color="primary"
-      printSectionId="quantities"
-      ngxPrint
-      styleSheetFile="src/assets/css/print-table.css"
-    >
-      Print Table
+  <div class="action-dropdown">
+    <button mat-raised-button [matMenuTriggerFor]="menu" color="primary">
+      Actions
     </button>
-    <div class="export-dropdown">
-      <button mat-raised-button color="primary" (click)="toggleExportMenu()">
-        Export
+    <mat-menu #menu="matMenu" class="action-menu">
+      <button mat-menu-item (click)="openEmailModal()">Send Email</button>
+      <button mat-menu-item (click)="exportToCSV()">Export CSV</button>
+      <button mat-menu-item (click)="exportToXLSX()">Export XLSX</button>
+      <button mat-menu-item (click)="exportToPDF()">Export PDF</button>
+      <button
+        mat-menu-item
+        [useExistingCss]="true"
+        printSectionId="quantities"
+        ngxPrint
+        styleSheetFile="assets/css/print-table.css"
+      >
+        Print Table
       </button>
-      <div class="export-menu" *ngIf="showExportMenu">
-        <button mat-button (click)="exportToCSV()">CSV</button>
-        <button mat-button (click)="exportToXLSX()">XLSX</button>
-        <button mat-button (click)="exportToPDF()">PDF</button>
-      </div>
-    </div>
+    </mat-menu>
   </div>
   <div class="filter-container">
     <mat-form-field class="filter-field">
@@ -64,13 +63,9 @@
       <!-- Price Column -->
       <ng-container matColumnDef="price">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Price/Unit</th>
-        <td mat-cell *matCellDef="let row">{{ row.price }}</td>
-      </ng-container>
-
-      <!-- Currency Column -->
-      <ng-container matColumnDef="currency">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Currency</th>
-        <td mat-cell *matCellDef="let row">{{ row.currency }}</td>
+        <td mat-cell *matCellDef="let row">
+          {{ convertPrice(row.price, row.currency) }}
+        </td>
       </ng-container>
 
       <!-- Expiring Date Column -->
@@ -105,7 +100,7 @@
       </ng-container>
 
       <!-- Actions Column -->
-      <ng-container matColumnDef="actions">
+      <ng-container matColumnDef="actions" class="action">
         <th mat-header-cell *matHeaderCellDef class="action_column"></th>
         <td mat-cell *matCellDef="let row">
           <button

@@ -1,0 +1,18 @@
+h2 {
+  display: flex;
+  padding: 10px 0;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.dialog-content {
+  padding: 0 0 10px;
+  .form-group {
+    display: flex;
+    justify-content: center;
+  }
+
+  .file-name {
+    margin-left: 10px;
+  }
+}

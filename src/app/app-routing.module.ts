@@ -11,6 +11,7 @@ import { AuthGuard } from './components/auth/auth.guard';
 import { RecipeFormComponent } from './components/recipe/recipe-form/recipe-form.component';
 import { IngredientQuantityTableComponent } from './components/ingredient/ingredient-quantity/ingredient-quantity-table/ingredient-quantity-table.component';
 import { Page404Component } from './components/page404/page404.component';
+import { PreparedRecipeHistoryComponent } from './components/prepared-recipe-history/prepared-recipe-history.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -57,6 +58,11 @@ const routes: Routes = [
   {
     path: 'edit-recipe/:id',
     component: RecipeFormComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'prepared-recipe-history',
+    component: PreparedRecipeHistoryComponent,
     canActivate: [AuthGuard],
   },
   { path: 'login', component: LoginComponent },

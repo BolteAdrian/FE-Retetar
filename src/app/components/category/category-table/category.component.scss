@@ -23,10 +23,13 @@
       }
     }
 
-    .add-category-button {
-      margin-left: 20px;
-      @media (max-width: 900px) {
-        padding: revert;
+    .actions-container {
+      display: flex;
+      .add-category-button {
+        margin-left: 20px;
+        @media (max-width: 900px) {
+          padding: revert;
+        }
       }
     }
   }

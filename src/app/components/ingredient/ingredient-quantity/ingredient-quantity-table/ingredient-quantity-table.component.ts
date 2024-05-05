@@ -14,6 +14,8 @@ import * as XLSX from 'xlsx';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { saveAs } from 'file-saver';
+import { EmailModalComponent } from 'src/app/components/modal/email-modal/email-modal.component';
+import { CurrencyConversionService } from 'src/app/services/currency-conversion/currency-conversion.service';
 
 @Component({
   selector: 'app-ingredient-quantity-table',
@@ -22,7 +24,6 @@ import { saveAs } from 'file-saver';
 })
 export class IngredientQuantityTableComponent {
   isLoading: boolean = true;
-  showExportMenu: boolean = false;
   options: ISearchOptions = {
     pageNumber: 1,
     pageSize: 5,
@@ -35,7 +36,6 @@ export class IngredientQuantityTableComponent {
     'amount',
     'unit',
     'price',
-    'currency',
     'expiringDate',
     'dateOfPurchase',
     'actions',
@@ -52,15 +52,12 @@ export class IngredientQuantityTableComponent {
     public dialog: MatDialog,
     private route: ActivatedRoute,
     private notificationsService: NotificationsService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private currencyConversionService: CurrencyConversionService
   ) {}
 
   ngOnInit() {
     this.getIngredientQuantities();
-  }
-
-  toggleExportMenu(): void {
-    this.showExportMenu = !this.showExportMenu;
   }
 
   exportToCSV(): void {
@@ -68,7 +65,6 @@ export class IngredientQuantityTableComponent {
     const csvData = this.convertToCSV(this.dataSource.filteredData);
     const blob = new Blob([csvData], { type: 'text/csv;charset=utf-8;' });
     saveAs(blob, filename);
-    this.showExportMenu = false;
   }
 
   convertToCSV(data: any[]): string {
@@ -101,7 +97,6 @@ export class IngredientQuantityTableComponent {
       new Blob([excelBuffer], { type: 'application/octet-stream' }),
       'ingredient_quantities.xlsx'
     );
-    this.showExportMenu = false;
   }
 
   exportToPDF(): void {
@@ -119,7 +114,6 @@ export class IngredientQuantityTableComponent {
       ],
     });
     doc.save('ingredient_quantities.pdf');
-    this.showExportMenu = false;
   }
 
   isExpiringSoon(expirationDateString: string): boolean {
@@ -137,6 +131,10 @@ export class IngredientQuantityTableComponent {
     const expirationDate = new Date(expirationDateString);
     const today = new Date();
     return expirationDate < today;
+  }
+
+  convertPrice(value: number, fromCurrency: string): number {
+    return this.currencyConversionService.convertPrice(value, fromCurrency);
   }
 
   getIngredientQuantities() {
@@ -275,6 +273,18 @@ export class IngredientQuantityTableComponent {
           }
         );
       }
+    });
+  }
+
+  openEmailModal() {
+    const dialogRef = this.dialog.open(EmailModalComponent, {
+      width: '400px',
+      data: {}, // You can pass any data to the modal if needed
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log('The email modal was closed');
+      // You can handle any actions after the modal is closed here
     });
   }
 
