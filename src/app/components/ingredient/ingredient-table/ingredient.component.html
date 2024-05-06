@@ -1,14 +1,24 @@
 <div class="container">
   <div class="back_button_container">
-    <button mat-button color="primary" (click)="goBack()">Back</button>
+    <button mat-button color="primary" (click)="goBack()">
+      {{ "INPUT_TEXT.BACK" | translate }}
+    </button>
   </div>
   <div class="title_container">
-    <span *ngIf="categoryId !== 2">Category</span> {{ categoryName }}
+    <span *ngIf="categoryId !== 2">
+      {{ "INGREDIENT.CATEGORY" | translate }}</span
+    >
+    {{ categoryName }}
   </div>
   <div class="filter-container">
     <mat-form-field class="filter-field">
-      <mat-label>Filter</mat-label>
-      <input matInput (keyup)="applyFilter($event)" #input />
+      <mat-label>{{ "INPUT_TEXT.FILTER" | translate }}</mat-label>
+      <input
+        matInput
+        (keyup)="applyFilter($event)"
+        #input
+        [placeholder]="'INPUT_TEXT.FILTER_PLACEHOLDER' | translate"
+      />
     </mat-form-field>
     <button
       mat-raised-button
@@ -16,7 +26,7 @@
       class="add-ingredient-button"
       (click)="openOperationModal('add', null)"
     >
-      Add Ingredient
+      {{ "INGREDIENT.ADD_INGREDIENT" | translate }}
     </button>
   </div>
 
@@ -30,7 +40,9 @@
 
       <!-- Picture Column -->
       <ng-container matColumnDef="picture">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Picture</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ "INGREDIENT.PICTURE" | translate }}
+        </th>
         <td mat-cell *matCellDef="let row">
           <img
             [src]="
@@ -46,13 +58,17 @@
 
       <!-- Name Column -->
       <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ "CATEGORY.NAME" | translate }}
+        </th>
         <td mat-cell *matCellDef="let row">{{ row.name }}</td>
       </ng-container>
 
       <!-- Short Description Column -->
       <ng-container matColumnDef="description">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Description</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ "CATEGORY.DESCRIPTION" | translate }}
+        </th>
         <td mat-cell *matCellDef="let row">{{ row.description }}</td>
       </ng-container>
 
@@ -88,16 +104,13 @@
 
       <tr class="mat-row" *matNoDataRow>
         <td class="mat-cell" colspan="5">
-          No data matching the filter "{{ input.value }}"
+          {{ "INPUT_TEXT.NO_DATA" | translate }} "{{ input.value }}"
         </td>
       </tr>
     </table>
     <div *ngIf="isLoading" class="loading-circle-container">
       <mat-spinner diameter="100"></mat-spinner>
     </div>
-    <mat-paginator
-      [pageSizeOptions]="[5, 10, 25, 100]"
-      aria-label="Select page of users"
-    ></mat-paginator>
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
   </div>
 </div>

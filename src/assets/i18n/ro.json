@@ -1,0 +1,104 @@
+{
+  "HOME": {
+    "TITLE": "Bine ai venit în Caietul Tău de Rețete!",
+    "SUBTITLE": "Organizează, creează și administrează rețetele și ingredientele tale cu ușurință.",
+    "MANAGE_RECIPES": "Administrează Rețete",
+    "MANAGE_INGREDIENTS": "Administrează Ingrediente"
+  },
+  "AUTH": {
+    "LOGIN": "Conectare",
+    "EMAIL": "Email",
+    "PASSWORD": "Parolă",
+    "REGISTER": "Înregistrare",
+    "WRONG_USERNAME_MESSAGE": "Numele de utilizator trebuie să înceapă cu o literă, poate conține doar litere, cifre, cratime și sublinieri și trebuie să aibă cel puțin 6 caractere.",
+    "WRONG_PASSWORD_MESSAGE": "Parola trebuie să aibă cel puțin 8 caractere, să conțină cel puțin o literă majusculă, o cifră și un caracter special.",
+    "USERNAME": "Nume de utilizator"
+  },
+  "INPUT_TEXT": {
+    "CHOOSE_FILE": "Alege Fișier",
+    "CANCEL": "Anulează",
+    "SAVE": "Salvează",
+    "BACK": "Înapoi",
+    "FILTER": "Filtrează",
+    "FILTER_PLACEHOLDER": "Filtrează după nume",
+    "ACTIONS": "Acțiuni",
+    "SEND_EMAIL": "Trimite Email",
+    "EXPORT_CSV": "Exportă CSV",
+    "EXPORT_XLSX": "Exportă XLSX",
+    "EXPORT_PDF": "Exportă PDF",
+    "PRINT_TABLE": "Tipărește Tabelul",
+    "NO_DATA": "Nu există date care să corespundă filtrului"
+  },
+  "CATEGORY": {
+    "NAME": "Nume",
+    "NAME_REQUIRED": "Numele este obligatoriu",
+    "DESCRIPTION": "Descriere",
+    "STATISTICS": "Statistici",
+    "ADD_CATEGORY": "Adaugă Categorie",
+    "NO_CATEGORY": "Nu există categorii disponibile momentan."
+  },
+  "INGREDIENT": {
+    "CATEGORY": "Categorie",
+    "ADD_INGREDIENT": "Adaugă Ingredient",
+    "PICTURE": "Imagine",
+    "NO_INGREDIENT": "Nu există ingrediente disponibile momentan.",
+    "AMOUNT": "Cantitate",
+    "UNIT": "Unitate",
+    "PRICE": "Preț/Unitate",
+    "CURRENCY": "Monedă",
+    "EXPIRING_DATE": "Dată de Expirare",
+    "DATE_OF_PURCHASE": "Data Achiziției",
+    "QUANTITY": "Cantitate",
+    "ADD_QUANTITY": "Adaugă Cantitate"
+  },
+  "MODALS": {
+    "CHANGE_EMAIL": "Schimbă Email",
+    "CHANGE_PASSWORD": "Schimbă Parola",
+    "NEW_EMAIL": "Noul Email",
+    "CURRENT_PASSWORD": "Parola Curentă",
+    "NEW_PASSWORD": "Noua Parolă",
+    "CONFIRM_LOGOUT": "Confirmare Deconectare",
+    "LOGOUT_MESSAGE": "Ești sigur că vrei să te deconectezi?",
+    "YES": "Da",
+    "NO": "Nu",
+    "DELETE": "Șterge",
+    "DELETE_MESSAGE": "Ești sigur că vrei să ștergi acest element?",
+    "DELETE_CONFIRMATION": "Confirmare Ștergere",
+    "RECIPIENT_EMAIL": "Email Destinatar",
+    "SUBJECT": "Subiect",
+    "MESSAGE": "Mesaj",
+    "SEND": "Trimite"
+  },
+  "NAVBAR": {
+    "SELECT_CURRENCY": "Selectează Moneda",
+    "SELECT_LANGUAGE": "Selectează Limba",
+    "MY_ACCOUNT": "Contul Meu",
+    "LOGOUT": "Deconectare"
+  },
+  "NOT_FOUND": {
+    "TITLE": "Eroare 404 - Pagina Nu a Fost Găsită",
+    "MESSAGE": "Pagina pe care o cauți nu există.",
+    "GO_BACK": "Mergi la Pagina Principală"
+  },
+  "STATISTICS": {
+    "INGREDIENTS": "Istoric Ingrediente",
+    "PRODUCTS": "Istoric Preparate"
+  },
+  "RECIPE": {
+    "NO_CATEGORIES": "Fără categorii",
+    "CATEGORIES": "Categorii",
+    "ADD_RECIPE": "Adaugă Rețetă",
+    "SHORT_DESCRIPTION": "Descriere Scurtă",
+    "INGREDIENTS": "Ingrediente",
+    "REMOVE": "Șterge",
+    "COOKING_INSTRUCTION": "Instrucțiuni de Gătit",
+    "DELETE_RECIPE": "Șterge Rețeta",
+    "EDIT_RECIPE": "Editează Rețeta",
+    "PRINT_RECIPE": "Tipărește Rețeta",
+    "MAX_AMOUNT": "Cantitate Maximă",
+    "PRICE_MAX": "Preț/Cantitate Maximă",
+    "PRICE_UNIT": "Preț/Unitate de Măsură",
+    "QUANTITY_USED": "Cantitate Utilizată",
+    "SUBMIT": "Trimite"
+  }
+}

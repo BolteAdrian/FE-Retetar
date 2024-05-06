@@ -1,0 +1,104 @@
+{
+  "HOME": {
+    "TITLE": "Welcome to Your Recipe Book!",
+    "SUBTITLE": "Organize, create, and manage your recipes and ingredients with ease.",
+    "MANAGE_RECIPES": "Manage Recipes",
+    "MANAGE_INGREDIENTS": "Manage Ingredients"
+  },
+  "AUTH": {
+    "LOGIN": "Login",
+    "EMAIL": "Email",
+    "PASSWORD": "Password",
+    "REGISTER": "Register",
+    "WRONG_USERNAME_MESSAGE": "Username must start with a letter, can contain only letters, numbers,hyphens, and underscores, and must be at least 6 characters long.",
+    "WRONG_PASSWORD_MESSAGE": "Password must be at least 8 characters long, contain at least one uppercase letter, one digit, and one special character.",
+    "USERNAME": "Username"
+  },
+  "INPUT_TEXT": {
+    "CHOOSE_FILE": "Choose File",
+    "CANCEL": "Cancel",
+    "SAVE": "Save",
+    "BACK": "Back",
+    "FILTER": "Filter",
+    "FILTER_PLACEHOLDER": "Filter by name",
+    "ACTIONS": "Actions",
+    "SEND_EMAIL": "Send Email",
+    "EXPORT_CSV": "Export CSV",
+    "EXPORT_XLSX": "Export XLSX",
+    "EXPORT_PDF": "Export PDF",
+    "PRINT_TABLE": "Print Table",
+    "NO_DATA": "No data matching the filter"
+  },
+  "CATEGORY": {
+    "NAME": "Name",
+    "NAME_REQUIRED": "Name is required",
+    "DESCRIPTION": "Description",
+    "STATISTICS": "Statistics",
+    "ADD_CATEGORY": "Add Category",
+    "NO_CATEGORY": "Nu există categorii disponibile momentan."
+  },
+  "INGREDIENT": {
+    "CATEGORY": "Category",
+    "ADD_INGREDIENT": "Add Ingredient",
+    "PICTURE": "Picture",
+    "NO_INGREDIENT": "Nu există ingrediente disponibile momentan.",
+    "AMOUNT": "Amount",
+    "UNIT": "Unit",
+    "PRICE": "Price/Unit",
+    "CURRENCY": "Currency",
+    "EXPIRING_DATE": "Expiring Date",
+    "DATE_OF_PURCHASE": "Date Of Purchase",
+    "QUANTITY": "Quantity",
+    "ADD_QUANTITY": "Add Quantity"
+  },
+  "MODALS": {
+    "CHANGE_EMAIL": "Change Email",
+    "CHANGE_PASSWORD": "Change Password",
+    "NEW_EMAIL": "New Email",
+    "CURRENT_PASSWORD": "Current Password",
+    "NEW_PASSWORD": "New Password",
+    "CONFIRM_LOGOUT": "Confirmation Logout",
+    "LOGOUT_MESSAGE": "Are you sure you want to log out?",
+    "YES": "Yes",
+    "NO": "No",
+    "DELETE": "Delete",
+    "DELETE_MESSAGE": "Are you sure you want to delete this item?",
+    "DELETE_CONFIRMATION": "Delete Confirmation",
+    "RECIPIENT_EMAIL": "Recipient Email",
+    "SUBJECT": "Subject",
+    "MESSAGE": "Message",
+    "SEND": "Send"
+  },
+  "NAVBAR": {
+    "SELECT_CURRENCY": "Select Currency",
+    "SELECT_LANGUAGE": "Select Language",
+    "MY_ACCOUNT": "My Account",
+    "LOGOUT": "Logout"
+  },
+  "NOT_FOUND": {
+    "TITLE": "Error 404 - Page Not Found",
+    "MESSAGE": "The page you are looking for does not exist.",
+    "GO_BACK": "Go to Homepage"
+  },
+  "STATISTICS": {
+    "INGREDIENTS": "Ingredients History",
+    "PRODUCTS": "Dishes History"
+  },
+  "RECIPE": {
+    "NO_CATEGORIES": "No categories",
+    "CATEGORIES": "Categories",
+    "ADD_RECIPE": "Add Recipe",
+    "SHORT_DESCRIPTION": "Short Description",
+    "INGREDIENTS": "Ingredients",
+    "REMOVE": "Remove",
+    "COOKING_INSTRUCTION": "Cooking Instructions",
+    "DELETE_RECIPE": "Delete Recipe",
+    "EDIT_RECIPE": "Edit Recipe",
+    "PRINT_RECIPE": "Print Recipe",
+    "MAX_AMOUNT": "Max amount",
+    "PRICE_MAX": "Price/Max amount",
+    "PRICE_UNIT": "Price/Unit amount",
+    "QUANTITY_USED": "Quantity used",
+    "SUBMIT": "Submit"
+  }
+}

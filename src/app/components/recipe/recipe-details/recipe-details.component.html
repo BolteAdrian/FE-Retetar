@@ -1,42 +1,53 @@
 <div class="container">
   <div class="buttons_container">
-    <button mat-button color="primary" (click)="goBack()">Back</button>
+    <button mat-button color="primary" (click)="goBack()">
+      {{ "INPUT_TEXT.BACK" | translate }}
+    </button>
     <div>
       <button mat-raised-button [matMenuTriggerFor]="menu" color="primary">
-        Actions
+        {{ "INPUT_TEXT.ACTIONS" | translate }}
       </button>
       <mat-menu #menu="matMenu">
-        <button mat-menu-item (click)="goToRecipeUpdate()">Edit Recipe</button>
-        <button mat-menu-item (click)="openDeleteConfirmation()">
-          Delete Recipe
+        <button mat-menu-item (click)="goToRecipeUpdate()">
+          {{ "RECIPE.EDIT_RECIPE" | translate }}
         </button>
-        <button mat-menu-item (click)="openEmailModal()">Send Email</button>
-        <button mat-menu-item (click)="exportToPDF()">Export PDF</button>
+        <button mat-menu-item (click)="openDeleteConfirmation()">
+          {{ "RECIPE.DELETE_RECIPE" | translate }}
+        </button>
+        <button mat-menu-item (click)="openEmailModal()">
+          {{ "INPUT_TEXT.SEND_EMAIL" | translate }}
+        </button>
+        <button mat-menu-item (click)="exportToPDF()">
+          {{ "INPUT_TEXT.EXPORT_PDF" | translate }}
+        </button>
         <button
           mat-menu-item
           printSectionId="recipe-details"
           ngxPrint
           styleSheetFile="src/assets/css/print-table.css"
         >
-          Print Recipe
+          {{ "RECIPE.PRINT_RECIPE" | translate }}
         </button>
       </mat-menu>
     </div>
   </div>
   <mat-card>
     <div class="recipe-details__quantity">
-      <div>Max amount: {{ recipeAmount?.maximumPossibleRecipes }}</div>
       <div>
-        Price/Max amount:
+        {{ "RECIPE.MAX_AMOUNT" | translate }}:
+        {{ recipeAmount?.maximumPossibleRecipes }}
+      </div>
+      <div>
+        {{ "RECIPE.PRICE_MAX" | translate }}:
         {{ convertPrice(recipeAmount?.priceAllRecipes || 0, "RON") }}
       </div>
       <div>
-        Price/Unit:
+        {{ "RECIPE.PRICE_UNIT" | translate }}:
         {{ convertPrice(recipeAmount?.priceUnitRecipe || 0, "RON") }}
       </div>
       <form (ngSubmit)="onSubmit()" [formGroup]="quantityForm">
         <mat-form-field class="recipe-details__quantity__input">
-          <mat-label>Quantity used</mat-label>
+          <mat-label>{{ "RECIPE.QUANTITY_USED" | translate }}</mat-label>
           <input
             matInput
             type="number"
@@ -47,7 +58,9 @@
             required
           />
         </mat-form-field>
-        <button mat-raised-button color="primary" type="submit">Submit</button>
+        <button mat-raised-button color="primary" type="submit">
+          {{ "RECIPE.SUBMIT" | translate }}
+        </button>
         <p>{{ missingIngredients }}</p>
       </form>
     </div>
@@ -65,7 +78,9 @@
       </div>
       <h2 class="recipe-details__title">{{ recipeDetails?.name }}</h2>
       <div class="recipe-details__section">
-        <h2 class="recipe-details__subtitle">Categories</h2>
+        <h2 class="recipe-details__subtitle">
+          {{ "RECIPE.CATEGORIES" | translate }}
+        </h2>
         <ul class="recipe-details__category-list">
           <li
             *ngFor="let category of recipeDetails.recipeCategories"
@@ -76,13 +91,17 @@
         </ul>
       </div>
       <div class="recipe-details__section">
-        <h2 class="recipe-details__subtitle">Description</h2>
+        <h2 class="recipe-details__subtitle">
+          {{ "CATEGORY.DESCRIPTION" | translate }}
+        </h2>
         <div
           class="recipe-details__content"
           [innerHTML]="recipeDetails?.description"
         ></div>
         <div class="recipe-details__section">
-          <h2 class="recipe-details__subtitle">Ingredients</h2>
+          <h2 class="recipe-details__subtitle">
+            {{ "RECIPE.INGREDIENTS" | translate }}
+          </h2>
           <ul class="recipe-details__ingredient-list">
             <li
               *ngFor="let ingredient of recipeDetails.recipeIngredients"
@@ -94,7 +113,9 @@
           </ul>
         </div>
         <div class="recipe-details__section">
-          <h2 class="recipe-details__subtitle">Cooking Instructions</h2>
+          <h2 class="recipe-details__subtitle">
+            {{ "RECIPE.COOKING_INSTRUCTION" | translate }}
+          </h2>
           <div
             class="recipe-details__content"
             [innerHTML]="recipeDetails?.cookingInstructions"

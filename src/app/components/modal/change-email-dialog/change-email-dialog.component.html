@@ -1,14 +1,22 @@
-<h2 mat-dialog-title>Change Email</h2>
+<h2 mat-dialog-title>{{ "MODALS.CHANGE_EMAIL" | translate }}</h2>
 <button mat-icon-button mat-dialog-close class="close-button">
   <mat-icon aria-label="Close dialog">close</mat-icon>
 </button>
 <mat-dialog-content>
   <!-- Formular pentru schimbarea emailului -->
   <mat-form-field appearance="fill">
-    <input matInput placeholder="New Email" [(ngModel)]="newEmail" />
+    <input
+      matInput
+      [placeholder]="'MODALS.NEW_EMAIL' | translate"
+      [(ngModel)]="newEmail"
+    />
   </mat-form-field>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-  <button mat-button color="warn" (click)="closeDialog()">Cancel</button>
-  <button mat-button color="primary" (click)="updateEmail()">Save</button>
+  <button mat-button color="warn" (click)="closeDialog()">
+    {{ "INPUT_TEXT.CANCEL" | translate }}
+  </button>
+  <button mat-button color="primary" (click)="updateEmail()">
+    {{ "INPUT_TEXT.SAVE" | translate }}
+  </button>
 </mat-dialog-actions>

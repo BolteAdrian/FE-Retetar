@@ -1,9 +1,15 @@
-<h2 mat-dialog-title>Confirmare Logout</h2>
+<h2 mat-dialog-title>{{ "MODALS.CONFIRM_LOGOUT" | translate }}</h2>
 <button mat-icon-button mat-dialog-close class="close-button">
   <mat-icon aria-label="Close dialog">close</mat-icon>
 </button>
-<mat-dialog-content>Ești sigur că vrei să te deloghezi?</mat-dialog-content>
+<mat-dialog-content>{{
+  "MODALS.LOGOUT_MESSAGE" | translate
+}}</mat-dialog-content>
 <mat-dialog-actions align="end">
-  <button mat-button color="warn" [mat-dialog-close]="false">Nu</button>
-  <button mat-button color="primary" [mat-dialog-close]="true">Da</button>
+  <button mat-button color="warn" [mat-dialog-close]="false">
+    {{ "MODALS.NO" | translate }}
+  </button>
+  <button mat-button color="primary" [mat-dialog-close]="true">
+    {{ "MODALS.YES" | translate }}
+  </button>
 </mat-dialog-actions>

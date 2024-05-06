@@ -20,7 +20,9 @@
         [formControl]="currencyControl"
         (change)="setCurrency($event.target)"
       >
-        <option value="" disabled>Select Currency</option>
+        <option value="" disabled>
+          {{ "NAVBAR.SELECT_CURRENCY" | translate }}
+        </option>
         <option
           *ngFor="let currencyOption of currencyOptions"
           [value]="currencyOption"
@@ -34,7 +36,9 @@
         [formControl]="languageControl"
         (change)="setLanguage($event.target)"
       >
-        <option value="" disabled>Select Language</option>
+        <option value="" disabled>
+          {{ "NAVBAR.SELECT_LANGUAGE" | translate }}
+        </option>
         <option *ngFor="let lang of languages" [value]="lang.code">
           {{ lang.name }}
         </option>
@@ -46,26 +50,30 @@
       *ngIf="authService.isAuthenticated()"
     >
       <button mat-button [matMenuTriggerFor]="menu" class="navbar__menu">
-        My Account
+        {{ "NAVBAR.MY_ACCOUNT" | translate }}
       </button>
       <mat-menu #menu="matMenu">
         <button mat-menu-item (click)="changePassword()">
-          Change Password
+          {{ "MODALS.CHANGE_PASSWORD" | translate }}
         </button>
-        <button mat-menu-item (click)="changeEmail()">Change Email</button>
-        <button mat-menu-item (click)="logout()">Logout</button>
+        <button mat-menu-item (click)="changeEmail()">
+          {{ "MODALS.CHANGE_EMAIL" | translate }}
+        </button>
+        <button mat-menu-item (click)="logout()">
+          {{ "NAVBAR.LOGOUT" | translate }}
+        </button>
       </mat-menu>
     </div>
     <div
       class="navbar__col-md-3 navbar__login"
       *ngIf="!authService.isAuthenticated()"
     >
-      <a href="/login" class="navbar__register-login-btn btn btn-default"
-        >Login</a
-      >
-      <a href="/register" class="navbar__register-login-btn btn btn-default"
-        >Register</a
-      >
+      <a href="/login" class="navbar__register-login-btn btn btn-default">{{
+        "AUTH.LOGIN" | translate
+      }}</a>
+      <a href="/register" class="navbar__register-login-btn btn btn-default">{{
+        "AUTH.LOGIN" | translate
+      }}</a>
     </div>
   </div>
 </nav>

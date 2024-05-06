@@ -1,11 +1,15 @@
-<h2 mat-dialog-title>Delete Confirmation</h2>
+<h2 mat-dialog-title>{{ "MODALS.DELETE_CONFIRMATION" | translate }}</h2>
 <button mat-icon-button mat-dialog-close class="close-button">
   <mat-icon aria-label="Close dialog">close</mat-icon>
 </button>
 <mat-dialog-content>
-  <p>Are you sure you want to delete this item?</p>
+  <p>{{ "MODALS.DELETE_MESSAGE" | translate }}</p>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-  <button mat-button color="primary" (click)="onCancelClick()">No</button>
-  <button mat-button color="warn" (click)="onConfirmClick()">Delete</button>
+  <button mat-button color="primary" (click)="onCancelClick()">
+    {{ "MODALS.NO" | translate }}
+  </button>
+  <button mat-button color="warn" (click)="onConfirmClick()">
+    {{ "MODALS.DELETE" | translate }}
+  </button>
 </mat-dialog-actions>

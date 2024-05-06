@@ -10,7 +10,11 @@ import { RecipeComponent } from './components/recipe/recipe-table/recipe.compone
 import { IngredientComponent } from './components/ingredient/ingredient-table/ingredient.component';
 import { CategoryComponent } from './components/category/category-table/category.component';
 import { FormsModule } from '@angular/forms';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import {
+  HTTP_INTERCEPTORS,
+  HttpClient,
+  HttpClientModule,
+} from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
@@ -47,6 +51,12 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { NgxPrintModule } from 'ngx-print';
 import { EmailModalComponent } from './components/modal/email-modal/email-modal.component';
 import { PreparedRecipeHistoryComponent } from './components/prepared-recipe-history/prepared-recipe-history.component';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+
+export function createTranslateLoader(http: HttpClient) {
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
 
 @NgModule({
   declarations: [
@@ -104,6 +114,14 @@ import { PreparedRecipeHistoryComponent } from './components/prepared-recipe-his
           return localStorage.getItem('authToken');
         },
       },
+    }),
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: createTranslateLoader,
+        deps: [HttpClient],
+      },
+      defaultLanguage: 'en',
     }),
   ],
   providers: [

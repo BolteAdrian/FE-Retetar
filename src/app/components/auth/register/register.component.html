@@ -1,24 +1,24 @@
 <div class="container">
   <div class="mat-card register_container">
-    <mat-card-title class="register_title">Register</mat-card-title>
+    <mat-card-title class="register_title">
+      {{ "AUTH.REGISTER" | translate }}</mat-card-title
+    >
     <mat-card-content>
       <mat-error
         class="error_user_container"
         *ngIf="userName.invalid && (userName.dirty || userName.touched)"
       >
-        Username must start with a letter, can contain only letters, numbers,
-        hyphens, and underscores, and must be at least 6 characters long.
+        {{ "AUTH.WRONG_USERNAME_MESSAGE" | translate }}
       </mat-error>
       <mat-error
         class="error_password_container"
         *ngIf="password.invalid && (password.dirty || password.touched)"
       >
-        Password must be at least 8 characters long, contain at least one
-        uppercase letter, one digit, and one special character.
+        {{ "AUTH.WRONG_PASSWORD_MESSAGE" | translate }}
       </mat-error>
       <form (ngSubmit)="onSubmit(registerForm)" #registerForm="ngForm">
         <mat-form-field appearance="fill" class="register_input">
-          <mat-label>Username</mat-label>
+          <mat-label>{{ "AUTH.USERNAME" | translate }}</mat-label>
           <input
             matInput
             type="text"
@@ -27,12 +27,11 @@
             name="userName"
             required
             pattern="^[a-zA-Z][-_a-zA-Z0-9]{4,}$"
-            title="Username must start with a letter, can contain only letters, numbers, hyphens, and underscores, and must be at least 6 characters long."
             #userName="ngModel"
           />
         </mat-form-field>
         <mat-form-field appearance="fill" class="register_input">
-          <mat-label>Email</mat-label>
+          <mat-label>{{ "AUTH.EMAIL" | translate }}</mat-label>
           <input
             matInput
             type="email"
@@ -43,7 +42,7 @@
           />
         </mat-form-field>
         <mat-form-field appearance="fill" class="register_input">
-          <mat-label>Password</mat-label>
+          <mat-label>{{ "AUTH.PASSWORD" | translate }}</mat-label>
           <input
             matInput
             [type]="showPassword ? 'text' : 'password'"
@@ -52,7 +51,6 @@
             name="password"
             required
             pattern="(?=.*\d)(?=.*[A-Z])(?=.*\W).{8,}"
-            title="Password must be at least 8 characters long, contain at least one uppercase letter, one digit, and one special character."
             #password="ngModel"
           />
           <mat-icon-button matSuffix (click)="togglePasswordVisibility()">
@@ -73,7 +71,7 @@
               'fas fa-spin fa-spinner': isLoading,
             }"
           ></i>
-          Register
+          {{ "AUTH.REGISTER" | translate }}
         </button>
         <div *ngIf="error" class="error">{{ error }}</div>
       </form>

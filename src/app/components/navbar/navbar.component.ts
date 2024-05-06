@@ -14,6 +14,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-navbar',
@@ -33,8 +34,10 @@ export class NavbarComponent {
     protected authService: AuthService,
     private router: Router,
     public dialog: MatDialog,
-    private notificationsService: NotificationsService
+    private notificationsService: NotificationsService,
+    private translate: TranslateService
   ) {
+    translate.setDefaultLang('en');
     this.currencyControl = new FormControl(
       this.currencyOptions[0],
       Validators.required
@@ -94,6 +97,7 @@ export class NavbarComponent {
       language.value
     );
     this.updateSettings();
+    this.translate.use(String(language.value).toLowerCase());
   }
 
   toggleDropdown() {

@@ -8,20 +8,20 @@
 <mat-dialog-content class="dialog-content">
   <form [formGroup]="categoryForm">
     <mat-form-field class="form-field">
-      <mat-label>Name</mat-label>
+      <mat-label>{{ "CATEGORY.NAME" | translate }}</mat-label>
       <input matInput formControlName="name" required />
       <mat-error *ngIf="categoryForm.get('name') === null">
-        Name is required
+        {{ "CATEGORY.NAME_REQUIRED" | translate }}
       </mat-error>
     </mat-form-field>
 
     <mat-form-field class="form-field">
-      <mat-label>Description</mat-label>
+      <mat-label>{{ "CATEGORY.DESCRIPTION" | translate }}</mat-label>
       <textarea matInput formControlName="description"></textarea>
     </mat-form-field>
 
     <button type="button" mat-raised-button (click)="fileInput.click()">
-      Choose File
+      {{ "INPUT_TEXT.CHOOSE_FILE" | translate }}
     </button>
     <input
       hidden
@@ -35,13 +35,15 @@
 </mat-dialog-content>
 
 <mat-dialog-actions class="dialog-actions" align="end">
-  <button mat-button class="cancel-button" (click)="onNoClick()">Cancel</button>
+  <button mat-button class="cancel-button" (click)="onNoClick()">
+    {{ "INPUT_TEXT.CANCEL" | translate }}
+  </button>
   <button
     mat-raised-button
     color="primary"
     (click)="onSaveClick()"
     [disabled]="categoryForm.get('name') == null"
   >
-    Save
+    {{ "INPUT_TEXT.SAVE" | translate }}
   </button>
 </mat-dialog-actions>

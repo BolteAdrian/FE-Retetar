@@ -1,9 +1,11 @@
 <div class="container">
   <mat-card class="recipe_form__container">
     <div class="buttons_container">
-      <button mat-button color="primary" (click)="goBack()">Back</button>
+      <button mat-button color="primary" (click)="goBack()">
+        {{ "INPUT_TEXT.BACK" | translate }}
+      </button>
       <button mat-raised-button color="primary" (click)="onSubmit()">
-        Save
+        {{ "INPUT_TEXT.SAVE" | translate }}
       </button>
     </div>
     <form [formGroup]="recipeForm" (ngSubmit)="onSubmit()">
@@ -11,7 +13,7 @@
         <div class="left_container">
           <div class="input_field">
             <mat-form-field appearance="fill" class="input_field">
-              <mat-label>Name</mat-label>
+              <mat-label>{{ "CATEGORY.NAME" | translate }}</mat-label>
               <input matInput fullwidth formControlName="name" required />
             </mat-form-field>
 
@@ -21,7 +23,7 @@
                 mat-raised-button
                 (click)="fileInput.click()"
               >
-                Choose File
+                {{ "INPUT_TEXT.CHOOSE_FILE" | translate }}
               </button>
               <input
                 hidden
@@ -35,7 +37,7 @@
           </div>
           <div class="input_field">
             <mat-form-field appearance="fill" class="input_field">
-              <mat-label>Categories</mat-label>
+              <mat-label>{{ "RECIPE.CATEGORIES" | translate }}</mat-label>
               <mat-select formArrayName="categories" multiple>
                 <mat-option
                   *ngFor="let category of categories; let i = index"
@@ -64,7 +66,7 @@
           </div>
         </div>
         <mat-form-field appearance="fill" class="shortDescription_container">
-          <mat-label>Short Description</mat-label>
+          <mat-label>{{ "RECIPE.SHORT_DESCRIPTION" | translate }}</mat-label>
           <textarea
             matInput
             formControlName="shortDescription"
@@ -80,7 +82,7 @@
           (click)="addIngredientField()"
           class="recipe_ingredients_button"
         >
-          Add Ingredient
+          {{ "INGREDIENT.ADD_INGREDIENT" | translate }}
         </button>
 
         <div
@@ -93,7 +95,7 @@
             class="ingredient_row"
           >
             <mat-form-field appearance="fill">
-              <mat-label>Ingredients</mat-label>
+              <mat-label>{{ "RECIPE.INGREDIENTS" | translate }}</mat-label>
               <mat-select
                 (selectionChange)="onIngredientSelected($event, i)"
                 formControlName="selectedIngredient"
@@ -108,7 +110,7 @@
             </mat-form-field>
 
             <mat-form-field appearance="fill">
-              <mat-label>Quantity</mat-label>
+              <mat-label>{{ "INGREDIENT.QUANTITY" | translate }}</mat-label>
               <input
                 matInput
                 type="number"
@@ -119,7 +121,7 @@
             </mat-form-field>
 
             <mat-form-field appearance="fill">
-              <mat-label>Unit</mat-label>
+              <mat-label> {{ "INGREDIENT.UNIT" | translate }}</mat-label>
               <mat-select
                 formControlName="selectedIngredientUnit"
                 (selectionChange)="onIngredientUnitChanged($event, i)"
@@ -139,14 +141,16 @@
               class="removeButton"
               (click)="removeIngredientField(i)"
             >
-              Remove
+              {{ "RECIPE.REMOVE" | translate }}
             </button>
           </div>
         </div>
       </div>
       <div class="recipe_description_container">
         <div class="form-group">
-          <label for="description">Description:</label>
+          <label for="description">
+            {{ "CATEGORY.DESCRIPTION" | translate }}:</label
+          >
           <editor
             apiKey="c8qwc5cv96qiwizuswzet80gvul391n2juf3v14t1vs4rcem"
             id="description"
@@ -156,7 +160,9 @@
         </div>
 
         <div class="form-group">
-          <label for="cookingInstructions">Cooking Instructions:</label>
+          <label for="cookingInstructions"
+            >{{ "RECIPE.COOKING_INSTRUCTION" | translate }}:</label
+          >
           <editor
             apiKey="c8qwc5cv96qiwizuswzet80gvul391n2juf3v14t1vs4rcem"
             id="cookingInstructions"

@@ -1,9 +1,9 @@
 <div class="container">
-  <h1>Error 404 - Page Not Found</h1>
-  <p>The page you are looking for does not exist.</p>
+  <h1>{{ "NOT_FOUND.TITLE" | translate }}</h1>
+  <p>{{ "NOT_FOUND.MESSAGE" | translate }}</p>
   <div class="action-buttons">
     <button mat-raised-button color="primary" (click)="goToHomepage()">
-      Go to Homepage
+      {{ "NOT_FOUND.GO_BACK" | translate }}
     </button>
   </div>
 </div>

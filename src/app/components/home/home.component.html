@@ -1,11 +1,14 @@
 <div class="container">
-    <div class="hero">
-      <h1>Welcome to Your Recipe Book!</h1>
-      <p>Organize, create, and manage your recipes and ingredients with ease.</p>
-      <div class="action-buttons">
-        <button class="recipe-button" (click)="goToRecipeManagement()">Manage Recipes</button>
-        <button class="ingredient-button" (click)="goToIngredientManagement()">Manage Ingredients</button>
-      </div>
+  <div class="hero">
+    <h1>{{ "HOME.TITLE" | translate }}</h1>
+    <p>{{ "HOME.SUBTITLE" | translate }}</p>
+    <div class="action-buttons">
+      <button class="recipe-button" (click)="goToRecipeManagement()">
+        {{ "HOME.MANAGE_RECIPES" | translate }}
+      </button>
+      <button class="ingredient-button" (click)="goToIngredientManagement()">
+        {{ "HOME.MANAGE_INGREDIENTS" | translate }}
+      </button>
     </div>
   </div>
-  
+</div>
