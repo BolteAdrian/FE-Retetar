@@ -10,6 +10,7 @@ import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import { EmailModalComponent } from '../../modal/email-modal/email-modal.component';
 import { CurrencyConversionService } from 'src/app/services/currency-conversion/currency-conversion.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-recipe-details',
@@ -30,7 +31,8 @@ export class RecipeDetailsComponent {
     private router: Router,
     public dialog: MatDialog,
     private notificationsService: NotificationsService,
-    private currencyConversionService: CurrencyConversionService
+    private currencyConversionService: CurrencyConversionService,
+    private translate: TranslateService
   ) {
     this.id = Number(this.route.snapshot.paramMap.get('id'));
     this.quantityForm = this.fb.group({
@@ -93,22 +95,22 @@ export class RecipeDetailsComponent {
     this.recipeService.submitAmount(this.id, quantityValue).subscribe(
       (response: any) => {
         if (response.status == 200) {
-          this.notificationsService.success(
-            response.status,
-            'The recipes quantity was submited',
-            {
-              timeOut: 5000,
-            }
-          );
+          this.translate
+            .get('NOTIFY.QUANTITY.SUBMIT.SUCCESS')
+            .subscribe((res: string) => {
+              this.notificationsService.success(res, '', {
+                timeOut: 5000,
+              });
+            });
         } else {
           this.missingIngredients = response.message;
-          this.notificationsService.error(
-            response.status,
-            'Missing ingredients',
-            {
-              timeOut: 5000,
-            }
-          );
+          this.translate
+            .get('NOTIFY.QUANTITY.SUBMIT.FAILED')
+            .subscribe((res: string) => {
+              this.notificationsService.error(res, '', {
+                timeOut: 5000,
+              });
+            });
         }
       },
       (error: any) => {
@@ -133,19 +135,24 @@ export class RecipeDetailsComponent {
         // User confirmed delete, perform your delete logic here
         this.recipeService.deleteRecipe(this.id).subscribe(
           (response: any) => {
-            this.notificationsService.success(
-              response.status,
-              response.message,
-              {
-                timeOut: 5000,
-              }
-            );
+            this.translate
+              .get('NOTIFY.QUANTITY.REMOVE.SUCCESS')
+              .subscribe((res: string) => {
+                this.notificationsService.success(res, '', {
+                  timeOut: 5000,
+                });
+              });
+
             window.history.back();
           },
           (error: any) => {
-            this.notificationsService.error(error.status, error.message, {
-              timeOut: 5000,
-            });
+            this.translate
+              .get('NOTIFY.QUANTITY.REMOVE.FAILED')
+              .subscribe((res: string) => {
+                this.notificationsService.success(res, '', {
+                  timeOut: 5000,
+                });
+              });
           }
         );
       }

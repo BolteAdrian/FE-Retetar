@@ -111,9 +111,13 @@ export class NavbarComponent {
       if (result) {
         this.authService.logout();
         this.router.navigateByUrl('/');
-        this.notificationsService.success(result, 'Logout successful', {
-          timeOut: 5000,
-        });
+        this.translate
+          .get('NOTIFY.ACCOUNT.LOGOUT.SUCCESS')
+          .subscribe((res: string) => {
+            this.notificationsService.success(res, '', {
+              timeOut: 5000,
+            });
+          });
       }
     });
   }
@@ -124,9 +128,7 @@ export class NavbarComponent {
       width: '300px',
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log('The dialog was closed');
-    });
+    dialogRef.afterClosed().subscribe((result) => {});
   }
 
   changePassword(): void {
@@ -135,8 +137,6 @@ export class NavbarComponent {
       width: '300px',
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log('The dialog was closed');
-    });
+    dialogRef.afterClosed().subscribe((result) => {});
   }
 }

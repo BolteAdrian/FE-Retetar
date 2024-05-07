@@ -7,6 +7,7 @@ import {
   FormControl,
 } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { NotificationsService } from 'angular2-notifications';
 import { CategoryService } from 'src/app/services/category/category.service';
 import { IngredientService } from 'src/app/services/ingredient/ingredient.service';
@@ -36,7 +37,8 @@ export class RecipeFormComponent {
     private categoryService: CategoryService,
     private recipeService: RecipeService,
     private route: ActivatedRoute,
-    private notificationsService: NotificationsService
+    private notificationsService: NotificationsService,
+    private translate: TranslateService
   ) {
     this.recipeForm = this.fb.group({
       name: ['', Validators.required],
@@ -201,33 +203,47 @@ export class RecipeFormComponent {
         .updateRecipe(Number(this.recipeId), recipeData)
         .subscribe(
           (response: any) => {
-            this.notificationsService.success(
-              response.status,
-              response.message,
-              {
-                timeOut: 5000,
-              }
-            );
+            this.translate
+              .get('NOTIFY.RECIPE.UPDATE.SUCCESS')
+              .subscribe((res: string) => {
+                this.notificationsService.success(res, '', {
+                  timeOut: 5000,
+                });
+              });
+
             location.reload();
           },
           (error: any) => {
-            this.notificationsService.error(error.status, error.message, {
-              timeOut: 5000,
-            });
+            this.translate
+              .get('NOTIFY.RECIPE.UPDATE.FAILED')
+              .subscribe((res: string) => {
+                this.notificationsService.error(res, '', {
+                  timeOut: 5000,
+                });
+              });
           }
         );
     } else {
       this.recipeService.addRecipe(recipeData).subscribe(
         (response: any) => {
-          this.notificationsService.success(response.status, response.message, {
-            timeOut: 5000,
-          });
+          this.translate
+            .get('NOTIFY.RECIPE.CREATE.SUCCESS')
+            .subscribe((res: string) => {
+              this.notificationsService.success(res, '', {
+                timeOut: 5000,
+              });
+            });
+
           location.reload();
         },
         (error: any) => {
-          this.notificationsService.error(error.status, error.message, {
-            timeOut: 5000,
-          });
+          this.translate
+            .get('NOTIFY.RECIPE.CREATE.FAILED')
+            .subscribe((res: string) => {
+              this.notificationsService.error(res, '', {
+                timeOut: 5000,
+              });
+            });
         }
       );
     }

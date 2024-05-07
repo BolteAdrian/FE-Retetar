@@ -1,5 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { TranslateService } from '@ngx-translate/core';
 import { NotificationsService } from 'angular2-notifications';
 import { ISendEmail } from 'src/app/models/ISendEmail';
 import { AuthService } from 'src/app/services/auth/auth.service';
@@ -21,6 +22,7 @@ export class EmailModalComponent {
     public dialogRef: MatDialogRef<EmailModalComponent>,
     private notificationsService: NotificationsService,
     private apiService: AuthService,
+    private translate: TranslateService,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {}
 
@@ -42,13 +44,24 @@ export class EmailModalComponent {
 
     this.apiService.sendEmailWithAttachment(formData).subscribe(
       (response: any) => {
-        console.log('Email sent successfully:', response);
-        this.notificationsService.success('Success', 'Email sent successfully');
+        this.translate
+          .get('NOTIFY.ACCOUNT.SEND_EMAIL.SUCCESS')
+          .subscribe((res: string) => {
+            this.notificationsService.success(res, '', {
+              timeOut: 5000,
+            });
+          });
+
         this.dialogRef.close();
       },
       (error: any) => {
-        console.error('Error sending email:', error);
-        this.notificationsService.error('Error', 'Failed to send email');
+        this.translate
+          .get('NOTIFY.ACCOUNT.SEND_EMAIL.FAILED')
+          .subscribe((res: string) => {
+            this.notificationsService.error(res, '', {
+              timeOut: 5000,
+            });
+          });
       }
     );
   }

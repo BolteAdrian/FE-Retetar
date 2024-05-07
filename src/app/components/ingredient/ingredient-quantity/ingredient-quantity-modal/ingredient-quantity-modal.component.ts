@@ -1,6 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { TranslateService } from '@ngx-translate/core';
 import { NotificationsService } from 'angular2-notifications';
 import { currency, unit } from 'src/app/utils/constants/constants';
 
@@ -17,7 +18,8 @@ export class IngredientQuantityModalComponent {
     public dialogRef: MatDialogRef<IngredientQuantityModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private formBuilder: FormBuilder,
-    private notificationsService: NotificationsService
+    private notificationsService: NotificationsService,
+    private translate: TranslateService
   ) {
     const ingredientId = this.data.ingredientId;
 
@@ -47,13 +49,13 @@ export class IngredientQuantityModalComponent {
       // Add any additional logic to handle form data as needed
       this.dialogRef.close(formData);
     } else {
-      this.notificationsService.error(
-        'Error',
-        'Please fill all the required fields',
-        {
-          timeOut: 5000,
-        }
-      );
+      this.translate
+        .get('NOTIFY.QUANTITY.CREATE.INVALID_VALUES')
+        .subscribe((res: string) => {
+          this.notificationsService.error(res, '', {
+            timeOut: 5000,
+          });
+        });
     }
   }
 }

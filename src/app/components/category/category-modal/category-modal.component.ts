@@ -1,6 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { TranslateService } from '@ngx-translate/core';
 import { NotificationsService } from 'angular2-notifications';
 
 @Component({
@@ -17,7 +18,8 @@ export class CategoryModalComponent {
     @Inject(MAT_DIALOG_DATA) public data: any,
 
     private formBuilder: FormBuilder,
-    private notificationsService: NotificationsService
+    private notificationsService: NotificationsService,
+    private translate: TranslateService
   ) {
     this.categoryForm = this.formBuilder.group({
       name: ['', Validators.required],
@@ -57,9 +59,13 @@ export class CategoryModalComponent {
       const formData = this.categoryForm.value;
       this.dialogRef.close(formData);
     } else {
-      this.notificationsService.error('Error', 'Please fill the name field', {
-        timeOut: 5000,
-      });
+      this.translate
+        .get('NOTIFY.CATEGORY.CREATE.INVALID_NAME')
+        .subscribe((res: string) => {
+          this.notificationsService.error(res, '', {
+            timeOut: 5000,
+          });
+        });
     }
   }
 }

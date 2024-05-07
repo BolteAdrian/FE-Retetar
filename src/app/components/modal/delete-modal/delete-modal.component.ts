@@ -1,5 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { TranslateService } from '@ngx-translate/core';
 import { NotificationsService } from 'angular2-notifications';
 
 @Component({
@@ -11,6 +12,7 @@ export class DeleteModalComponent {
   constructor(
     public dialogRef: MatDialogRef<DeleteModalComponent>,
     private notificationsService: NotificationsService,
+    private translate: TranslateService,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {}
 
@@ -23,8 +25,12 @@ export class DeleteModalComponent {
     this.dialogRef.close(true);
 
     // Afișează o notificare pentru confirmare
-    this.notificationsService.success('Success', 'Item deleted successfully', {
-      timeOut: 5000,
-    });
+    this.translate
+      .get('NOTIFY.ACCOUNT.DELETE.SUCCESS')
+      .subscribe((res: string) => {
+        this.notificationsService.success(res, '', {
+          timeOut: 5000,
+        });
+      });
   }
 }

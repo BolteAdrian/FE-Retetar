@@ -1,4 +1,96 @@
 {
+  "NOTIFY": {
+    "SUCCESS": "Success",
+    "FAILED": "Failed",
+    "LOGIN_FAILED": "Login failed. Please check your credentials.",
+    "LOGIN_SUCCESS": "Login successfully!!",
+    "REGISTER_FAILED": "Register failed!!",
+    "REGISTER_SUCCESS": "Register successfully!!",
+    "CATEGORY": {
+      "CREATE": {
+        "SUCCESS": "The category was created!",
+        "FAILED": "The category was not created!",
+        "INVALID_NAME": "Please fill the name field with a valid value"
+      },
+      "UPDATE": {
+        "SUCCESS": "The category was updated!",
+        "FAILED": "The category was not updated!"
+      },
+      "REMOVE": {
+        "SUCCESS": "The category was removed!",
+        "FAILED": "The category was not removed!"
+      }
+    },
+    "INGREDIENT": {
+      "CREATE": {
+        "SUCCESS": "The ingredient was created!",
+        "FAILED": "The ingredient was not created!",
+        "INVALID_VALUES": "Please fill all the required fields with valid values"
+      },
+      "UPDATE": {
+        "SUCCESS": "The ingredient was updated!",
+        "FAILED": "The ingredient was not updated!"
+      },
+      "REMOVE": {
+        "SUCCESS": "The ingredient was removed!",
+        "FAILED": "The ingredient was not removed!"
+      }
+    },
+    "QUANTITY": {
+      "CREATE": {
+        "SUCCESS": "The quantity was added!",
+        "FAILED": "The quantity was not added!",
+        "INVALID_VALUES": "Please fill all the required fields with valid values"
+      },
+      "UPDATE": {
+        "SUCCESS": "The quantity was updated!",
+        "FAILED": "The quantity was not updated!"
+      },
+      "REMOVE": {
+        "SUCCESS": "The quantity was removed!",
+        "FAILED": "The quantity was not removed!"
+      },
+      "SUBMIT": {
+        "SUCCESS": "The recipes quantity was submited!",
+        "FAILED": "Missing ingredients!"
+      }
+    },
+    "ACCOUNT": {
+      "CHANGE_EMAIL": {
+        "SUCCESS": "The email was updated!",
+        "FAILED": "The email was not updated!"
+      },
+      "CHANGE_PASSWORD": {
+        "SUCCESS": "The password was updated!",
+        "FAILED": "The password was not updated!"
+      },
+      "DELETE": {
+        "SUCCESS": "Item deleted successfully!",
+        "FAILED": "The Item was not deleted!"
+      },
+      "SEND_EMAIL": {
+        "SUCCESS": "Email sent successfully!",
+        "FAILED": "Failed to send email!"
+      },
+      "LOGOUT": {
+        "SUCCESS": "Logout successfully!"
+      }
+    },
+    "RECIPE": {
+      "CREATE": {
+        "SUCCESS": "The recipe was created!",
+        "FAILED": "The recipe was not created!"
+      },
+      "UPDATE": {
+        "SUCCESS": "The recipe was updated!",
+        "FAILED": "The recipe was not updated!"
+      },
+      "REMOVE": {
+        "SUCCESS": "The recipe was removed!",
+        "FAILED": "The recipe was not removed!"
+      }
+    }
+  },
   "HOME": {
     "TITLE": "Welcome to Your Recipe Book!",
     "SUBTITLE": "Organize, create, and manage your recipes and ingredients with ease.",

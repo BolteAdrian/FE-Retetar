@@ -10,6 +10,7 @@ import { DeleteModalComponent } from '../../modal/delete-modal/delete-modal.comp
 import { IIngredint } from 'src/app/models/IIngredint';
 import { NotificationsService } from 'angular2-notifications';
 import { ISearchOptions } from 'src/app/models/ISearchOptions';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-ingredient',
@@ -47,7 +48,8 @@ export class IngredientComponent {
     private router: Router,
     private notificationsService: NotificationsService,
     private cdr: ChangeDetectorRef,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private translate: TranslateService
   ) {}
 
   ngOnInit() {
@@ -91,33 +93,38 @@ export class IngredientComponent {
         if (mode == 'add') {
           this.ingredientService.addIngredient(result).subscribe(
             (response: any) => {
-              this.notificationsService.success(
-                response.status,
-                response.message,
-                {
-                  timeOut: 5000,
-                }
-              );
+              this.translate
+                .get('NOTIFY.INGREDIENT.CREATE.SUCCESS')
+                .subscribe((res: string) => {
+                  this.notificationsService.success(res, '', {
+                    timeOut: 5000,
+                  });
+                });
+
               this.getIngredients();
               this.dataSource._updateChangeSubscription();
               this.cdr.detectChanges();
             },
             (error: any) => {
-              this.notificationsService.error(error.status, error.message, {
-                timeOut: 5000,
-              });
+              this.translate
+                .get('NOTIFY.INGREDIENT.CREATE.FAILED')
+                .subscribe((res: string) => {
+                  this.notificationsService.error(res, '', {
+                    timeOut: 5000,
+                  });
+                });
             }
           );
         } else {
           this.ingredientService.updateIngredient(data.id, result).subscribe(
             (response: any) => {
-              this.notificationsService.success(
-                response.status,
-                response.message,
-                {
-                  timeOut: 5000,
-                }
-              );
+              this.translate
+                .get('NOTIFY.INGREDIENT.UPDATE.SUCCESS')
+                .subscribe((res: string) => {
+                  this.notificationsService.success(res, '', {
+                    timeOut: 5000,
+                  });
+                });
 
               const index = this.dataSource.data.findIndex(
                 (item: any) => item.id === data.id
@@ -138,9 +145,13 @@ export class IngredientComponent {
               this.cdr.detectChanges();
             },
             (error: any) => {
-              this.notificationsService.error(error.status, error.message, {
-                timeOut: 5000,
-              });
+              this.translate
+                .get('NOTIFY.INGREDIENT.UPDATE.FAILED')
+                .subscribe((res: string) => {
+                  this.notificationsService.error(res, '', {
+                    timeOut: 5000,
+                  });
+                });
             }
           );
         }
@@ -157,22 +168,26 @@ export class IngredientComponent {
       if (result) {
         this.ingredientService.deleteIngredient(ingredientId).subscribe(
           (response: any) => {
-            this.notificationsService.success(
-              response.status,
-              response.message,
-              {
-                timeOut: 5000,
-              }
-            );
+            this.translate
+              .get('NOTIFY.INGREDIENT.REMOVE.SUCCESS')
+              .subscribe((res: string) => {
+                this.notificationsService.success(res, '', {
+                  timeOut: 5000,
+                });
+              });
             const ingredients = this.dataSource.data.filter(
               (ingredient) => ingredient.id !== ingredientId
             );
             this.dataSource.data = ingredients;
           },
           (error: any) => {
-            this.notificationsService.error(error.status, error.message, {
-              timeOut: 5000,
-            });
+            this.translate
+              .get('NOTIFY.INGREDIENT.REMOVE.FAILED')
+              .subscribe((res: string) => {
+                this.notificationsService.error(res, '', {
+                  timeOut: 5000,
+                });
+              });
           }
         );
       }

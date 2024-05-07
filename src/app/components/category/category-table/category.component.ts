@@ -11,6 +11,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NotificationsService } from 'angular2-notifications';
 import { ChangeDetectorRef } from '@angular/core';
 import { ISearchOptions } from 'src/app/models/ISearchOptions';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-category',
@@ -35,7 +36,8 @@ export class CategoryComponent {
     private route: ActivatedRoute,
     private router: Router,
     private notificationsService: NotificationsService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private translate: TranslateService
   ) {}
 
   ngOnInit() {
@@ -107,33 +109,39 @@ export class CategoryComponent {
         if (mode == 'add') {
           this.categoryService.addCategory(result).subscribe(
             (response: any) => {
-              this.notificationsService.success(
-                response.status,
-                response.message,
-                {
-                  timeOut: 5000,
-                }
-              );
+              this.translate
+                .get('NOTIFY.CATEGORY.CREATE.SUCCESS')
+                .subscribe((res: string) => {
+                  this.notificationsService.success(res, '', {
+                    timeOut: 5000,
+                  });
+                });
+
               this.getCategories();
               this.dataSource._updateChangeSubscription();
               this.cdr.detectChanges();
             },
             (error: any) => {
-              this.notificationsService.error(error.name, error.message, {
-                timeOut: 5000,
-              });
+              this.translate
+                .get('NOTIFY.CATEGORY.CREATE.FAILED')
+                .subscribe((res: string) => {
+                  this.notificationsService.error(res, '', {
+                    timeOut: 5000,
+                  });
+                });
             }
           );
         } else {
           this.categoryService.updateCategory(data.id, result).subscribe(
             (response: any) => {
-              this.notificationsService.success(
-                response.status,
-                response.message,
-                {
-                  timeOut: 5000,
-                }
-              );
+              this.translate
+                .get('NOTIFY.CATEGORY.UPDATE.SUCCESS')
+                .subscribe((res: string) => {
+                  this.notificationsService.success(res, '', {
+                    timeOut: 5000,
+                  });
+                });
+
               result.id = data.id;
 
               const index = this.dataSource.data.findIndex(
@@ -147,9 +155,13 @@ export class CategoryComponent {
               this.cdr.detectChanges();
             },
             (error: any) => {
-              this.notificationsService.error(error.name, error.message, {
-                timeOut: 5000,
-              });
+              this.translate
+                .get('NOTIFY.CATEGORY.UPDATE.FAILED')
+                .subscribe((res: string) => {
+                  this.notificationsService.error(res, '', {
+                    timeOut: 5000,
+                  });
+                });
             }
           );
         }
@@ -180,13 +192,13 @@ export class CategoryComponent {
       if (result) {
         this.categoryService.deleteCategory(categoryId).subscribe(
           (response: any) => {
-            this.notificationsService.success(
-              response.status,
-              response.message,
-              {
-                timeOut: 5000,
-              }
-            );
+            this.translate
+              .get('NOTIFY.CATEGORY.REMOVE.SUCCESS')
+              .subscribe((res: string) => {
+                this.notificationsService.success(res, '', {
+                  timeOut: 5000,
+                });
+              });
 
             const categories = this.dataSource.data.filter(
               (category) => category.id !== categoryId
@@ -197,9 +209,13 @@ export class CategoryComponent {
             this.cdr.detectChanges();
           },
           (error: any) => {
-            this.notificationsService.error(error.name, error.message, {
-              timeOut: 5000,
-            });
+            this.translate
+              .get('NOTIFY.CATEGORY.REMOVE.FAILED')
+              .subscribe((res: string) => {
+                this.notificationsService.error(res, '', {
+                  timeOut: 5000,
+                });
+              });
           }
         );
       }

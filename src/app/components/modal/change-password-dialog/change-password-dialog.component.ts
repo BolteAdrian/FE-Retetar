@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
+import { TranslateService } from '@ngx-translate/core';
 import { NotificationsService } from 'angular2-notifications';
 import { AuthService } from 'src/app/services/auth/auth.service';
 
@@ -15,7 +16,8 @@ export class ChangePasswordDialogComponent {
   constructor(
     public dialogRef: MatDialogRef<ChangePasswordDialogComponent>,
     protected authService: AuthService,
-    private notificationsService: NotificationsService
+    private notificationsService: NotificationsService,
+    private translate: TranslateService
   ) {}
 
   updatePassword(): void {
@@ -26,15 +28,24 @@ export class ChangePasswordDialogComponent {
 
     this.authService.updatePassword(model).subscribe(
       (response: any) => {
-        this.notificationsService.success(response.status, response.message, {
-          timeOut: 5000,
-        });
+        this.translate
+          .get('NOTIFY.ACCOUNT.CHANGE_PASSWORD.SUCCESS')
+          .subscribe((res: string) => {
+            this.notificationsService.success(res, '', {
+              timeOut: 5000,
+            });
+          });
+
         this.dialogRef.close();
       },
       (error: any) => {
-        this.notificationsService.error(error.status, error.message, {
-          timeOut: 5000,
-        });
+        this.translate
+          .get('NOTIFY.ACCOUNT.CHANGE_PASSWORD.FAILED')
+          .subscribe((res: string) => {
+            this.notificationsService.error(res, '', {
+              timeOut: 5000,
+            });
+          });
       }
     );
   }

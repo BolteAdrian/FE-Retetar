@@ -55,14 +55,8 @@ export class PreparedRecipeHistoryComponent {
     this.getHistory();
   }
 
-  convertPrice(
-    value: number,
-    fromCurrency: string,
-  ): number {
-    return this.currencyConversionService.convertPrice(
-      value,
-      fromCurrency,
-    );
+  convertPrice(value: number, fromCurrency: string): number {
+    return this.currencyConversionService.convertPrice(value, fromCurrency);
   }
 
   changeTab(tab: 'tab1' | 'tab2') {
@@ -170,10 +164,7 @@ export class PreparedRecipeHistoryComponent {
       data: {}, // You can pass any data to the modal if needed
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log('The email modal was closed');
-      // You can handle any actions after the modal is closed here
-    });
+    dialogRef.afterClosed().subscribe((result) => {});
   }
 
   goBack() {

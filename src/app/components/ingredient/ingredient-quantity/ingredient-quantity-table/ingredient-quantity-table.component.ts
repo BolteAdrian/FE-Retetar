@@ -16,6 +16,7 @@ import autoTable from 'jspdf-autotable';
 import { saveAs } from 'file-saver';
 import { EmailModalComponent } from 'src/app/components/modal/email-modal/email-modal.component';
 import { CurrencyConversionService } from 'src/app/services/currency-conversion/currency-conversion.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-ingredient-quantity-table',
@@ -53,7 +54,8 @@ export class IngredientQuantityTableComponent {
     private route: ActivatedRoute,
     private notificationsService: NotificationsService,
     private cdr: ChangeDetectorRef,
-    private currencyConversionService: CurrencyConversionService
+    private currencyConversionService: CurrencyConversionService,
+    private translate: TranslateService
   ) {}
 
   ngOnInit() {
@@ -192,21 +194,26 @@ export class IngredientQuantityTableComponent {
         if (mode == 'add') {
           this.ingredientService.addIngredientQuantities(result).subscribe(
             (response: any) => {
-              this.notificationsService.success(
-                'Success',
-                'The quantity was added succcesfully',
-                {
-                  timeOut: 5000,
-                }
-              );
+              this.translate
+                .get('NOTIFY.QUANTITY.CREATE.SUCCESS')
+                .subscribe((res: string) => {
+                  this.notificationsService.success(res, '', {
+                    timeOut: 5000,
+                  });
+                });
+
               this.getIngredientQuantities();
               this.dataSource._updateChangeSubscription();
               this.cdr.detectChanges();
             },
             (error: any) => {
-              this.notificationsService.error(error.status, error.message, {
-                timeOut: 5000,
-              });
+              this.translate
+                .get('NOTIFY.QUANTITY.CREATE.FAILED')
+                .subscribe((res: string) => {
+                  this.notificationsService.error(res, '', {
+                    timeOut: 5000,
+                  });
+                });
             }
           );
         } else {
@@ -214,13 +221,14 @@ export class IngredientQuantityTableComponent {
             .updateIngredientQuantities(data.id, result)
             .subscribe(
               (response: any) => {
-                this.notificationsService.success(
-                  response.status,
-                  response.message,
-                  {
-                    timeOut: 5000,
-                  }
-                );
+                this.translate
+                  .get('NOTIFY.QUANTITY.UPDATE.SUCCESS')
+                  .subscribe((res: string) => {
+                    this.notificationsService.success(res, '', {
+                      timeOut: 5000,
+                    });
+                  });
+
                 result.id = data.id;
 
                 const index = this.dataSource.data.findIndex(
@@ -234,9 +242,13 @@ export class IngredientQuantityTableComponent {
                 this.cdr.detectChanges();
               },
               (error: any) => {
-                this.notificationsService.error(error.status, error.message, {
-                  timeOut: 5000,
-                });
+                this.translate
+                  .get('NOTIFY.QUANTITY.UPDATE.FAILED')
+                  .subscribe((res: string) => {
+                    this.notificationsService.error(res, '', {
+                      timeOut: 5000,
+                    });
+                  });
               }
             );
         }
@@ -253,13 +265,13 @@ export class IngredientQuantityTableComponent {
       if (result) {
         this.ingredientService.deleteIngredientQuantities(quantityId).subscribe(
           (response: any) => {
-            this.notificationsService.success(
-              response.status,
-              response.message,
-              {
-                timeOut: 5000,
-              }
-            );
+            this.translate
+              .get('NOTIFY.QUANTITY.REMOVE.SUCCESS')
+              .subscribe((res: string) => {
+                this.notificationsService.success(res, '', {
+                  timeOut: 5000,
+                });
+              });
 
             const quantities = this.dataSource.data.filter(
               (quantity) => quantity.id !== quantityId
@@ -267,9 +279,13 @@ export class IngredientQuantityTableComponent {
             this.dataSource.data = quantities;
           },
           (error: any) => {
-            this.notificationsService.error(error.status, error.message, {
-              timeOut: 5000,
-            });
+            this.translate
+              .get('NOTIFY.QUANTITY.REMOVE.FAILED')
+              .subscribe((res: string) => {
+                this.notificationsService.error(res, '', {
+                  timeOut: 5000,
+                });
+              });
           }
         );
       }
@@ -279,13 +295,10 @@ export class IngredientQuantityTableComponent {
   openEmailModal() {
     const dialogRef = this.dialog.open(EmailModalComponent, {
       width: '400px',
-      data: {}, // You can pass any data to the modal if needed
+      data: {},
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log('The email modal was closed');
-      // You can handle any actions after the modal is closed here
-    });
+    dialogRef.afterClosed().subscribe((result) => {});
   }
 
   goBack() {
