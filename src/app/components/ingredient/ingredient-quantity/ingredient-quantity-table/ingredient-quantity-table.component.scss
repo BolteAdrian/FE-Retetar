@@ -63,6 +63,13 @@
       margin-left: 20px;
       max-width: 100%;
     }
+
+    .add-quantity-container {
+      display: flex;
+      flex-direction: column;
+      padding: 10px 0;
+      gap: 10px;
+    }
   }
 
   .quantities_container {

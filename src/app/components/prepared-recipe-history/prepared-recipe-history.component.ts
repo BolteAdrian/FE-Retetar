@@ -35,7 +35,11 @@ export class PreparedRecipeHistoryComponent {
     'quantity.expiringDate',
     'quantity.dateOfPurchase',
   ];
-  displayedColumns2: string[] = ['recipeName', 'preparedRecipe.amount'];
+  displayedColumns2: string[] = [
+    'recipeName',
+    'preparedRecipe.amount',
+    'preparedRecipe.preparationDate',
+  ];
   dataSource: MatTableDataSource<any> = new MatTableDataSource<any>();
   dataSource2: MatTableDataSource<any> = new MatTableDataSource<any>();
   ingredientId: number = Number(this.route.snapshot.paramMap.get('id'));

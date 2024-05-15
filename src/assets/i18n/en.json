@@ -135,13 +135,15 @@
     "PICTURE": "Picture",
     "NO_INGREDIENT": "Nu există ingrediente disponibile momentan.",
     "AMOUNT": "Amount",
+    "PREPARATION_DATE": "Preparation date",
     "UNIT": "Unit",
     "PRICE": "Price/Unit",
     "CURRENCY": "Currency",
     "EXPIRING_DATE": "Expiring Date",
     "DATE_OF_PURCHASE": "Date Of Purchase",
     "QUANTITY": "Quantity",
-    "ADD_QUANTITY": "Add Quantity"
+    "ADD_QUANTITY": "Add Quantity",
+    "IMPORT_QTY": "Import Quantity (.xlsx)"
   },
   "MODALS": {
     "CHANGE_EMAIL": "Change Email",

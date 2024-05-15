@@ -183,6 +183,63 @@ export class IngredientQuantityTableComponent {
     }
   }
 
+  importFromExcel() {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = '.xlsx';
+    input.onchange = (event: any) => {
+      const file = event.target.files[0];
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        const data = new Uint8Array(e.target.result);
+        const workbook = XLSX.read(data, { type: 'array' });
+        const worksheetName = workbook.SheetNames[0]; // Considerăm că fișierul XLSX are o singură foaie de lucru
+        const worksheet = workbook.Sheets[worksheetName];
+        const jsonData: IIngredintQuantity[] = XLSX.utils.sheet_to_json(
+          worksheet,
+          { raw: true }
+        );
+
+        // Iterăm prin fiecare element din jsonData și facem modificările necesare
+        const modifiedJsonData = jsonData.map((item: any) => {
+          // Eliminăm proprietatea 'IOd'
+          const { id, ...rest } = item;
+          // Adăugăm proprietatea 'ingredientId'
+          return { ...rest, ingredientId: this.ingredientId };
+        });
+
+        this.ingredientService
+          .importIngredientQuantities(modifiedJsonData)
+          .subscribe(
+            (response: any) => {
+              this.translate
+                .get('NOTIFY.QUANTITY.CREATE.SUCCESS')
+                .subscribe((res: string) => {
+                  this.notificationsService.success(res, '', {
+                    timeOut: 5000,
+                  });
+                });
+
+              this.getIngredientQuantities();
+              this.dataSource._updateChangeSubscription();
+              this.cdr.detectChanges();
+            },
+            (error: any) => {
+              this.translate
+                .get('NOTIFY.QUANTITY.CREATE.FAILED')
+                .subscribe((res: string) => {
+                  this.notificationsService.error(res, '', {
+                    timeOut: 5000,
+                  });
+                });
+            }
+          );
+      };
+      reader.readAsArrayBuffer(file);
+    };
+    input.click();
+  }
+
   openOperationModal(mode: 'add' | 'edit', data: any): void {
     const dialogRef = this.dialog.open(IngredientQuantityModalComponent, {
       width: '400px',

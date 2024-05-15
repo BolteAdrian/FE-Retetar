@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { ICategory } from 'src/app/models/ICategory';
 import { ISearchOptions } from 'src/app/models/ISearchOptions';
 import { environment } from 'src/environments/environment';
 
@@ -27,11 +28,11 @@ export class CategoryService {
     return this.http.get<any>(`${this.apiUrl}/Category/${id}`);
   }
 
-  addCategory(category: any): Observable<any> {
+  addCategory(category: ICategory): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/Category`, category);
   }
 
-  updateCategory(id: number, category: any): Observable<any> {
+  updateCategory(id: number, category: ICategory): Observable<any> {
     return this.http.put<any>(`${this.apiUrl}/Category/${id}`, category);
   }
 

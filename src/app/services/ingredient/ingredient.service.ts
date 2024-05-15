@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { IIngredintQuantity } from 'src/app/models/IIngredientQuantity';
+import { IIngredint } from 'src/app/models/IIngredint';
 import { ISearchOptions } from 'src/app/models/ISearchOptions';
 import { environment } from 'src/environments/environment';
 
@@ -27,11 +29,11 @@ export class IngredientService {
     return this.http.get<any>(`${this.apiUrl}/Ingredient/${id}`);
   }
 
-  addIngredient(ingredient: any): Observable<any> {
+  addIngredient(ingredient: IIngredint): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/Ingredient`, ingredient);
   }
 
-  updateIngredient(id: number, ingredient: any): Observable<any> {
+  updateIngredient(id: number, ingredient: IIngredint): Observable<any> {
     return this.http.put<any>(`${this.apiUrl}/Ingredient/${id}`, ingredient);
   }
 
@@ -57,16 +59,27 @@ export class IngredientService {
     return this.http.get<any>(`${this.apiUrl}/IngredientQuantities/${id}`);
   }
 
-  addIngredientQuantities(ingredientQuantities: any): Observable<any> {
+  addIngredientQuantities(
+    ingredientQuantities: IIngredintQuantity
+  ): Observable<any> {
     return this.http.post<any>(
       `${this.apiUrl}/IngredientQuantities`,
       ingredientQuantities
     );
   }
 
+  importIngredientQuantities(
+    ingredientQuantities: IIngredintQuantity[]
+  ): Observable<any> {
+    return this.http.post<any>(
+      `${this.apiUrl}/IngredientQuantities/import`,
+      ingredientQuantities
+    );
+  }
+
   updateIngredientQuantities(
     id: number,
-    ingredientQuantities: any
+    ingredientQuantities: IIngredintQuantity
   ): Observable<any> {
     return this.http.put<any>(
       `${this.apiUrl}/IngredientQuantities/${id}`,

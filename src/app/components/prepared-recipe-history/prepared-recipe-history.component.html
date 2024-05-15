@@ -171,6 +171,15 @@
             {{ row.preparedRecipe.amount }}
           </td>
         </ng-container>
+        <!-- Preparation Date Column -->
+        <ng-container matColumnDef="preparedRecipe.preparationDate">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            {{ "INGREDIENT.PREPARATION_DATE" | translate }}
+          </th>
+          <td mat-cell *matCellDef="let row">
+            {{ row.preparedRecipe.preparationDate | date : "yyyy-MM-dd" }}
+          </td>
+        </ng-container>
 
         <!-- Header row -->
         <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>

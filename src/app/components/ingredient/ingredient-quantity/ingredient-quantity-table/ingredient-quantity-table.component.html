@@ -46,15 +46,20 @@
         [placeholder]="'INPUT_TEXT.FILTER_PLACEHOLDER' | translate"
       />
     </mat-form-field>
-    <button
-      mat-raised-button
-      color="primary"
-      class="add-quantity-button"
-      *ngIf="ingredientId !== 0"
-      (click)="openOperationModal('add', null)"
-    >
-      {{ "INGREDIENT.ADD_QUANTITY" | translate }}
-    </button>
+    <div class="add-quantity-container">
+      <button
+        mat-raised-button
+        color="primary"
+        class="add-quantity-button"
+        *ngIf="ingredientId !== 0"
+        (click)="openOperationModal('add', null)"
+      >
+        {{ "INGREDIENT.ADD_QUANTITY" | translate }}
+      </button>
+      <button mat-raised-button (click)="importFromExcel()">
+        {{ "INGREDIENT.IMPORT_QTY" | translate }}
+      </button>
+    </div>
   </div>
 
   <div id="quantities" class="mat-elevation-z8 quantities_container">
