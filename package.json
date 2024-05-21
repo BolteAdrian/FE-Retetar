@@ -26,6 +26,7 @@
     "@ngx-translate/http-loader": "^8.0.0",
     "@tinymce/tinymce-angular": "^7.0.0",
     "angular2-notifications": "^16.0.1",
+    "chart.js": "^4.4.3",
     "file-saver": "^2.0.5",
     "html2canvas": "^1.4.1",
     "html2pdf.js": "^0.10.1",

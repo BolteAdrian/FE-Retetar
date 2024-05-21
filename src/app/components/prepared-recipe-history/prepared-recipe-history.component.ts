@@ -63,7 +63,7 @@ export class PreparedRecipeHistoryComponent {
     return this.currencyConversionService.convertPrice(value, fromCurrency);
   }
 
-  changeTab(tab: 'tab1' | 'tab2') {
+  changeTab(tab: 'tab1' | 'tab2' | 'tab3') {
     this.activeTab = tab;
   }
 

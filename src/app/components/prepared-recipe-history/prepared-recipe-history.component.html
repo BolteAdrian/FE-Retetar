@@ -5,14 +5,25 @@
     </button>
   </div>
   <div class="tabs">
-    <button mat-raised-button (click)="changeTab('tab1')">
+    <button
+      (click)="changeTab('tab1')"
+      [ngClass]="{ 'active-tab': activeTab === 'tab1' }"
+    >
       {{ "STATISTICS.INGREDIENTS" | translate }}
     </button>
-    <button mat-raised-button (click)="changeTab('tab2')">
+    <button
+      (click)="changeTab('tab2')"
+      [ngClass]="{ 'active-tab': activeTab === 'tab2' }"
+    >
       {{ "STATISTICS.PRODUCTS" | translate }}
     </button>
+    <button
+      (click)="changeTab('tab3')"
+      [ngClass]="{ 'active-tab': activeTab === 'tab3' }"
+    >
+      {{ "STATISTICS.CONSUMPTION_CHART" | translate }}
+    </button>
   </div>
-
   <div *ngIf="activeTab === 'tab1'">
     <div class="filter-container">
       <mat-form-field class="filter-field">
@@ -191,5 +202,10 @@
       </div>
       <mat-paginator [pageSizeOptions]="[10, 25, 100]"></mat-paginator>
     </div>
+  </div>
+  <div *ngIf="activeTab === 'tab3'">
+    <app-consumption-chart
+      [dataSource]="dataSource2.filteredData"
+    ></app-consumption-chart>
   </div>
 </div>

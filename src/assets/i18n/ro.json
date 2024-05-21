@@ -176,7 +176,8 @@
   },
   "STATISTICS": {
     "INGREDIENTS": "Istoric Ingrediente",
-    "PRODUCTS": "Istoric Mâncăruri"
+    "PRODUCTS": "Istoric Preparate",
+    "CONSUMPTION_CHART": "Diagramă Consumații"
   },
   "RECIPE": {
     "NO_CATEGORIES": "Fără categorii",

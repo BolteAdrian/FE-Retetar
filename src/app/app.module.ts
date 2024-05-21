@@ -53,6 +53,7 @@ import { EmailModalComponent } from './components/modal/email-modal/email-modal.
 import { PreparedRecipeHistoryComponent } from './components/prepared-recipe-history/prepared-recipe-history.component';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { ConsumptionChartComponent } from './components/consumption-chart/consumption-chart.component';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -81,6 +82,7 @@ export function createTranslateLoader(http: HttpClient) {
     Page404Component,
     EmailModalComponent,
     PreparedRecipeHistoryComponent,
+    ConsumptionChartComponent,
   ],
   imports: [
     BrowserModule,

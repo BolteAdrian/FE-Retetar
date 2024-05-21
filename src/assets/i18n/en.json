@@ -176,7 +176,8 @@
   },
   "STATISTICS": {
     "INGREDIENTS": "Ingredients History",
-    "PRODUCTS": "Dishes History"
+    "PRODUCTS": "Dishes History",
+    "CONSUMPTION_CHART": "Consumption Chart"
   },
   "RECIPE": {
     "NO_CATEGORIES": "No categories",
