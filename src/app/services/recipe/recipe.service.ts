@@ -32,6 +32,10 @@ export class RecipeService {
     return this.http.get<any>(`${this.apiUrl}/Recipe/prepared-recipes`);
   }
 
+  getPrediction() {
+    return this.http.get<any>(`${this.apiUrl}/Recipe/prediction-consume`);
+  }
+
   addRecipe(recipe: any): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/Recipe`, recipe);
   }

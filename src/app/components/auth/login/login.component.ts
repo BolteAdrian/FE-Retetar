@@ -56,6 +56,6 @@ export class LoginComponent {
   }
 
   forgotPassword() {
-    // in work
+    this.router.navigateByUrl('/forgot-password');
   }
 }

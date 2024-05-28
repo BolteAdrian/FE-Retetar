@@ -6,6 +6,8 @@
     "LOGIN_SUCCESS": "Login successfully!!",
     "REGISTER_FAILED": "Register failed!!",
     "REGISTER_SUCCESS": "Register successfully!!",
+    "SEND_LINK_FAILED": "The reset link was not send!",
+    "SEND_LINK_SUCCESS": "Password reset link sent to your email.",
     "CATEGORY": {
       "CREATE": {
         "SUCCESS": "The category was created!",
@@ -104,7 +106,15 @@
     "REGISTER": "Register",
     "WRONG_USERNAME_MESSAGE": "Username must start with a letter, can contain only letters, numbers,hyphens, and underscores, and must be at least 6 characters long.",
     "WRONG_PASSWORD_MESSAGE": "Password must be at least 8 characters long, contain at least one uppercase letter, one digit, and one special character.",
-    "USERNAME": "Username"
+    "USERNAME": "Username",
+    "FORGOT_PASSWORD": "Forgot Password",
+    "EMAIL_REQUIRED": "Email is required.",
+    "EMAIL_INVALID": "Invalid email format.",
+    "SEND_RESET_LINK": "Send Reset Link",
+    "RESET_PASSWORD": "Reset Password",
+    "RESET_PASSWORD2": "Reset Password",
+    "PASSWORD_REQUIRED": "Password is required.",
+    "PASSWORD_INVALID": "Password must be at least 6 characters long."
   },
   "INPUT_TEXT": {
     "CHOOSE_FILE": "Choose File",
@@ -177,7 +187,8 @@
   "STATISTICS": {
     "INGREDIENTS": "Ingredients History",
     "PRODUCTS": "Dishes History",
-    "CONSUMPTION_CHART": "Consumption Chart"
+    "CONSUMPTION_CHART": "Consumption Chart",
+    "PREDICTION_CHART": "Prediction Chart"
   },
   "RECIPE": {
     "NO_CATEGORIES": "No categories",

@@ -23,6 +23,12 @@
     >
       {{ "STATISTICS.CONSUMPTION_CHART" | translate }}
     </button>
+    <button
+      (click)="changeTab('tab4')"
+      [ngClass]="{ 'active-tab': activeTab === 'tab4' }"
+    >
+      {{ "STATISTICS.PREDICTION_CHART" | translate }}
+    </button>
   </div>
   <div *ngIf="activeTab === 'tab1'">
     <div class="filter-container">
@@ -207,5 +213,8 @@
     <app-consumption-chart
       [dataSource]="dataSource2.filteredData"
     ></app-consumption-chart>
+  </div>
+  <div *ngIf="activeTab === 'tab4'">
+    <app-consumption-prediction-chart></app-consumption-prediction-chart>
   </div>
 </div>

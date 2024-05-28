@@ -12,6 +12,8 @@ import { RecipeFormComponent } from './components/recipe/recipe-form/recipe-form
 import { IngredientQuantityTableComponent } from './components/ingredient/ingredient-quantity/ingredient-quantity-table/ingredient-quantity-table.component';
 import { Page404Component } from './components/page404/page404.component';
 import { PreparedRecipeHistoryComponent } from './components/prepared-recipe-history/prepared-recipe-history.component';
+import { ForgotPasswordComponent } from './components/auth/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './components/auth/reset-password/reset-password.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -67,6 +69,8 @@ const routes: Routes = [
   },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
+  { path: 'forgot-password', component: ForgotPasswordComponent },
+  { path: 'reset-password/:email/:token', component: ResetPasswordComponent },
   { path: '**', component: Page404Component },
 ];
 

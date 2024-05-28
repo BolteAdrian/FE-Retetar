@@ -5,6 +5,11 @@
   display: flex;
   flex-direction: column;
 
+  .buttons_container {
+    display: flex;
+    justify-content: space-between;
+  }
+
   .login_title {
     margin-bottom: 15px;
     font-size: 20px;

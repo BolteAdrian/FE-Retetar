@@ -54,6 +54,9 @@ import { PreparedRecipeHistoryComponent } from './components/prepared-recipe-his
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ConsumptionChartComponent } from './components/consumption-chart/consumption-chart.component';
+import { ConsumptionPredictionChartComponent } from './components/consumption-prediction-chart/consumption-prediction-chart.component';
+import { ForgotPasswordComponent } from './components/auth/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './components/auth/reset-password/reset-password.component';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -83,6 +86,9 @@ export function createTranslateLoader(http: HttpClient) {
     EmailModalComponent,
     PreparedRecipeHistoryComponent,
     ConsumptionChartComponent,
+    ConsumptionPredictionChartComponent,
+    ForgotPasswordComponent,
+    ResetPasswordComponent,
   ],
   imports: [
     BrowserModule,

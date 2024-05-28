@@ -104,7 +104,12 @@ export class AuthService {
   }
 
   forgotPassword(email: string): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/User/forgot-password`, email);
+    const body = { email: email };
+    return this.http.post<any>(`${this.apiUrl}/User/forgot-password`, body, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
   }
 
   resetPassword(
@@ -112,9 +117,10 @@ export class AuthService {
     token: string,
     newPassword: string
   ): Observable<any> {
+    const body = { email: email, newPassword: newPassword };
     return this.http.post<any>(
-      `${this.apiUrl}/User/reset-password/${email}/${token}`,
-      newPassword
+      `${this.apiUrl}/User/reset-password/${token}`,
+      body
     );
   }
 }

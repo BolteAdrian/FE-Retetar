@@ -6,6 +6,8 @@
     "LOGIN_SUCCESS": "Autentificare reușită!",
     "REGISTER_FAILED": "Înregistrarea a eșuat!",
     "REGISTER_SUCCESS": "Înregistrarea a fost efectuată cu succes!",
+    "SEND_LINK_FAILED": "Link-ul de resetare nu a fost trimis!",
+    "SEND_LINK_SUCCESS": "Link-ul de resetare a parolei a fost trimis pe emailul tău.",
     "CATEGORY": {
       "CREATE": {
         "SUCCESS": "Categoria a fost creată!",
@@ -104,7 +106,15 @@
     "REGISTER": "Înregistrare",
     "WRONG_USERNAME_MESSAGE": "Numele de utilizator trebuie să înceapă cu o literă, poate conține doar litere, cifre, cratime și sublinieri și trebuie să aibă cel puțin 6 caractere.",
     "WRONG_PASSWORD_MESSAGE": "Parola trebuie să aibă cel puțin 8 caractere, să conțină cel puțin o literă majusculă, o cifră și un caracter special.",
-    "USERNAME": "Nume de utilizator"
+    "USERNAME": "Nume de utilizator",
+    "FORGOT_PASSWORD": "Ți-ai uitat parola",
+    "EMAIL_REQUIRED": "Adresa de email este obligatorie.",
+    "EMAIL_INVALID": "Formatul adresei de email este invalid.",
+    "SEND_RESET_LINK": "Trimite link-ul de resetare",
+    "RESET_PASSWORD": "Resetare Parolă",
+    "RESET_PASSWORD2": "Resetează Parola",
+    "PASSWORD_REQUIRED": "Parola este obligatorie.",
+    "PASSWORD_INVALID": "Parola trebuie să aibă cel puțin 6 caractere."
   },
   "INPUT_TEXT": {
     "CHOOSE_FILE": "Alegeți fișierul",
@@ -177,7 +187,8 @@
   "STATISTICS": {
     "INGREDIENTS": "Istoric Ingrediente",
     "PRODUCTS": "Istoric Preparate",
-    "CONSUMPTION_CHART": "Diagramă Consumații"
+    "CONSUMPTION_CHART": "Diagramă Consumații",
+    "PREDICTION_CHART": "Diagramă Predicție"
   },
   "RECIPE": {
     "NO_CATEGORIES": "Fără categorii",
