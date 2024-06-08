@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { AuthService } from 'src/app/services/auth/auth.service';
 
 @Component({
@@ -18,7 +19,8 @@ export class ResetPasswordComponent {
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private translate: TranslateService
   ) {
     this.resetPasswordForm = this.fb.group({
       newPassword: ['', [Validators.required, Validators.minLength(6)]],
@@ -43,11 +45,19 @@ export class ResetPasswordComponent {
         .resetPassword(this.email, this.token, newPassword)
         .subscribe(
           (response: any) => {
-            this.message = 'Parola a fost resetată cu succes.';
+            this.translate
+              .get('NOTIFY.RESET_PASSWORD_SUCCESS')
+              .subscribe((res: string) => {
+                this.message = res;
+              });
             this.router.navigate(['/login']);
           },
           (error: any) => {
-            this.message = 'Ceva n-a mers bine. Încercați din nou.';
+            this.translate
+              .get('NOTIFY.RESET_PASSWORD_FAILED')
+              .subscribe((res: string) => {
+                this.message = res;
+              });
           }
         );
     }

@@ -57,6 +57,7 @@ import { ConsumptionChartComponent } from './components/consumption-chart/consum
 import { ConsumptionPredictionChartComponent } from './components/consumption-prediction-chart/consumption-prediction-chart.component';
 import { ForgotPasswordComponent } from './components/auth/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './components/auth/reset-password/reset-password.component';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -116,6 +117,7 @@ export function createTranslateLoader(http: HttpClient) {
     NgxMaterialTimepickerModule,
     MatDatepickerModule,
     NgxPrintModule,
+    MatAutocompleteModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: () => {

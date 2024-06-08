@@ -193,18 +193,15 @@ export class IngredientQuantityTableComponent {
       reader.onload = (e: any) => {
         const data = new Uint8Array(e.target.result);
         const workbook = XLSX.read(data, { type: 'array' });
-        const worksheetName = workbook.SheetNames[0]; // Considerăm că fișierul XLSX are o singură foaie de lucru
+        const worksheetName = workbook.SheetNames[0];
         const worksheet = workbook.Sheets[worksheetName];
         const jsonData: IIngredintQuantity[] = XLSX.utils.sheet_to_json(
           worksheet,
           { raw: true }
         );
 
-        // Iterăm prin fiecare element din jsonData și facem modificările necesare
         const modifiedJsonData = jsonData.map((item: any) => {
-          // Eliminăm proprietatea 'IOd'
           const { id, ...rest } = item;
-          // Adăugăm proprietatea 'ingredientId'
           return { ...rest, ingredientId: this.ingredientId };
         });
 

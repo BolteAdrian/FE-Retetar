@@ -24,8 +24,8 @@ export class CategoryComponent {
 
   dataSource: MatTableDataSource<ICategory> =
     new MatTableDataSource<ICategory>();
-  pageSize: number = 9;
-  pageSizeOptions: number[] = [9, 18, 27];
+  pageSize: number = 6;
+  pageSizeOptions: number[] = [3, 6, 9];
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -73,7 +73,6 @@ export class CategoryComponent {
     const startIndex = this.paginator.pageIndex * this.paginator.pageSize;
     const endIndex = startIndex + this.paginator.pageSize;
 
-    // Actualizăm lista de categorii afișate cu datele filtrate
     this.displayedCategories = this.dataSource.filteredData.slice(
       startIndex,
       endIndex
@@ -93,8 +92,8 @@ export class CategoryComponent {
       pageNumber: this.paginator.pageIndex + 1,
       pageSize: this.paginator.pageSize,
       searchTerm: this.dataSource.filter,
-      SortOrder: 0, // Modify this according to your sorting logic
-      SortField: 'name', // Modify this according to your sorting logic
+      SortOrder: 0,
+      SortField: 'name',
     };
   }
 

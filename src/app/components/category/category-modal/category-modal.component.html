@@ -1,5 +1,10 @@
 <h2 mat-dialog-title>
-  {{ data.mode === "add" ? "Add Category" : "Edit Category" }}
+  {{
+    data.mode === "add"
+      ? ("CATEGORY.ADD_CATEGORY" | translate)
+      : ("CATEGORY.EDIT_CATEGORY" | translate)
+  }}
+
   <button mat-icon-button mat-dialog-close class="close-button">
     <mat-icon aria-label="Close dialog">close</mat-icon>
   </button>

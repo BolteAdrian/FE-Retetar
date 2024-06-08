@@ -165,7 +165,7 @@ export class PreparedRecipeHistoryComponent {
   openEmailModal() {
     const dialogRef = this.dialog.open(EmailModalComponent, {
       width: '400px',
-      data: {}, // You can pass any data to the modal if needed
+      data: {},
     });
 
     dialogRef.afterClosed().subscribe((result) => {});

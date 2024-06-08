@@ -55,7 +55,7 @@ export class RecipeDetailsComponent {
       // Convert HTML element to canvas
       html2canvas(element).then((canvas) => {
         const imgData = canvas.toDataURL('image/png');
-        const imgWidth = 210; // Width of the PDF document (A4 size)
+        const imgWidth = 210;
         const imgHeight = (canvas.height * imgWidth) / canvas.width;
         doc.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
         doc.save('recipe_details.pdf');
@@ -132,7 +132,6 @@ export class RecipeDetailsComponent {
 
     dialogRef.afterClosed().subscribe((result: any) => {
       if (result) {
-        // User confirmed delete, perform your delete logic here
         this.recipeService.deleteRecipe(this.id).subscribe(
           (response: any) => {
             this.translate
@@ -162,12 +161,11 @@ export class RecipeDetailsComponent {
   openEmailModal() {
     const dialogRef = this.dialog.open(EmailModalComponent, {
       width: '400px',
-      data: {}, // You can pass any data to the modal if needed
+      data: {},
     });
 
     dialogRef.afterClosed().subscribe((result) => {
       console.log('The email modal was closed');
-      // You can handle any actions after the modal is closed here
     });
   }
 }

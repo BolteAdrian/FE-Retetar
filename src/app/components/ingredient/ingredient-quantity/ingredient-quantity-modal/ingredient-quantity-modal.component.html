@@ -1,5 +1,9 @@
 <h2 mat-dialog-title>
-  {{ data.mode === "add" ? "Add Quantity" : "Edit Quantity" }}
+  {{
+    data.mode === "add"
+      ? ("INGREDIENT.ADD_QUANTITY" | translate)
+      : ("INGREDIENT.EDIT_QUANTITY" | translate)
+  }}
   <button mat-icon-button mat-dialog-close class="close-button">
     <mat-icon aria-label="Close dialog">close</mat-icon>
   </button>

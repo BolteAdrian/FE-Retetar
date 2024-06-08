@@ -8,28 +8,27 @@ import { Chart, registerables } from 'chart.js';
 })
 export class ConsumptionChartComponent implements OnInit {
   @Input() dataSource: any = [];
-
-  // Variabile pentru grafic
-  chart: any;
-  currentYear: number = new Date().getFullYear(); // Anul curent afișat pe grafic
+  chart: Chart | any;
+  currentYear: number = new Date().getFullYear();
+  filteredData: any[] = [];
+  filterValue: string = '';
 
   constructor() {}
 
   ngOnInit() {
-    // Configurăm Chart.js
     Chart.register(...registerables);
 
+    this.filteredData = this.dataSource;
     this.drawChart();
   }
 
-  // Desenează graficul
+  // Draw Chart
   drawChart() {
-    // Agruparea datelor pe lună și rețetă și calculul sumei cantităților pentru fiecare combinație
     const monthlyConsumption: any = {};
-    for (const data of this.dataSource) {
+    for (const data of this.filteredData) {
       const date = new Date(data.preparedRecipe.preparationDate);
       const year = date.getFullYear();
-      if (year !== this.currentYear) continue; // Ignoră datele din alte ani
+      if (year !== this.currentYear) continue;
       const monthYear = `${date.getMonth() + 1}-${year}`;
       const recipeName = data.recipeName;
       if (!monthlyConsumption[recipeName]) {
@@ -41,10 +40,9 @@ export class ConsumptionChartComponent implements OnInit {
       monthlyConsumption[recipeName][monthYear] += data.preparedRecipe.amount;
     }
 
-    // Crearea unui nou canvas și eliminarea celui vechi
     const chartContainer = document.getElementById('chart-container');
     if (chartContainer) {
-      chartContainer.innerHTML = ''; // Elimină canvas-ul anterior
+      chartContainer.innerHTML = '';
       const canvas = document.createElement('canvas');
       canvas.width = 400;
       canvas.height = 400;
@@ -70,7 +68,7 @@ export class ConsumptionChartComponent implements OnInit {
             scales: {
               y: {
                 beginAtZero: true,
-                suggestedMax: 20, // Maximul dorit pentru axa Y
+                suggestedMax: 20,
               },
               x: {
                 type: 'category',
@@ -79,14 +77,11 @@ export class ConsumptionChartComponent implements OnInit {
           },
         });
       } else {
-        console.error(
-          'Contextul de desenare pentru canvas nu este disponibil.'
-        );
+        console.error('Canvas drawing context is not available.');
       }
     }
   }
 
-  // Funcție pentru a genera o culoare aleatoare pentru fiecare linie de pe grafic
   getRandomColor() {
     const letters = '0123456789ABCDEF';
     let color = '#';
@@ -96,7 +91,6 @@ export class ConsumptionChartComponent implements OnInit {
     return color;
   }
 
-  // Funcție pentru a obține etichetele sortate
   getSortedLabels(monthlyConsumption: any): string[] {
     const labelsSet = new Set<string>();
     Object.values(monthlyConsumption).forEach((consumption: any) => {
@@ -114,28 +108,37 @@ export class ConsumptionChartComponent implements OnInit {
       });
   }
 
-  // Funcție pentru a obține datele sortate pentru fiecare rețetă
   getSortedData(recipeConsumption: any, sortedLabels: string[]): number[] {
     return sortedLabels.map((label) => recipeConsumption[label] || 0);
   }
 
-  // Arată datele pentru anul precedent
+  filterData() {
+    this.filteredData = this.dataSource.filter((data: { recipeName: string }) =>
+      data.recipeName.toLowerCase().includes(this.filterValue.toLowerCase())
+    );
+    this.updateChart();
+  }
+
+  clearFilter() {
+    this.filterValue = '';
+    this.filteredData = this.dataSource;
+    this.updateChart();
+  }
+
   showPreviousYear() {
     this.currentYear--;
     this.updateChart();
   }
 
-  // Arată datele pentru anul următor
   showNextYear() {
     this.currentYear++;
     this.updateChart();
   }
 
-  // Actualizează graficul cu datele pentru anul curent
   updateChart() {
     if (this.chart) {
-      this.chart.destroy(); // Distruge graficul existent
-      this.drawChart(); // Desenează un grafic nou cu datele actualizate
+      this.chart.destroy();
+      this.drawChart();
     }
   }
 }

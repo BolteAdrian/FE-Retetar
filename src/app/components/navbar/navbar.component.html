@@ -4,17 +4,17 @@
     <h2><a href="" class="navbar__title">The Recipe</a></h2>
   </div>
   <div class="navbar__settings">
-    <!-- <div class="navbar__setting">
+    <div class="navbar__setting">
       <label class="switch">
         <input
           type="checkbox"
-          [checked]="settings.value.nightMode"
+          [checked]="nightModeControl"
           (change)="toggleTheme()"
         />
         <span class="slider round"></span>
       </label>
       <span class="navbar__label">Night Mode</span>
-    </div> -->
+    </div>
     <div class="navbar__setting">
       <select
         [formControl]="currencyControl"

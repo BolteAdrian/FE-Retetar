@@ -1,3 +1,21 @@
-<button mat-raised-button (click)="showPreviousYear()">Previous Year</button>
-<button mat-raised-button (click)="showNextYear()">Next Year</button>
+<button mat-raised-button (click)="showPreviousYear()">
+  {{ "CHART.PREVIOUS_YEAR" | translate }}
+</button>
+<button mat-raised-button (click)="showNextYear()">
+  {{ "CHART.NEXT_YEAR" | translate }}
+</button>
+<div>
+  <mat-form-field>
+    <input
+      matInput
+      type="text"
+      [(ngModel)]="filterValue"
+      (input)="filterData()"
+      placeholder="Search"
+    />
+  </mat-form-field>
+  <button mat-raised-button color="primary" (click)="clearFilter()">
+    {{ "CHART.CLEAR" | translate }}
+  </button>
+</div>
 <div id="chart-container"></div>

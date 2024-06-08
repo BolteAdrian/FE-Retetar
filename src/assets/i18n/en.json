@@ -1,7 +1,14 @@
 {
+  "CHART": {
+    "NEXT_YEAR": "Next Year",
+    "PREVIOUS_YEAR": "Previous Year",
+    "CLEAR": "Clear"
+  },
   "NOTIFY": {
     "SUCCESS": "Success",
     "FAILED": "Failed",
+    "RESET_PASSWORD_SUCCESS": "Password reset successful.",
+    "RESET_PASSWORD_FAILED": "Something went wrong. Please try again.",
     "LOGIN_FAILED": "Login failed. Please check your credentials.",
     "LOGIN_SUCCESS": "Login successfully!!",
     "REGISTER_FAILED": "Register failed!!",
@@ -117,7 +124,7 @@
     "PASSWORD_INVALID": "Password must be at least 6 characters long."
   },
   "INPUT_TEXT": {
-    "CHOOSE_FILE": "Choose File",
+    "CHOOSE_FILE": "Choose Picture",
     "CANCEL": "Cancel",
     "SAVE": "Save",
     "BACK": "Back",
@@ -137,11 +144,13 @@
     "DESCRIPTION": "Description",
     "STATISTICS": "Statistics",
     "ADD_CATEGORY": "Add Category",
+    "EDIT_CATEGORY": "Edit Category",
     "NO_CATEGORY": "Nu există categorii disponibile momentan."
   },
   "INGREDIENT": {
     "CATEGORY": "Category",
     "ADD_INGREDIENT": "Add Ingredient",
+    "EDIT_INGREDIENT": "Edit Ingredient",
     "PICTURE": "Picture",
     "NO_INGREDIENT": "Nu există ingrediente disponibile momentan.",
     "AMOUNT": "Amount",
@@ -153,6 +162,7 @@
     "DATE_OF_PURCHASE": "Date Of Purchase",
     "QUANTITY": "Quantity",
     "ADD_QUANTITY": "Add Quantity",
+    "EDIT_QUANTITY": "Edit Quantity",
     "IMPORT_QTY": "Import Quantity (.xlsx)"
   },
   "MODALS": {

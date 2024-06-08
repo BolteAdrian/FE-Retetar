@@ -41,7 +41,7 @@ export class LoginComponent {
         (error: any) => {
           this.isLoading = false;
           this.translate.get('NOTIFY.LOGIN_FAILED').subscribe((res: string) => {
-            this.error = res; // Obține traducerea și setează eroarea
+            this.error = res;
           });
           this.notificationsService.error(error.message, '', {
             timeOut: 5000,

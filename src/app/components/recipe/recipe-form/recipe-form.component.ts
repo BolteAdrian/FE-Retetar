@@ -20,7 +20,7 @@ import { unit } from 'src/app/utils/constants/constants';
   styleUrls: ['./recipe-form.component.scss'],
 })
 export class RecipeFormComponent {
-  @Input() recipe: any; // Obiectul rețetei pentru adăugare sau actualizare
+  @Input() recipe: any;
 
   recipeForm: FormGroup;
   ingredients: any[] = [];
@@ -55,9 +55,7 @@ export class RecipeFormComponent {
     this.getIngredients();
     this.getCategories();
 
-    // Verifică dacă există un parametru 'id' în URL pentru a decide între adăugare și editare
     if (this.recipeId) {
-      // Pagină de editare
       this.loadRecipeData(this.recipeId);
     }
   }
@@ -65,7 +63,6 @@ export class RecipeFormComponent {
   loadRecipeData(recipeId: string) {
     this.recipeService.getRecipeDetails(Number(recipeId)).subscribe(
       (response: any) => {
-        // Completează formularul cu datele rețetei existente pentru editare
         const recipeDetails = response.recipe.result;
         this.recipeForm.patchValue({
           name: recipeDetails.name,
@@ -84,7 +81,6 @@ export class RecipeFormComponent {
           this.selectedCategoriesIds.includes(category.id)
         );
 
-        // Setează ingredientele selectate
         this.selectedIngredients = recipeDetails.recipeIngredients.map(
           (ingredient: any) => ({
             id: ingredient.ingredient.id,
@@ -94,7 +90,6 @@ export class RecipeFormComponent {
           })
         );
 
-        // Adaugă controlurile pentru fiecare ingredient existent
         this.selectedIngredients.forEach((ingredient) => {
           const newIngredientControl = this.fb.group({
             selectedIngredient: [ingredient.id],
@@ -115,11 +110,9 @@ export class RecipeFormComponent {
   getIngredients() {
     this.ingredientService.getIngredients().subscribe(
       (response: any) => {
-        // Manipulează datele primite aici
         this.ingredients = response.ingredients;
       },
       (error: any) => {
-        // Gestionează erorile aici
         console.error(error);
       }
     );
@@ -145,17 +138,13 @@ export class RecipeFormComponent {
   }
 
   onCategorySelectionChange(category: any) {
-    // Verifică dacă category.id există deja în selectedCategoriesIds
     if (!this.selectedCategoriesIds.includes(category.id)) {
-      // Adaugă id-ul în array doar dacă nu există deja
       this.selectedCategoriesIds.push(category.id);
 
-      // Verifică dacă category nu există deja în selectedCategories
       const categoryExists = this.selectedCategories.some(
         (selectedCategory) => selectedCategory.id === category.id
       );
 
-      // Adaugă category în array doar dacă nu există deja
       if (!categoryExists) {
         this.selectedCategories.push(category);
       }
@@ -270,7 +259,7 @@ export class RecipeFormComponent {
       name: '',
       quantity: null,
       unit: '',
-    }); // Adaugă un obiect gol pentru un nou ingredient
+    });
   }
 
   addIngredientField() {
@@ -313,7 +302,7 @@ export class RecipeFormComponent {
               ?.selectedIngredientQuantity || 0,
           unit:
             this.recipeForm.get('selectedIngredients')?.value[index]
-              ?.selectedIngredientUnit || '', // Adăugat pentru a prelua valoarea 'unit'
+              ?.selectedIngredientUnit || '',
         };
       }
     }

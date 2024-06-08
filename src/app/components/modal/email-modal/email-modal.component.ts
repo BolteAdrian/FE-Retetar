@@ -32,8 +32,6 @@ export class EmailModalComponent {
   }
 
   sendEmailWithAttachment() {
-    // Implement logic to send email with attachment
-    // You can call your API service here
     const formData = new FormData();
     formData.append('email', this.emailData.email);
     formData.append('subject', this.emailData.subject);

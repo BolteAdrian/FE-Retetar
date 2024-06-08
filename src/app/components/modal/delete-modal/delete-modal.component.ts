@@ -21,10 +21,8 @@ export class DeleteModalComponent {
   }
 
   onConfirmClick(): void {
-    // Închide dialogul și trimite înapoi true pentru a confirma acțiunea
     this.dialogRef.close(true);
 
-    // Afișează o notificare pentru confirmare
     this.translate
       .get('NOTIFY.ACCOUNT.DELETE.SUCCESS')
       .subscribe((res: string) => {

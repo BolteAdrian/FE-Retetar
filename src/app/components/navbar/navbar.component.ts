@@ -22,10 +22,11 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent {
-  isDropdownOpen = false;
+  isDropdownOpen: boolean = false;
   languages: ILanguageSwitcher[] = languages;
   currencyOptions: string[] = currency;
   currencyControl: FormControl;
+  nightModeControl: boolean = false;
   languageControl: FormControl;
   static settings: FormGroup;
 
@@ -62,6 +63,12 @@ export class NavbarComponent {
     this.authService.getSettings().subscribe(
       (response: any) => {
         NavbarComponent.settings.patchValue(response.result);
+        this.nightModeControl = response.result.nightMode;
+        this.currencyControl.setValue(response.result.currency);
+        this.languageControl.setValue(response.result.language);
+        localStorage.setItem('theme', this.nightModeControl ? 'dark' : 'light');
+        this.translate.use(response.result.language.toLowerCase());
+        this.updateTheme();
       },
       (error: any) => {
         console.error(error);
@@ -70,34 +77,62 @@ export class NavbarComponent {
   }
 
   updateSettings() {
+    const settingsValue = {
+      ...NavbarComponent.settings.value,
+      nightMode: this.nightModeControl,
+    };
+    this.authService.setSettings(settingsValue).subscribe((result: any) => {
+      this.nightModeControl = settingsValue.nightMode;
+      localStorage.setItem('theme', this.nightModeControl ? 'dark' : 'light');
+      this.updateTheme();
+      this.notificationsService.success(result.message, 'Settings updated', {
+        timeOut: 5000,
+      });
+    });
+  }
+
+  toggleTheme() {
+    this.nightModeControl = !this.nightModeControl;
+    this.updateSettings();
+  }
+
+  updateTheme(): void {
+    if (this.nightModeControl) {
+      document.body.classList.add('dark-mode');
+    } else {
+      document.body.classList.remove('dark-mode');
+    }
+  }
+
+  setCurrency(currency: any) {
+    this.currencyControl.setValue(currency.value);
+    NavbarComponent.settings.controls['currency'].setValue(currency.value);
     this.authService
-      .setSettings(NavbarComponent.settings.value)
+      .setSettings({
+        ...NavbarComponent.settings.value,
+        currency: currency.value,
+      })
       .subscribe((result: any) => {
-        this.notificationsService.success(result.message, 'Settings updated', {
+        this.notificationsService.success(result.message, 'Currency updated', {
           timeOut: 5000,
         });
       });
   }
 
-  toggleTheme() {
-    NavbarComponent.settings.value.nightMode =
-      !NavbarComponent.settings.value.nightMode;
-    this.updateSettings();
-  }
-
-  setCurrency(currency: any) {
-    (NavbarComponent.settings.controls['currency'] as FormControl).setValue(
-      currency.value
-    );
-    this.updateSettings();
-  }
-
   setLanguage(language: any) {
-    (NavbarComponent.settings.controls['language'] as FormControl).setValue(
-      language.value
-    );
-    this.updateSettings();
-    this.translate.use(String(language.value).toLowerCase());
+    this.languageControl.setValue(language.value);
+    NavbarComponent.settings.controls['language'].setValue(language.value);
+    this.authService
+      .setSettings({
+        ...NavbarComponent.settings.value,
+        language: language.value,
+      })
+      .subscribe((result: any) => {
+        this.notificationsService.success(result.message, 'Language updated', {
+          timeOut: 5000,
+        });
+        this.translate.use(language.value.toLowerCase());
+      });
   }
 
   toggleDropdown() {

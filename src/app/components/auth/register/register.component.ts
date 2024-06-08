@@ -12,7 +12,7 @@ import { AuthService } from 'src/app/services/auth/auth.service';
   styleUrls: ['./register.component.scss'],
 })
 export class RegisterComponent {
-  user: IUserAuth = { userName: '', email: '', password: '' }; // Inițializează utilizatorul cu datele introduse în formular
+  user: IUserAuth = { userName: '', email: '', password: '' };
   error: string = '';
   showPassword = false;
   isLoading = false;
@@ -44,7 +44,7 @@ export class RegisterComponent {
           this.translate
             .get('NOTIFY.REGISTER_FAILED')
             .subscribe((res: string) => {
-              this.error = res; // Obține traducerea și setează eroarea
+              this.error = res;
             });
           this.notificationsService.error(error.message, '', {
             timeOut: 5000,

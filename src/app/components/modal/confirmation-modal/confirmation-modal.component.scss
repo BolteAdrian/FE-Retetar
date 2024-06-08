@@ -1,26 +1,24 @@
 .close-button {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-  }
-  
-  mat-dialog-content {
-    padding: 20px;
-  }
-  
-  mat-dialog-actions {
-    padding: 20px;
-    justify-content: flex-end;
-  }
-  
-  /* Optional: Stilizare pentru butonul de închidere */
-  .close-button {
-    background-color: transparent;
-    color: #000;
-    opacity: 0.7;
-  }
-  
-  .close-button:hover {
-    opacity: 1;
-  }
-  
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+mat-dialog-content {
+  padding: 20px;
+}
+
+mat-dialog-actions {
+  padding: 20px;
+  justify-content: flex-end;
+}
+
+.close-button {
+  background-color: transparent;
+  color: #000;
+  opacity: 0.7;
+}
+
+.close-button:hover {
+  opacity: 1;
+}

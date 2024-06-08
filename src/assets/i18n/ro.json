@@ -1,7 +1,14 @@
 {
+  "CHART": {
+    "NEXT_YEAR": "Anul Următor",
+    "PREVIOUS_YEAR": "Anul Anterior",
+    "CLEAR": "Șterge"
+  },
   "NOTIFY": {
     "SUCCESS": "Succes",
     "FAILED": "Eșuat",
+    "RESET_PASSWORD_SUCCESS": "Parola a fost resetată cu succes.",
+    "RESET_PASSWORD_FAILED": "Ceva n-a mers bine. Încercați din nou.",
     "LOGIN_FAILED": "Autentificarea a eșuat. Vă rugăm să verificați datele de autentificare.",
     "LOGIN_SUCCESS": "Autentificare reușită!",
     "REGISTER_FAILED": "Înregistrarea a eșuat!",
@@ -117,7 +124,7 @@
     "PASSWORD_INVALID": "Parola trebuie să aibă cel puțin 6 caractere."
   },
   "INPUT_TEXT": {
-    "CHOOSE_FILE": "Alegeți fișierul",
+    "CHOOSE_FILE": "Alegeți poza",
     "CANCEL": "Anulare",
     "SAVE": "Salvare",
     "BACK": "Înapoi",
@@ -137,11 +144,13 @@
     "DESCRIPTION": "Descriere",
     "STATISTICS": "Statistici",
     "ADD_CATEGORY": "Adăugare Categorie",
+    "EDIT_CATEGORY": "Editare Categorie",
     "NO_CATEGORY": "Nu există categorii disponibile momentan."
   },
   "INGREDIENT": {
     "CATEGORY": "Categorie",
     "ADD_INGREDIENT": "Adăugare Ingredient",
+    "EDIT_INGREDIENT": "Editare Ingredient",
     "PICTURE": "Imagine",
     "NO_INGREDIENT": "Nu există ingrediente disponibile momentan.",
     "AMOUNT": "Cantitate",
@@ -153,6 +162,7 @@
     "DATE_OF_PURCHASE": "Dată Achiziție",
     "QUANTITY": "Cantitate",
     "ADD_QUANTITY": "Adăugare Cantitate",
+    "EDIT_QUANTITY": "Editare Cantitate",
     "IMPORT_QTY": "Importă Cantitate (.xlsx)"
   },
   "MODALS": {

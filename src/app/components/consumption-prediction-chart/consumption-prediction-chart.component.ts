@@ -9,14 +9,13 @@ import { RecipeService } from 'src/app/services/recipe/recipe.service';
 })
 export class ConsumptionPredictionChartComponent implements OnInit {
   @Input() dataSource: any = [];
-
-  // Variabile pentru grafic
   chart: any;
+  filteredDataSource: any = [];
+  filterValue: string = '';
 
   constructor(private recipeService: RecipeService) {}
 
   ngOnInit() {
-    // Configurăm Chart.js
     Chart.register(...registerables);
     this.getData();
   }
@@ -24,15 +23,14 @@ export class ConsumptionPredictionChartComponent implements OnInit {
   getData(): void {
     this.recipeService.getPrediction().subscribe((response: any) => {
       this.dataSource = response;
+      this.filteredDataSource = [...this.dataSource];
       this.drawChart();
     });
   }
 
-  // Desenează graficul
   drawChart() {
-    // Agruparea datelor pe lună și rețetă și calculul sumei cantităților pentru fiecare combinație
     const monthlyConsumption: any = {};
-    for (const data of this.dataSource) {
+    for (const data of this.filteredDataSource) {
       const date = new Date(data.preparationDate);
       const year = date.getFullYear();
 
@@ -47,10 +45,9 @@ export class ConsumptionPredictionChartComponent implements OnInit {
       monthlyConsumption[recipeName][monthYear] += data.amount;
     }
 
-    // Crearea unui nou canvas și eliminarea celui vechi
     const chartContainer = document.getElementById('chart-container');
     if (chartContainer) {
-      chartContainer.innerHTML = ''; // Elimină canvas-ul anterior
+      chartContainer.innerHTML = '';
       const canvas = document.createElement('canvas');
       canvas.width = 200;
       canvas.height = 200;
@@ -76,7 +73,7 @@ export class ConsumptionPredictionChartComponent implements OnInit {
             scales: {
               y: {
                 beginAtZero: true,
-                suggestedMax: 20, // Maximul dorit pentru axa Y
+                suggestedMax: 20,
               },
               x: {
                 type: 'category',
@@ -85,14 +82,11 @@ export class ConsumptionPredictionChartComponent implements OnInit {
           },
         });
       } else {
-        console.error(
-          'Contextul de desenare pentru canvas nu este disponibil.'
-        );
+        console.error('Canvas drawing context is not available.');
       }
     }
   }
 
-  // Funcție pentru a genera o culoare aleatoare pentru fiecare linie de pe grafic
   getRandomColor() {
     const letters = '0123456789ABCDEF';
     let color = '#';
@@ -102,7 +96,6 @@ export class ConsumptionPredictionChartComponent implements OnInit {
     return color;
   }
 
-  // Funcție pentru a obține etichetele sortate
   getSortedLabels(monthlyConsumption: any): string[] {
     const labelsSet = new Set<string>();
     Object.values(monthlyConsumption).forEach((consumption: any) => {
@@ -120,8 +113,25 @@ export class ConsumptionPredictionChartComponent implements OnInit {
       });
   }
 
-  // Funcție pentru a obține datele sortate pentru fiecare rețetă
   getSortedData(recipeConsumption: any, sortedLabels: string[]): number[] {
     return sortedLabels.map((label) => recipeConsumption[label] || 0);
+  }
+
+  filterData() {
+    if (this.filterValue.trim() === '') {
+      this.filteredDataSource = [...this.dataSource];
+    } else {
+      const filterRegex = new RegExp(this.filterValue.trim(), 'i');
+      this.filteredDataSource = this.dataSource.filter((data: any) =>
+        filterRegex.test(data.recipeName)
+      );
+    }
+    this.drawChart();
+  }
+
+  clearFilter() {
+    this.filterValue = '';
+    this.filteredDataSource = [...this.dataSource];
+    this.drawChart();
   }
 }

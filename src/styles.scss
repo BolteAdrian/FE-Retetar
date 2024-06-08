@@ -1,13 +1,65 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap");
-@import '~@fortawesome/fontawesome-free/css/all.css';
+@import "~@fortawesome/fontawesome-free/css/all.css";
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+:root {
+  --background-color: white;
+  --background-activ-tab: #3f51b5;
+  --text-color: black;
+  --navbar-color: #3f51b5;
+}
+
+.dark-mode {
+  --background-color: #212121;
+  --background-activ-tab: #212121;
+  --text-color: white;
+  --second-background-color: #555;
+  --navbar-color: #555;
+}
+
 body {
-  font-family: 'Roboto', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  height: auto !important;
+  font-family: "Roboto", "Helvetica Neue Light", "Helvetica Neue", Helvetica,
+    Arial, "Lucida Grande", sans-serif;
+}
+
+table {
+  background-color: var(--background-color) !important;
+  color: var(--text-color) !important;
+}
+
+.mat-mdc-card {
+  background-color: var(--second-background-color) !important;
+  color: var(--text-color) !important;
+}
+
+button {
+  color: var(--text-color);
+}
+
+.mat-mdc-row {
+  background-color: var(--background-color) !important;
+  color: var(--text-color) !important;
+}
+
+.mat-mdc-header-row {
+  background-color: var(--background-color) !important;
+  color: var(--text-color) !important;
+}
+
+.mat-mdc-select-value {
+  color: var(--text-color) !important;
+}
+
+.mat-mdc-paginator {
+  background-color: var(--background-color) !important;
+  color: var(--text-color) !important;
 }
 
 html {
@@ -25,8 +77,16 @@ html {
   margin: auto;
 }
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+  min-height: -webkit-fill-available;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
 
 .loading-circle-container {
   display: flex;
