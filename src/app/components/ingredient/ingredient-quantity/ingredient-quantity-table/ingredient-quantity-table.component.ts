@@ -121,12 +121,12 @@ export class IngredientQuantityTableComponent {
   isExpiringSoon(expirationDateString: string): boolean {
     const expirationDate = new Date(expirationDateString);
     const today = new Date();
-    const oneMonthFromNow = new Date(
-      today.getFullYear(),
-      today.getMonth() + 1,
-      today.getDate()
-    );
-    return expirationDate <= oneMonthFromNow && expirationDate > today;
+
+    // Calculate the date exactly 7 days from today
+    const sevenDaysAhead = new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000);
+
+    // Check if expirationDate is after today and on or before sevenDaysAhead
+    return expirationDate > today && expirationDate <= sevenDaysAhead;
   }
 
   isExpired(expirationDateString: string): boolean {

@@ -58,6 +58,8 @@ import { ConsumptionPredictionChartComponent } from './components/consumption-pr
 import { ForgotPasswordComponent } from './components/auth/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './components/auth/reset-password/reset-password.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { UsedIngredientsComponent } from './components/used-ingredients/used-ingredients.component';
+import { MatChipsModule } from '@angular/material/chips';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -90,8 +92,10 @@ export function createTranslateLoader(http: HttpClient) {
     ConsumptionPredictionChartComponent,
     ForgotPasswordComponent,
     ResetPasswordComponent,
+    UsedIngredientsComponent,
   ],
   imports: [
+    MatChipsModule,
     BrowserModule,
     AppRoutingModule,
     SimpleNotificationsModule.forRoot(),

@@ -11,8 +11,6 @@ import { NotificationsService } from 'angular2-notifications';
 export class DeleteModalComponent {
   constructor(
     public dialogRef: MatDialogRef<DeleteModalComponent>,
-    private notificationsService: NotificationsService,
-    private translate: TranslateService,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {}
 
@@ -22,13 +20,5 @@ export class DeleteModalComponent {
 
   onConfirmClick(): void {
     this.dialogRef.close(true);
-
-    this.translate
-      .get('NOTIFY.ACCOUNT.DELETE.SUCCESS')
-      .subscribe((res: string) => {
-        this.notificationsService.success(res, '', {
-          timeOut: 5000,
-        });
-      });
   }
 }

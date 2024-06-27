@@ -1,0 +1,53 @@
+.action-menu {
+  position: absolute;
+  top: calc(100% + 5px);
+  right: 0;
+  background-color: #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+}
+
+.action-menu button {
+  display: block;
+  width: 100%;
+  text-align: left;
+}
+
+.title_container {
+  padding: 10px;
+  font-size: 30px;
+  font-weight: 700;
+  margin-bottom: 30px;
+}
+
+.back_button_container {
+  padding: 10px 0;
+}
+
+.filter-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  @media (max-width: 900px) {
+    margin-bottom: 0px;
+  }
+  .filter-field {
+    width: 200px;
+    display: -webkit-box;
+    @media (max-width: 900px) {
+      display: unset;
+    }
+  }
+
+  .add-quantity-button {
+    margin-left: 20px;
+    max-width: 100%;
+  }
+}
+
+.ingredients_container {
+  width: 100%;
+  overflow-x: auto;
+  padding: 0 30px;
+}

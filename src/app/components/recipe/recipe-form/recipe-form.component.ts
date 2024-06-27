@@ -1,10 +1,11 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import {
   FormGroup,
   FormBuilder,
   Validators,
   FormArray,
   FormControl,
+  AbstractControl,
 } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
@@ -13,13 +14,17 @@ import { CategoryService } from 'src/app/services/category/category.service';
 import { IngredientService } from 'src/app/services/ingredient/ingredient.service';
 import { RecipeService } from 'src/app/services/recipe/recipe.service';
 import { unit } from 'src/app/utils/constants/constants';
+import { Observable } from 'rxjs';
+import { map, startWith, catchError, switchMap } from 'rxjs/operators';
+import { IIngredint } from 'src/app/models/IIngredint';
+import { IResponse } from 'src/app/models/IResponse';
 
 @Component({
   selector: 'app-recipe-form',
   templateUrl: './recipe-form.component.html',
   styleUrls: ['./recipe-form.component.scss'],
 })
-export class RecipeFormComponent {
+export class RecipeFormComponent implements OnInit {
   @Input() recipe: any;
 
   recipeForm: FormGroup;
@@ -31,6 +36,14 @@ export class RecipeFormComponent {
   unit = unit;
   recipeId: string | null = this.route.snapshot.paramMap.get('id');
   selectedFile: File | null = null;
+  filteredIngredients!: Observable<any[]>;
+  options = {
+    searchTerm: '',
+    pageNumber: 1,
+    pageSize: 10,
+    SortOrder: 0,
+  };
+
   constructor(
     private fb: FormBuilder,
     private ingredientService: IngredientService,
@@ -44,11 +57,14 @@ export class RecipeFormComponent {
       name: ['', Validators.required],
       description: ['', Validators.required],
       shortDescription: ['', Validators.required],
-      picture: ['', Validators.required],
+      picture: [''],
       cookingInstructions: ['', Validators.required],
       categories: this.fb.array([]),
-      selectedIngredients: this.fb.array([]),
+      selectedIngredients: this.fb.array([], Validators.minLength(1)), // Require at least one ingredient
     });
+
+    // Initialize ingredients form array with autocomplete inputs
+    this.selectedIngredients = [];
   }
 
   ngOnInit() {
@@ -58,6 +74,53 @@ export class RecipeFormComponent {
     if (this.recipeId) {
       this.loadRecipeData(this.recipeId);
     }
+
+    // Initialize filtered ingredients for each ingredient field
+    (this.recipeForm.get('selectedIngredients') as FormArray).controls.forEach(
+      (group: AbstractControl, index: number) => {
+        if (group instanceof FormGroup) {
+          this.initializeIngredientAutocomplete(group as FormGroup, index);
+        }
+      }
+    );
+  }
+
+  private _filterIngredients(value: any): Observable<any[]> {
+    if (typeof value !== 'string' || !value.trim()) {
+      return this.ingredientService.getIngredientsPaginated(this.options).pipe(
+        map((response) => response.data),
+        catchError((error) => {
+          console.error('Error occurred:', error);
+          return [];
+        })
+      );
+    }
+
+    const filterValue = value.toLowerCase();
+    this.options.searchTerm = filterValue;
+
+    return this.ingredientService.getIngredientsPaginated(this.options).pipe(
+      map((response) => {
+        this.ingredients = response.data;
+        return response.data.filter((ingredient: any) =>
+          ingredient.name.toLowerCase().includes(filterValue)
+        );
+      }),
+      catchError((error) => {
+        console.error('Error occurred:', error);
+        return [];
+      })
+    );
+  }
+
+  initializeIngredientAutocomplete(group: FormGroup, index: number) {
+    group.addControl('selectedIngredientInput', new FormControl(''));
+    this.filteredIngredients = group
+      .get('selectedIngredientInput')!
+      .valueChanges.pipe(
+        startWith(''),
+        switchMap((value) => this._filterIngredients(value))
+      );
   }
 
   loadRecipeData(recipeId: string) {
@@ -90,15 +153,20 @@ export class RecipeFormComponent {
           })
         );
 
-        this.selectedIngredients.forEach((ingredient) => {
+        this.selectedIngredients.forEach((ingredient, index) => {
           const newIngredientControl = this.fb.group({
-            selectedIngredient: [ingredient.id],
-            selectedIngredientQuantity: [ingredient.quantity],
-            selectedIngredientUnit: [ingredient.unit],
+            selectedIngredient: [ingredient.id, Validators.required],
+            selectedIngredientQuantity: [
+              ingredient.quantity,
+              Validators.required,
+            ],
+            selectedIngredientUnit: [ingredient.unit, Validators.required],
+            selectedIngredientInput: [ingredient.name],
           });
           (this.recipeForm.get('selectedIngredients') as FormArray).push(
             newIngredientControl
           );
+          this.initializeIngredientAutocomplete(newIngredientControl, index);
         });
       },
       (error: any) => {
@@ -108,9 +176,9 @@ export class RecipeFormComponent {
   }
 
   getIngredients() {
-    this.ingredientService.getIngredients().subscribe(
-      (response: any) => {
-        this.ingredients = response.ingredients;
+    this.ingredientService.getIngredientsPaginated(this.options).subscribe(
+      (response: IResponse<IIngredint[]>) => {
+        this.ingredients = response.data;
       },
       (error: any) => {
         console.error(error);
@@ -171,6 +239,15 @@ export class RecipeFormComponent {
   }
 
   onSubmit() {
+    if (this.recipeForm.invalid) {
+      this.translate
+        .get('RECIPE.ERROR.FORM_INVALID')
+        .subscribe((res: string) => {
+          this.notificationsService.error(res, '', { timeOut: 5000 });
+        });
+      return;
+    }
+
     const recipeData = {
       Recipe: {
         name: this.recipeForm.value.name,
@@ -195,20 +272,15 @@ export class RecipeFormComponent {
             this.translate
               .get('NOTIFY.RECIPE.UPDATE.SUCCESS')
               .subscribe((res: string) => {
-                this.notificationsService.success(res, '', {
-                  timeOut: 5000,
-                });
+                this.notificationsService.success(res, '', { timeOut: 5000 });
               });
-
-            location.reload();
+            window.history.back();
           },
           (error: any) => {
             this.translate
               .get('NOTIFY.RECIPE.UPDATE.FAILED')
               .subscribe((res: string) => {
-                this.notificationsService.error(res, '', {
-                  timeOut: 5000,
-                });
+                this.notificationsService.error(res, '', { timeOut: 5000 });
               });
           }
         );
@@ -218,20 +290,15 @@ export class RecipeFormComponent {
           this.translate
             .get('NOTIFY.RECIPE.CREATE.SUCCESS')
             .subscribe((res: string) => {
-              this.notificationsService.success(res, '', {
-                timeOut: 5000,
-              });
+              this.notificationsService.success(res, '', { timeOut: 5000 });
             });
-
-          location.reload();
+          window.history.back();
         },
         (error: any) => {
           this.translate
             .get('NOTIFY.RECIPE.CREATE.FAILED')
             .subscribe((res: string) => {
-              this.notificationsService.error(res, '', {
-                timeOut: 5000,
-              });
+              this.notificationsService.error(res, '', { timeOut: 5000 });
             });
         }
       );
@@ -243,30 +310,19 @@ export class RecipeFormComponent {
 
     if (this.selectedFile) {
       const reader = new FileReader();
-
       reader.onload = (e: any) => {
         const base64Image = e.target.result;
         this.recipeForm.get('picture')?.setValue(base64Image);
       };
-
       reader.readAsDataURL(this.selectedFile);
     }
   }
 
-  addSelectedIngredient() {
-    this.selectedIngredients.push({
-      id: null,
-      name: '',
-      quantity: null,
-      unit: '',
-    });
-  }
-
   addIngredientField() {
     const newIngredientControl = this.fb.group({
-      selectedIngredient: [null],
-      selectedIngredientQuantity: [null],
-      selectedIngredientUnit: [null],
+      selectedIngredient: [null, Validators.required],
+      selectedIngredientQuantity: [null, Validators.required],
+      selectedIngredientUnit: [null, Validators.required],
     });
     (this.recipeForm.get('selectedIngredients') as FormArray).push(
       newIngredientControl
@@ -277,42 +333,48 @@ export class RecipeFormComponent {
       quantity: null,
       unit: '',
     });
+    this.initializeIngredientAutocomplete(
+      newIngredientControl,
+      this.selectedIngredients.length - 1
+    );
   }
 
   removeIngredientField(index: number) {
     this.selectedIngredients.splice(index, 1);
+    (this.recipeForm.get('selectedIngredients') as FormArray).removeAt(index);
   }
 
-  onIngredientSelected(event: any, index: number) {
-    const selectedIngredientId = event?.value;
+  onIngredientSelected(ingredient: any, index: number) {
+    const selectedIngredientId = ingredient.id;
     const selectedIngredient = this.ingredients.find(
-      (ingredient) => ingredient.id === +selectedIngredientId
+      (ing) => ing.id === selectedIngredientId
     );
 
     if (selectedIngredient) {
-      const existingIngredient = this.selectedIngredients.find(
-        (ingredient) => ingredient.id === +selectedIngredientId
-      );
+      const formArray = this.recipeForm.get('selectedIngredients') as FormArray;
+      const formGroup = formArray.at(index) as FormGroup;
 
-      if (!existingIngredient) {
-        this.selectedIngredients[index] = {
-          ...selectedIngredient,
-          quantity:
-            this.recipeForm.get('selectedIngredients')?.value[index]
-              ?.selectedIngredientQuantity || 0,
-          unit:
-            this.recipeForm.get('selectedIngredients')?.value[index]
-              ?.selectedIngredientUnit || '',
-        };
-      }
+      // Update the form group with selected ingredient details
+      formGroup.patchValue({
+        selectedIngredient: selectedIngredient.id,
+        selectedIngredientQuantity:
+          formGroup.get('selectedIngredientQuantity')?.value ?? 0,
+        selectedIngredientUnit:
+          formGroup.get('selectedIngredientUnit')?.value ?? '',
+      });
+
+      // Set the selected ingredient's name in the input field
+      formGroup
+        .get('selectedIngredientInput')
+        ?.setValue(selectedIngredient.name);
+
+      // Update selectedIngredients array
+      this.selectedIngredients[index] = {
+        id: selectedIngredient.id,
+        name: selectedIngredient.name,
+        quantity: formGroup.get('selectedIngredientQuantity')?.value ?? 0,
+        unit: formGroup.get('selectedIngredientUnit')?.value ?? '',
+      };
     }
-  }
-
-  onIngredientQuantityChanged(event: any, index: number) {
-    this.selectedIngredients[index].quantity = event.value;
-  }
-
-  onIngredientUnitChanged(event: any, index: number) {
-    this.selectedIngredients[index].unit = event.value;
   }
 }

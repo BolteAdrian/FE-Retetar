@@ -1,3 +1,10 @@
 button {
   margin: 10px;
 }
+
+#chart-container {
+  @media (min-width: 900px) {
+    width: 40rem;
+    height: 40rem;
+  }
+}

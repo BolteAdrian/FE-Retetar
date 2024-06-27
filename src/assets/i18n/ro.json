@@ -148,6 +148,9 @@
     "NO_CATEGORY": "Nu există categorii disponibile momentan."
   },
   "INGREDIENT": {
+    "EXPIRED_STOCK": "Stoc Expirat",
+    "EMPTY_STOCK": "Stoc Gol",
+    "ALMOST_STOCK": "Stoc Aproape de expirare",
     "CATEGORY": "Categorie",
     "ADD_INGREDIENT": "Adăugare Ingredient",
     "EDIT_INGREDIENT": "Editare Ingredient",
@@ -184,6 +187,7 @@
     "SEND": "Trimite"
   },
   "NAVBAR": {
+    "NIGHT_MODE": "Mod de noapte",
     "SELECT_CURRENCY": "Selectați Valuta",
     "SELECT_LANGUAGE": "Selectați Limba",
     "MY_ACCOUNT": "Contul Meu",
@@ -201,6 +205,17 @@
     "PREDICTION_CHART": "Diagramă Predicție"
   },
   "RECIPE": {
+    "ERROR": {
+      "FORM_INVALID": "Formularul este invalid. Vă rugăm să completați toate câmpurile obligatorii.",
+      "NAME_REQUIRED": "Numele este obligatoriu.",
+      "CATEGORY_REQUIRED": "Este necesară cel puțin o categorie.",
+      "SHORT_DESCRIPTION_REQUIRED": "Descrierea scurtă este obligatorie.",
+      "DESCRIPTION_REQUIRED": "Descrierea este obligatorie.",
+      "INGREDIENT_REQUIRED": "Este necesar cel puțin un ingredient.",
+      "QUANTITY_REQUIRED": "Cantitatea este obligatorie.",
+      "UNIT_REQUIRED": "Unitatea este obligatorie.",
+      "COOKING_INSTRUCTIONS_REQUIRED": "Instrucțiunile de gătit sunt obligatorii."
+    },
     "NO_CATEGORIES": "Fără categorii",
     "CATEGORIES": "Categorii",
     "ADD_RECIPE": "Adăugare Rețetă",
@@ -215,6 +230,7 @@
     "PRICE_MAX": "Preț/Maximul cantității",
     "PRICE_UNIT": "Preț/Unitate",
     "QUANTITY_USED": "Cantitate utilizată",
+    "QUANTITY_UNAVAILABLE": "Cantitate insuficientă disponibilă pentru rețetă. Lipsesc:",
     "SUBMIT": "Trimite"
   }
 }

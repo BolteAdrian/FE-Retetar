@@ -11,6 +11,7 @@ import html2canvas from 'html2canvas';
 import { EmailModalComponent } from '../../modal/email-modal/email-modal.component';
 import { CurrencyConversionService } from 'src/app/services/currency-conversion/currency-conversion.service';
 import { TranslateService } from '@ngx-translate/core';
+import { IMissingIngredients } from 'src/app/models/IMissingIngredients';
 
 @Component({
   selector: 'app-recipe-details',
@@ -22,7 +23,8 @@ export class RecipeDetailsComponent {
   recipeAmount: IRecipeAmount | undefined;
   id: number = 0;
   quantityForm: FormGroup;
-  missingIngredients: string = '';
+  missingIngredients: IMissingIngredients[] = [];
+  isLoading: boolean = true;
 
   constructor(
     private fb: FormBuilder,
@@ -69,24 +71,32 @@ export class RecipeDetailsComponent {
   }
 
   getRecipeDetails(): void {
+    this.isLoading = true;
     if (this.id !== null) {
       this.recipeService.getRecipeDetails(this.id).subscribe(
         (response: any) => {
           this.recipeDetails = response.recipe.result;
-        },
-        (error: any) => {
-          console.error(error);
-        }
-      );
-      this.recipeService.maxAmount(this.id).subscribe(
-        (response: any) => {
-          this.recipeAmount = response.recipeAmount.result;
+          this.getMaxAmount();
+          this.isLoading = false;
         },
         (error: any) => {
           console.error(error);
         }
       );
     }
+  }
+
+  getMaxAmount(): void {
+
+    this.recipeService.maxAmount(this.id).subscribe(
+      (response: any) => {
+        this.recipeAmount = response.recipeAmount.result;
+        this.isLoading = false;
+      },
+      (error: any) => {
+        console.error(error);
+      }
+    );
   }
 
   onSubmit() {
@@ -98,12 +108,13 @@ export class RecipeDetailsComponent {
           this.translate
             .get('NOTIFY.QUANTITY.SUBMIT.SUCCESS')
             .subscribe((res: string) => {
+              this.getMaxAmount();
               this.notificationsService.success(res, '', {
                 timeOut: 5000,
               });
             });
         } else {
-          this.missingIngredients = response.message;
+          this.missingIngredients = response.missingIngredients;
           this.translate
             .get('NOTIFY.QUANTITY.SUBMIT.FAILED')
             .subscribe((res: string) => {

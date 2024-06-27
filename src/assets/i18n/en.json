@@ -148,6 +148,9 @@
     "NO_CATEGORY": "Nu există categorii disponibile momentan."
   },
   "INGREDIENT": {
+    "EXPIRED_STOCK": "Expired Stock",
+    "EMPTY_STOCK": "Empty Stock",
+    "ALMOST_STOCK": "Almost Stock",
     "CATEGORY": "Category",
     "ADD_INGREDIENT": "Add Ingredient",
     "EDIT_INGREDIENT": "Edit Ingredient",
@@ -184,6 +187,7 @@
     "SEND": "Send"
   },
   "NAVBAR": {
+    "NIGHT_MODE": "Night Mode",
     "SELECT_CURRENCY": "Select Currency",
     "SELECT_LANGUAGE": "Select Language",
     "MY_ACCOUNT": "My Account",
@@ -201,6 +205,17 @@
     "PREDICTION_CHART": "Prediction Chart"
   },
   "RECIPE": {
+    "ERROR": {
+      "FORM_INVALID": "Form is invalid. Please fill out all required fields.",
+      "NAME_REQUIRED": "Name is required.",
+      "CATEGORY_REQUIRED": "At least one category is required.",
+      "SHORT_DESCRIPTION_REQUIRED": "Short description is required.",
+      "DESCRIPTION_REQUIRED": "Description is required.",
+      "INGREDIENT_REQUIRED": "At least one ingredient is required.",
+      "QUANTITY_REQUIRED": "Quantity is required.",
+      "UNIT_REQUIRED": "Unit is required.",
+      "COOKING_INSTRUCTIONS_REQUIRED": "Cooking instructions are required."
+    },
     "NO_CATEGORIES": "No categories",
     "CATEGORIES": "Categories",
     "ADD_RECIPE": "Add Recipe",
@@ -215,6 +230,7 @@
     "PRICE_MAX": "Price/Max amount",
     "PRICE_UNIT": "Price/Unit amount",
     "QUANTITY_USED": "Quantity used",
+    "QUANTITY_UNAVAILABLE": "Not enough quantity available for the recipe. Missing:",
     "SUBMIT": "Submit"
   }
 }

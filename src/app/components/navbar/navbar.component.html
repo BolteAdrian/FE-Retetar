@@ -4,52 +4,59 @@
     <h2><a href="" class="navbar__title">The Recipe</a></h2>
   </div>
   <div class="navbar__settings">
-    <div class="navbar__setting">
-      <label class="switch">
-        <input
-          type="checkbox"
-          [checked]="nightModeControl"
-          (change)="toggleTheme()"
-        />
-        <span class="slider round"></span>
-      </label>
-      <span class="navbar__label">Night Mode</span>
-    </div>
-    <div class="navbar__setting">
-      <select
-        [formControl]="currencyControl"
-        (change)="setCurrency($event.target)"
-      >
-        <option value="" disabled>
-          {{ "NAVBAR.SELECT_CURRENCY" | translate }}
-        </option>
-        <option
-          *ngFor="let currencyOption of currencyOptions"
-          [value]="currencyOption"
+    <div class="settings__container">
+      <div class="navbar__setting">
+        <label class="switch">
+          <input
+            type="checkbox"
+            [checked]="nightModeControl"
+            (change)="toggleTheme()"
+          />
+          <span class="slider round"></span>
+        </label>
+        <span class="navbar__label">
+          {{ "NAVBAR.NIGHT_MODE" | translate }}</span
         >
-          {{ currencyOption }}
-        </option>
-      </select>
-    </div>
-    <div class="navbar__setting">
-      <select
-        [formControl]="languageControl"
-        (change)="setLanguage($event.target)"
-      >
-        <option value="" disabled>
-          {{ "NAVBAR.SELECT_LANGUAGE" | translate }}
-        </option>
-        <option *ngFor="let lang of languages" [value]="lang.code">
-          {{ lang.name }}
-        </option>
-      </select>
+      </div>
+      <div class="navbar__setting">
+        <select
+          class="navbar__setting_select_list"
+          [formControl]="currencyControl"
+          (change)="setCurrency($event.target)"
+        >
+          <option value="" disabled>
+            {{ "NAVBAR.SELECT_CURRENCY" | translate }}
+          </option>
+          <option
+            *ngFor="let currencyOption of currencyOptions"
+            [value]="currencyOption"
+          >
+            {{ currencyOption }}
+          </option>
+        </select>
+      </div>
+
+      <div class="navbar__setting">
+        <select
+          class="navbar__setting_select_list"
+          [formControl]="languageControl"
+          (change)="setLanguage($event.target)"
+        >
+          <option value="" disabled>
+            {{ "NAVBAR.SELECT_LANGUAGE" | translate }}
+          </option>
+          <option *ngFor="let lang of languages" [value]="lang.code">
+            {{ lang.name }}
+          </option>
+        </select>
+      </div>
     </div>
 
     <div
       class="navbar__col-md-3 navbar__login"
       *ngIf="authService.isAuthenticated()"
     >
-      <button mat-button [matMenuTriggerFor]="menu" class="navbar__menu">
+      <button mat-button [matMenuTriggerFor]="menu" class="navbar__menu_button">
         {{ "NAVBAR.MY_ACCOUNT" | translate }}
       </button>
       <mat-menu #menu="matMenu">

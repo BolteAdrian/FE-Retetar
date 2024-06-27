@@ -113,6 +113,7 @@ export class NavbarComponent {
         currency: currency.value,
       })
       .subscribe((result: any) => {
+        location.reload(); //reload the page after we change the currency to make a new api call to ExchangeRate
         this.notificationsService.success(result.message, 'Currency updated', {
           timeOut: 5000,
         });

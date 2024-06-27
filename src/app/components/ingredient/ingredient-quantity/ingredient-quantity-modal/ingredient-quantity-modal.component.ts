@@ -46,7 +46,6 @@ export class IngredientQuantityModalComponent {
   onSaveClick(): void {
     if (this.ingredientQuantityForm.valid) {
       const formData = this.ingredientQuantityForm.value;
-      // Add any additional logic to handle form data as needed
       this.dialogRef.close(formData);
     } else {
       this.translate

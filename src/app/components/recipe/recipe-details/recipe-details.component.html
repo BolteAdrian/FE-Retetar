@@ -32,7 +32,10 @@
     </div>
   </div>
   <mat-card>
-    <div class="recipe-details__quantity">
+    <div *ngIf="isLoading" class="loading-circle-container">
+      <mat-spinner diameter="100"></mat-spinner>
+    </div>
+    <div *ngIf="!isLoading" class="recipe-details__quantity">
       <div>
         {{ "RECIPE.MAX_AMOUNT" | translate }}:
         {{ recipeAmount?.maximumPossibleRecipes }}
@@ -61,12 +64,23 @@
         <button mat-raised-button color="primary" type="submit">
           {{ "RECIPE.SUBMIT" | translate }}
         </button>
-        <p>{{ missingIngredients }}</p>
+        <p *ngIf="missingIngredients.length">
+          {{ "RECIPE.QUANTITY_UNAVAILABLE" | translate }}
+        </p>
+        <div *ngFor="let ingredient of missingIngredients">
+          <p>
+            {{ ingredient.quantity }} {{ ingredient.unit }}
+            {{ ingredient.name }}
+          </p>
+        </div>
       </form>
     </div>
   </mat-card>
   <mat-card class="recipe-details" id="recipe-details">
-    <div class="recipe-details__info">
+    <div *ngIf="isLoading" class="loading-circle-container">
+      <mat-spinner diameter="100"></mat-spinner>
+    </div>
+    <div *ngIf="!isLoading" class="recipe-details__info">
       <div class="recipe-details__picture">
         <img
           [src]="

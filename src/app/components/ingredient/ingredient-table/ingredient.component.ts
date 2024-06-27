@@ -7,7 +7,7 @@ import { IngredientService } from 'src/app/services/ingredient/ingredient.servic
 import { IngredientModalComponent } from '../ingredient-modal/ingredient-modal.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DeleteModalComponent } from '../../modal/delete-modal/delete-modal.component';
-import { IIngredint } from 'src/app/models/IIngredint';
+import { IIngredint, IngredientWithStock } from 'src/app/models/IIngredint';
 import { NotificationsService } from 'angular2-notifications';
 import { ISearchOptions } from 'src/app/models/ISearchOptions';
 import { TranslateService } from '@ngx-translate/core';
@@ -37,7 +37,8 @@ export class IngredientComponent {
 
   categoryId: number = Number(this.route.snapshot.paramMap.get('id'));
   categoryName: string | null = this.route.snapshot.paramMap.get('category');
-  dataSource: MatTableDataSource<any> = new MatTableDataSource<any>();
+  dataSource: MatTableDataSource<IngredientWithStock> =
+    new MatTableDataSource<IngredientWithStock>();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;

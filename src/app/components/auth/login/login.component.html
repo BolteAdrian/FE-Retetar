@@ -6,10 +6,10 @@
     <mat-card-content>
       <form (ngSubmit)="onSubmit(loginForm)" #loginForm="ngForm">
         <mat-form-field appearance="fill" class="login_input">
-          <mat-label> {{ "AUTH.EMAIL" | translate }}</mat-label>
+          <mat-label> {{ "AUTH.EMAIL" | translate }}/{{ "AUTH.USERNAME" | translate }}</mat-label>
           <input
             matInput
-            type="email"
+            type="text"
             id="email"
             [(ngModel)]="user.email"
             name="email"

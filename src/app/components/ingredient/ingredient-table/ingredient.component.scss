@@ -38,9 +38,43 @@
     overflow-x: auto;
     padding: 0 30px;
 
+    .picture-container {
+      position: relative;
+      display: inline-block;
+    }
+
+    .tag {
+      position: absolute;
+      top: 5px;
+      right: 5px; 
+      background-color: rgba(0, 0, 0, 0.5);
+      color: white;
+      padding: 2px 5px;
+      border-radius: 3px;
+      font-size: 12px;
+      z-index: 1;
+    }
+
+    .tag.with-top-margin {
+      margin-top: 30px;
+    }
+
+    .tag-empty {
+      background-color: red;
+    }
+
+    .tag-expired {
+      background-color: orange;
+    }
+
+    .tag-almost-expired {
+      background-color: yellow;
+      color: black;
+    }
+
     .ingredient_picture {
-      width: 100px;
-      height: 100px;
+      width: 175px;
+      height: 175px;
       margin: 10px;
       object-fit: cover;
     }

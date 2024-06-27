@@ -3,5 +3,5 @@ export interface ISearchOptions {
   pageSize: number;
   searchTerm: string;
   SortOrder: number;
-  SortField: string;
+  SortField?: string;
 }

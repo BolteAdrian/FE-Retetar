@@ -7,5 +7,5 @@ export interface IIngredintQuantity {
   expiringDate: Date;
   dateOfPurchase: Date;
   ingredientId: number;
-  used?: boolean;
+  usedDate?: Date;
 }

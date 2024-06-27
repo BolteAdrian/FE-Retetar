@@ -44,15 +44,34 @@
           {{ "INGREDIENT.PICTURE" | translate }}
         </th>
         <td mat-cell *matCellDef="let row">
-          <img
-            [src]="
-              row.picture
-                ? row.picture
-                : './../../../../assets/images/ingredient-default.png'
-            "
-            alt="ingredient picture"
-            ngClass="ingredient_picture"
-          />
+          <div class="picture-container">
+            <img
+              [src]="
+                row.picture
+                  ? row.picture
+                  : './../../../../assets/images/ingredient-default.png'
+              "
+              alt="ingredient picture"
+              ngClass="ingredient_picture"
+            />
+            <span
+              class="tag tag-empty"
+              *ngIf="row.stockEmpty"
+              [class.with-top-margin]="
+                row.stockExpired || row.stockAlmostExpired
+              "
+              >{{ "INGREDIENT.EMPTY_STOCK" | translate }}</span
+            >
+            <span class="tag tag-expired" *ngIf="row.stockExpired">{{
+              "INGREDIENT.EXPIRED_STOCK" | translate
+            }}</span>
+            <span
+              class="tag tag-almost-expired"
+              *ngIf="row.stockAlmostExpired"
+              [class.with-top-margin]="row.stockExpired"
+              >{{ "INGREDIENT.ALMOST_STOCK" | translate }}</span
+            >
+          </div>
         </td>
       </ng-container>
 

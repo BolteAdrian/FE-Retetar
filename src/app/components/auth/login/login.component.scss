@@ -8,6 +8,10 @@
   .buttons_container {
     display: flex;
     justify-content: space-between;
+
+    .btn{
+      width: 100%;
+    }
   }
 
   .login_title {
@@ -26,5 +30,9 @@
 
   .error {
     margin-top: 20px;
+  }
+
+  .fa {
+    height: min-content;
   }
 }

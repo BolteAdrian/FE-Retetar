@@ -5,3 +5,9 @@ export interface IIngredint {
   picture?: string;
   categoryId?: number;
 }
+
+export interface IngredientWithStock extends IIngredint {
+  StockEmpty: boolean;
+  StockExpired: boolean;
+  StockAlmostExpired: boolean;
+}

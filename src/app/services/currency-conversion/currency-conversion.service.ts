@@ -3,13 +3,15 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { NavbarComponent } from 'src/app/components/navbar/navbar.component';
 import { ISettings } from 'src/app/models/ISettings';
+import { AuthService } from '../auth/auth.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CurrencyConversionService {
   // Base URL for the currency exchange rate API
-  private apiUrl = 'https://api.exchangerate-api.com/v4/latest';
+  private apiUrl =
+    'https://v6.exchangerate-api.com/v6/b11e0240df9580390db2fa06/latest/';
 
   // Object to hold the exchange rates
   private exchangeRates: any;
@@ -21,11 +23,21 @@ export class CurrencyConversionService {
    * Constructor
    * Initializes the service and fetches exchange rates based on the current currency setting.
    * @param {HttpClient} http - The HttpClient for making HTTP requests.
+   * @param {AuthService} authService - The AuthService for handling authentication and settings.
    */
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, protected authService: AuthService) {
     this.getExchangeRates(this.settings.currency).subscribe((data) => {
-      this.exchangeRates = data.rates;
+      this.exchangeRates = data.conversion_rates;
     });
+
+    this.authService.getSettings().subscribe(
+      (response: any) => {
+        this.settings = response.result;
+      },
+      (error: any) => {
+        console.error(error);
+      }
+    );
   }
 
   /**
@@ -49,7 +61,6 @@ export class CurrencyConversionService {
     if (!this.exchangeRates) {
       throw new Error('Exchange rates not loaded yet');
     }
-
     const fromRate = this.getRateForCurrency(fromCurrency);
     const toRate = this.getRateForCurrency(this.settings.currency);
 

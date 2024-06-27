@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -8,17 +8,17 @@ import * as saveAs from 'file-saver';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { ISearchOptions } from 'src/app/models/ISearchOptions';
-import { RecipeService } from 'src/app/services/recipe/recipe.service';
-import * as XLSX from 'xlsx';
-import { EmailModalComponent } from '../modal/email-modal/email-modal.component';
 import { CurrencyConversionService } from 'src/app/services/currency-conversion/currency-conversion.service';
+import { EmailModalComponent } from '../modal/email-modal/email-modal.component';
+import * as XLSX from 'xlsx';
+import { IngredientService } from 'src/app/services/ingredient/ingredient.service';
 
 @Component({
-  selector: 'app-prepared-recipe-history',
-  templateUrl: './prepared-recipe-history.component.html',
-  styleUrls: ['./prepared-recipe-history.component.scss'],
+  selector: 'app-used-ingredients',
+  templateUrl: './used-ingredients.component.html',
+  styleUrls: ['./used-ingredients.component.scss'],
 })
-export class PreparedRecipeHistoryComponent {
+export class UsedIngredientsComponent {
   isLoading: boolean = true;
   options: ISearchOptions = {
     pageNumber: 1,
@@ -29,11 +29,13 @@ export class PreparedRecipeHistoryComponent {
   };
 
   displayedColumns: string[] = [
-    'recipeName',
-    'preparedRecipe.amount',
-    'preparedRecipe.preparationDate',
+    'ingredientName',
+    'quantity.amount',
+    'quantity.unit',
+    'quantity.price',
+    'quantity.expiringDate',
+    'quantity.dateOfPurchase',
   ];
-
   dataSource: MatTableDataSource<any> = new MatTableDataSource<any>();
   ingredientId: number = Number(this.route.snapshot.paramMap.get('id'));
   ingredintName: string | null = this.route.snapshot.paramMap.get('ingredient');
@@ -45,33 +47,16 @@ export class PreparedRecipeHistoryComponent {
   constructor(
     private route: ActivatedRoute,
     public dialog: MatDialog,
-    private recipeService: RecipeService,
-    private currencyConversionService: CurrencyConversionService,
-    private changeDetectorRef: ChangeDetectorRef
+    private ingredientService: IngredientService,
+    private currencyConversionService: CurrencyConversionService
   ) {}
 
   ngOnInit() {
     this.getHistory();
   }
 
-  ngAfterViewInit() {
-    // Initially set the paginator and sort for the first tab
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-  }
-
   convertPrice(value: number, fromCurrency: string): number {
     return this.currencyConversionService.convertPrice(value, fromCurrency);
-  }
-
-  changeTab(tab: 'tab1' | 'tab2' | 'tab3' | 'tab4') {
-    this.activeTab = tab;
-
-    // After tab change, detect changes to update view
-    this.changeDetectorRef.detectChanges();
-
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
   }
 
   applyFilter(event: Event) {
@@ -84,11 +69,15 @@ export class PreparedRecipeHistoryComponent {
   }
 
   exportToXLSX(): void {
-    const filename = 'prepared_food.xlsx';
+    const filename = 'ingredient_quantities.xlsx';
     const formattedData = this.dataSource.filteredData.map((item) => ({
-      recipeName: item.recipeName,
-      amount: item.preparedRecipe.amount,
-      preparationDate: item.preparedRecipe.preparationDate,
+      ingredientName: item.ingredientName,
+      amount: item.quantity.amount,
+      unit: item.quantity.unit,
+      price: item.quantity.price,
+      currency: item.quantity.currency,
+      dateOfPurchase: item.quantity.dateOfPurchase,
+      expiringDate: item.quantity.expiringDate,
     }));
     const filteredData = formattedData;
 
@@ -108,28 +97,32 @@ export class PreparedRecipeHistoryComponent {
   }
 
   exportToPDF(): void {
-    const filename = 'prepared_food.pdf';
+    const filename = 'ingredient_quantities.pdf';
 
     const doc = new jsPDF();
     autoTable(doc, {
       html: 'table',
       columns: [
-        { header: 'Name', dataKey: 'name' },
+        { header: 'Id', dataKey: 'id' },
         { header: 'Amount', dataKey: 'amount' },
-        { header: 'Date of Preparation', dataKey: 'preparationDate' },
+        { header: 'Unit', dataKey: 'unit' },
+        { header: 'Price/Unit', dataKey: 'price' },
+        { header: 'Currency', dataKey: 'currency' },
+        { header: 'Expiring Date', dataKey: 'expiringDate' },
+        { header: 'Date Of Purchase', dataKey: 'dateOfPurchase' },
       ],
     });
     doc.save(filename);
   }
 
   getHistory(): void {
-    this.recipeService.getPreparedRecipesAndIngredients().subscribe(
+    this.ingredientService.getUsedIngredients().subscribe(
       (response: any) => {
-        this.dataSource = new MatTableDataSource(
-          response.result.result
-        );
-
         this.isLoading = false;
+
+        this.dataSource = new MatTableDataSource(
+          response.ingredients.result
+        );
 
         // Set paginator and sort after data is set
         this.dataSource.paginator = this.paginator;
@@ -149,9 +142,5 @@ export class PreparedRecipeHistoryComponent {
     });
 
     dialogRef.afterClosed().subscribe((result) => {});
-  }
-
-  goBack() {
-    window.history.back();
   }
 }
