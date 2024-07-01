@@ -4,6 +4,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { RecipeService } from 'src/app/services/recipe/recipe.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth/auth.service';
 
 @Component({
   selector: 'app-recipe',
@@ -12,6 +13,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class RecipeComponent implements OnInit {
   isLoading: boolean = true;
+  userRole!: string | null;
   displayedColumns: string[] = [
     'id',
     'picture',
@@ -28,11 +30,13 @@ export class RecipeComponent implements OnInit {
   constructor(
     private recipeService: RecipeService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private authService: AuthService
   ) {}
 
   ngOnInit() {
     this.getRecipes();
+    this.userRole = this.authService.getUserRole();
   }
 
   getRecipes() {

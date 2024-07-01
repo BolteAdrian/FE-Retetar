@@ -22,6 +22,7 @@
     </mat-form-field>
     <button
       mat-raised-button
+      *ngIf="userRole === 'Manager'"
       color="primary"
       class="add-ingredient-button"
       (click)="openOperationModal('add', null)"
@@ -98,12 +99,14 @@
           <button
             mat-icon-button
             color="warn"
+            *ngIf="userRole === 'Manager'"
             (click)="openDeleteConfirmation(row.id); $event.stopPropagation()"
           >
             <mat-icon>delete</mat-icon>
           </button>
           <button
             mat-icon-button
+            *ngIf="userRole === 'Manager'"
             (click)="openOperationModal('edit', row); $event.stopPropagation()"
           >
             <mat-icon>edit</mat-icon>

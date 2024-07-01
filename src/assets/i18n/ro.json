@@ -125,6 +125,7 @@
   },
   "INPUT_TEXT": {
     "CHOOSE_FILE": "Alegeți poza",
+    "INSERT_FILE": "Importați fișier",
     "CANCEL": "Anulare",
     "SAVE": "Salvare",
     "BACK": "Înapoi",
@@ -162,6 +163,7 @@
     "PRICE": "Preț/Unitate",
     "CURRENCY": "Valută",
     "EXPIRING_DATE": "Dată Expirare",
+    "USED_DATE": "Dată de consumație",
     "DATE_OF_PURCHASE": "Dată Achiziție",
     "QUANTITY": "Cantitate",
     "ADD_QUANTITY": "Adăugare Cantitate",
@@ -227,8 +229,8 @@
     "EDIT_RECIPE": "Editare Rețetă",
     "PRINT_RECIPE": "Imprimare Rețetă",
     "MAX_AMOUNT": "Cantitate Maximă",
-    "PRICE_MAX": "Preț/Maximul cantității",
-    "PRICE_UNIT": "Preț/Unitate",
+    "PRICE_MAX": "Prețul numărului maxim de porții cu materia primă",
+    "PRICE_UNIT": "Portie Preț/Unitate Materie prima",
     "QUANTITY_USED": "Cantitate utilizată",
     "QUANTITY_UNAVAILABLE": "Cantitate insuficientă disponibilă pentru rețetă. Lipsesc:",
     "SUBMIT": "Trimite"

@@ -11,6 +11,7 @@ import { IIngredint, IngredientWithStock } from 'src/app/models/IIngredint';
 import { NotificationsService } from 'angular2-notifications';
 import { ISearchOptions } from 'src/app/models/ISearchOptions';
 import { TranslateService } from '@ngx-translate/core';
+import { AuthService } from 'src/app/services/auth/auth.service';
 
 @Component({
   selector: 'app-ingredient',
@@ -19,6 +20,7 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class IngredientComponent {
   isLoading: boolean = true;
+  userRole!: string | null;
   options: ISearchOptions = {
     pageNumber: 1,
     pageSize: 5,
@@ -50,11 +52,13 @@ export class IngredientComponent {
     private notificationsService: NotificationsService,
     private cdr: ChangeDetectorRef,
     private route: ActivatedRoute,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private authService: AuthService
   ) {}
 
   ngOnInit() {
     this.getIngredients();
+    this.userRole = this.authService.getUserRole();
   }
 
   getIngredients() {

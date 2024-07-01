@@ -35,6 +35,7 @@ export class UsedIngredientsComponent {
     'quantity.price',
     'quantity.expiringDate',
     'quantity.dateOfPurchase',
+    'quantity.usedDate',
   ];
   dataSource: MatTableDataSource<any> = new MatTableDataSource<any>();
   ingredientId: number = Number(this.route.snapshot.paramMap.get('id'));
@@ -120,9 +121,7 @@ export class UsedIngredientsComponent {
       (response: any) => {
         this.isLoading = false;
 
-        this.dataSource = new MatTableDataSource(
-          response.ingredients.result
-        );
+        this.dataSource = new MatTableDataSource(response.ingredients.result);
 
         // Set paginator and sort after data is set
         this.dataSource.paginator = this.paginator;

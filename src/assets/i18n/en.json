@@ -125,6 +125,7 @@
   },
   "INPUT_TEXT": {
     "CHOOSE_FILE": "Choose Picture",
+    "INSERT_FILE": "Import file",
     "CANCEL": "Cancel",
     "SAVE": "Save",
     "BACK": "Back",
@@ -162,6 +163,7 @@
     "PRICE": "Price/Unit",
     "CURRENCY": "Currency",
     "EXPIRING_DATE": "Expiring Date",
+    "USED_DATE": "Used Date",
     "DATE_OF_PURCHASE": "Date Of Purchase",
     "QUANTITY": "Quantity",
     "ADD_QUANTITY": "Add Quantity",
@@ -227,8 +229,8 @@
     "EDIT_RECIPE": "Edit Recipe",
     "PRINT_RECIPE": "Print Recipe",
     "MAX_AMOUNT": "Max amount",
-    "PRICE_MAX": "Price/Max amount",
-    "PRICE_UNIT": "Price/Unit amount",
+    "PRICE_MAX": "The price of the max number of portions with the raw material",
+    "PRICE_UNIT": "Price per Portion/Unit of Raw Material",
     "QUANTITY_USED": "Quantity used",
     "QUANTITY_UNAVAILABLE": "Not enough quantity available for the recipe. Missing:",
     "SUBMIT": "Submit"

@@ -12,6 +12,7 @@ import { NotificationsService } from 'angular2-notifications';
 import { ChangeDetectorRef } from '@angular/core';
 import { ISearchOptions } from 'src/app/models/ISearchOptions';
 import { TranslateService } from '@ngx-translate/core';
+import { AuthService } from 'src/app/services/auth/auth.service';
 
 @Component({
   selector: 'app-category',
@@ -21,7 +22,7 @@ import { TranslateService } from '@ngx-translate/core';
 export class CategoryComponent {
   isLoading: boolean = true;
   displayedCategories: ICategory[] = [];
-
+  userRole!: string | null;
   dataSource: MatTableDataSource<ICategory> =
     new MatTableDataSource<ICategory>();
   pageSize: number = 6;
@@ -37,11 +38,13 @@ export class CategoryComponent {
     private router: Router,
     private notificationsService: NotificationsService,
     private cdr: ChangeDetectorRef,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private authService: AuthService
   ) {}
 
   ngOnInit() {
     this.getCategories();
+    this.userRole = this.authService.getUserRole();
   }
 
   getCategories() {

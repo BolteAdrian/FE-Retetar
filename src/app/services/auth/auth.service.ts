@@ -15,6 +15,7 @@ export class AuthService {
   private readonly TOKEN_KEY = 'authToken';
   private readonly USER_NAME = 'username';
   private readonly USER_ID = 'userid';
+  private readonly USER_ROLE = 'role';
 
   constructor(private http: HttpClient, private jwtHelper: JwtHelperService) {}
 
@@ -22,15 +23,17 @@ export class AuthService {
    * METHOD POST
    * Authenticates the user and stores the authentication token.
    * @param {IUserAuth} user - The user credentials.
-   * @returns {Observable<any>} - An observable containing the authentication response.
+   * @returns {Observable<IJwtAutResponse>} - An observable containing the authentication response.
    */
   login(user: IUserAuth): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/User/login`, user).pipe(
-      tap((response: IJwtAutResponse) => {
-        if (response && response.token) {
-          localStorage.setItem(this.TOKEN_KEY, response.token);
-          localStorage.setItem(this.USER_NAME, response.userName);
-          localStorage.setItem(this.USER_ID, response.id);
+      tap((response) => {
+        if (response.userData) {
+          const userData: IJwtAutResponse = response.userData;
+          localStorage.setItem(this.TOKEN_KEY, userData.token);
+          localStorage.setItem(this.USER_NAME, userData.userName);
+          localStorage.setItem(this.USER_ID, userData.userId);
+          localStorage.setItem(this.USER_ROLE, userData.userRole);
         }
       })
     );
@@ -83,6 +86,7 @@ export class AuthService {
     localStorage.removeItem(this.TOKEN_KEY);
     localStorage.removeItem(this.USER_NAME);
     localStorage.removeItem(this.USER_ID);
+    localStorage.removeItem(this.USER_ROLE);
   }
 
   /**
@@ -92,6 +96,15 @@ export class AuthService {
    */
   getToken(): string | null {
     return localStorage.getItem(this.TOKEN_KEY);
+  }
+
+  /**
+   * METHOD GET
+   * Retrieves the user role from local storage.
+   * @returns {string | null} - The role of the user.
+   */
+  getUserRole(): string | null {
+    return localStorage.getItem(this.USER_ROLE);
   }
 
   /**

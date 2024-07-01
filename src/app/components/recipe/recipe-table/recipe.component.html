@@ -24,6 +24,7 @@
     <button
       mat-raised-button
       color="primary"
+      *ngIf="userRole === 'Manager'"
       class="add-recipe-button"
       (click)="goToRecipeCreate()"
     >

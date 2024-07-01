@@ -12,6 +12,7 @@ import { EmailModalComponent } from '../../modal/email-modal/email-modal.compone
 import { CurrencyConversionService } from 'src/app/services/currency-conversion/currency-conversion.service';
 import { TranslateService } from '@ngx-translate/core';
 import { IMissingIngredients } from 'src/app/models/IMissingIngredients';
+import { AuthService } from 'src/app/services/auth/auth.service';
 
 @Component({
   selector: 'app-recipe-details',
@@ -20,6 +21,7 @@ import { IMissingIngredients } from 'src/app/models/IMissingIngredients';
 })
 export class RecipeDetailsComponent {
   recipeDetails: any = {};
+  userRole!: string | null;
   recipeAmount: IRecipeAmount | undefined;
   id: number = 0;
   quantityForm: FormGroup;
@@ -34,7 +36,8 @@ export class RecipeDetailsComponent {
     public dialog: MatDialog,
     private notificationsService: NotificationsService,
     private currencyConversionService: CurrencyConversionService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private authService: AuthService
   ) {
     this.id = Number(this.route.snapshot.paramMap.get('id'));
     this.quantityForm = this.fb.group({
@@ -44,6 +47,7 @@ export class RecipeDetailsComponent {
 
   ngOnInit() {
     this.getRecipeDetails();
+    this.userRole = this.authService.getUserRole();
   }
 
   convertPrice(value: number, fromCurrency: string): number {
@@ -87,7 +91,6 @@ export class RecipeDetailsComponent {
   }
 
   getMaxAmount(): void {
-
     this.recipeService.maxAmount(this.id).subscribe(
       (response: any) => {
         this.recipeAmount = response.recipeAmount.result;

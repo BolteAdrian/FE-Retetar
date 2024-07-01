@@ -6,7 +6,11 @@
     <mat-card-content>
       <form (ngSubmit)="onSubmit(loginForm)" #loginForm="ngForm">
         <mat-form-field appearance="fill" class="login_input">
-          <mat-label> {{ "AUTH.EMAIL" | translate }}/{{ "AUTH.USERNAME" | translate }}</mat-label>
+          <mat-label>
+            {{ "AUTH.EMAIL" | translate }}/{{
+              "AUTH.USERNAME" | translate
+            }}</mat-label
+          >
           <input
             matInput
             type="text"
@@ -48,7 +52,11 @@
             ></i>
             {{ "AUTH.LOGIN" | translate }}
           </button>
-          <button mat-button (click)="forgotPassword()">
+          <button
+            mat-button
+            (click)="forgotPassword()"
+            class="forgot_password_link"
+          >
             {{ "AUTH.FORGOT_PASSWORD" | translate }}
           </button>
         </div>

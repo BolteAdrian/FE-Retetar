@@ -1,5 +1,6 @@
 export interface IJwtAutResponse {
   userName: string;
+  userRole: string;
   token: string;
-  id: string;
+  userId: string;
 }

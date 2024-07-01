@@ -8,10 +8,18 @@
         {{ "INPUT_TEXT.ACTIONS" | translate }}
       </button>
       <mat-menu #menu="matMenu">
-        <button mat-menu-item (click)="goToRecipeUpdate()">
+        <button
+          *ngIf="userRole === 'Manager'"
+          mat-menu-item
+          (click)="goToRecipeUpdate()"
+        >
           {{ "RECIPE.EDIT_RECIPE" | translate }}
         </button>
-        <button mat-menu-item (click)="openDeleteConfirmation()">
+        <button
+          *ngIf="userRole === 'Manager'"
+          mat-menu-item
+          (click)="openDeleteConfirmation()"
+        >
           {{ "RECIPE.DELETE_RECIPE" | translate }}
         </button>
         <button mat-menu-item (click)="openEmailModal()">
@@ -48,7 +56,11 @@
         {{ "RECIPE.PRICE_UNIT" | translate }}:
         {{ convertPrice(recipeAmount?.priceUnitRecipe || 0, "RON") }}
       </div>
-      <form (ngSubmit)="onSubmit()" [formGroup]="quantityForm">
+      <form
+        *ngIf="userRole === 'Manager'"
+        (ngSubmit)="onSubmit()"
+        [formGroup]="quantityForm"
+      >
         <mat-form-field class="recipe-details__quantity__input">
           <mat-label>{{ "RECIPE.QUANTITY_USED" | translate }}</mat-label>
           <input

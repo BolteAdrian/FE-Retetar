@@ -17,6 +17,7 @@ import { saveAs } from 'file-saver';
 import { EmailModalComponent } from 'src/app/components/modal/email-modal/email-modal.component';
 import { CurrencyConversionService } from 'src/app/services/currency-conversion/currency-conversion.service';
 import { TranslateService } from '@ngx-translate/core';
+import { AuthService } from 'src/app/services/auth/auth.service';
 
 @Component({
   selector: 'app-ingredient-quantity-table',
@@ -25,6 +26,7 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class IngredientQuantityTableComponent {
   isLoading: boolean = true;
+  userRole!: string | null;
   options: ISearchOptions = {
     pageNumber: 1,
     pageSize: 5,
@@ -55,11 +57,13 @@ export class IngredientQuantityTableComponent {
     private notificationsService: NotificationsService,
     private cdr: ChangeDetectorRef,
     private currencyConversionService: CurrencyConversionService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private authService: AuthService
   ) {}
 
   ngOnInit() {
     this.getIngredientQuantities();
+    this.userRole = this.authService.getUserRole();
   }
 
   exportToCSV(): void {
@@ -71,7 +75,7 @@ export class IngredientQuantityTableComponent {
 
   convertToCSV(data: any[]): string {
     // Exclude the last two columns from the header
-    const header = Object.keys(data[0]).slice(0, -2);
+    const header = Object.keys(data[0]).slice(0, -3);
     const csv = data.map((row) =>
       header.map((fieldName) => JSON.stringify(row[fieldName])).join(',')
     );
@@ -103,6 +107,8 @@ export class IngredientQuantityTableComponent {
 
   exportToPDF(): void {
     const doc = new jsPDF();
+
+    //Create table
     autoTable(doc, {
       html: 'table',
       columns: [
@@ -110,7 +116,6 @@ export class IngredientQuantityTableComponent {
         { header: 'Amount', dataKey: 'amount' },
         { header: 'Unit', dataKey: 'unit' },
         { header: 'Price/Unit', dataKey: 'price' },
-        { header: 'Currency', dataKey: 'currency' },
         { header: 'Expiring Date', dataKey: 'expiringDate' },
         { header: 'Date Of Purchase', dataKey: 'dateOfPurchase' },
       ],
