@@ -157,6 +157,7 @@
     "EDIT_INGREDIENT": "Editare Ingredient",
     "PICTURE": "Imagine",
     "NO_INGREDIENT": "Nu există ingrediente disponibile momentan.",
+    "NO_QUANTITY": "În prezent nu sunt disponibile cantități.",
     "AMOUNT": "Cantitate",
     "PREPARATION_DATE": "Data de preparare",
     "UNIT": "Unitate",
@@ -219,6 +220,7 @@
       "COOKING_INSTRUCTIONS_REQUIRED": "Instrucțiunile de gătit sunt obligatorii."
     },
     "NO_CATEGORIES": "Fără categorii",
+    "NO_RECIPE": "Nu există rețete disponibile momentan.",
     "CATEGORIES": "Categorii",
     "ADD_RECIPE": "Adăugare Rețetă",
     "SHORT_DESCRIPTION": "Descriere Scurtă",

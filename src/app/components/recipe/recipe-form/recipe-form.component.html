@@ -121,12 +121,17 @@
                 type="number"
                 formControlName="selectedIngredientQuantity"
                 placeholder="Quantity"
+                (input)="onQuantityChange($event, i)"
                 required
               />
             </mat-form-field>
             <mat-form-field appearance="fill">
               <mat-label>{{ "INGREDIENT.UNIT" | translate }}</mat-label>
-              <mat-select formControlName="selectedIngredientUnit" required>
+              <mat-select
+                formControlName="selectedIngredientUnit"
+                (selectionChange)="onUnitChange($event, i)"
+                required
+              >
                 <mat-option
                   *ngFor="let unitOption of unit"
                   [value]="unitOption"

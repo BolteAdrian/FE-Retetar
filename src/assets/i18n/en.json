@@ -146,7 +146,7 @@
     "STATISTICS": "Statistics",
     "ADD_CATEGORY": "Add Category",
     "EDIT_CATEGORY": "Edit Category",
-    "NO_CATEGORY": "Nu există categorii disponibile momentan."
+    "NO_CATEGORY": "There are currently no categories available."
   },
   "INGREDIENT": {
     "EXPIRED_STOCK": "Expired Stock",
@@ -156,7 +156,8 @@
     "ADD_INGREDIENT": "Add Ingredient",
     "EDIT_INGREDIENT": "Edit Ingredient",
     "PICTURE": "Picture",
-    "NO_INGREDIENT": "Nu există ingrediente disponibile momentan.",
+    "NO_INGREDIENT": "There are currently no ingredients available.",
+    "NO_QUANTITY": "There are currently no quantities available.",
     "AMOUNT": "Amount",
     "PREPARATION_DATE": "Preparation date",
     "UNIT": "Unit",
@@ -219,6 +220,7 @@
       "COOKING_INSTRUCTIONS_REQUIRED": "Cooking instructions are required."
     },
     "NO_CATEGORIES": "No categories",
+    "NO_RECIPE": "There are currently no recipes available.",
     "CATEGORIES": "Categories",
     "ADD_RECIPE": "Add Recipe",
     "SHORT_DESCRIPTION": "Short Description",

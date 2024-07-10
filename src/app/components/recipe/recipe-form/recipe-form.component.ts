@@ -14,10 +14,11 @@ import { CategoryService } from 'src/app/services/category/category.service';
 import { IngredientService } from 'src/app/services/ingredient/ingredient.service';
 import { RecipeService } from 'src/app/services/recipe/recipe.service';
 import { unit } from 'src/app/utils/constants/constants';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { map, startWith, catchError, switchMap } from 'rxjs/operators';
 import { IIngredint } from 'src/app/models/IIngredint';
 import { IResponse } from 'src/app/models/IResponse';
+import { MatSelectChange } from '@angular/material/select';
 
 @Component({
   selector: 'app-recipe-form',
@@ -75,28 +76,12 @@ export class RecipeFormComponent implements OnInit {
       this.loadRecipeData(this.recipeId);
     }
 
-    // Initialize filtered ingredients for each ingredient field
-    (this.recipeForm.get('selectedIngredients') as FormArray).controls.forEach(
-      (group: AbstractControl, index: number) => {
-        if (group instanceof FormGroup) {
-          this.initializeIngredientAutocomplete(group as FormGroup, index);
-        }
-      }
-    );
+    this.initializeIngredientAutocomplete();
   }
 
-  private _filterIngredients(value: any): Observable<any[]> {
-    if (typeof value !== 'string' || !value.trim()) {
-      return this.ingredientService.getIngredientsPaginated(this.options).pipe(
-        map((response) => response.data),
-        catchError((error) => {
-          console.error('Error occurred:', error);
-          return [];
-        })
-      );
-    }
-
-    const filterValue = value.toLowerCase();
+  // Filters ingredients based on the input value
+  private _filterIngredients(value: any): Observable<IIngredint[]> {
+    const filterValue = (value || '').toString().toLowerCase();
     this.options.searchTerm = filterValue;
 
     return this.ingredientService.getIngredientsPaginated(this.options).pipe(
@@ -108,21 +93,37 @@ export class RecipeFormComponent implements OnInit {
       }),
       catchError((error) => {
         console.error('Error occurred:', error);
-        return [];
+        return of([]); // Return an empty array on error
       })
     );
   }
 
-  initializeIngredientAutocomplete(group: FormGroup, index: number) {
+  // Initializes autocomplete for ingredient input fields
+  initializeIngredientAutocomplete() {
+    (this.recipeForm.get('selectedIngredients') as FormArray).controls.forEach(
+      (group: AbstractControl, index: number) => {
+        if (group instanceof FormGroup) {
+          this.setupAutocomplete(group as FormGroup, index);
+        }
+      }
+    );
+  }
+
+  // Sets up autocomplete for a specific ingredient input field
+  setupAutocomplete(group: FormGroup, _index: number) {
     group.addControl('selectedIngredientInput', new FormControl(''));
-    this.filteredIngredients = group
+    group
       .get('selectedIngredientInput')!
       .valueChanges.pipe(
         startWith(''),
         switchMap((value) => this._filterIngredients(value))
-      );
+      )
+      .subscribe((filteredIngredients) => {
+        this.filteredIngredients = of(filteredIngredients);
+      });
   }
 
+  // Loads recipe data based on the recipe ID
   loadRecipeData(recipeId: string) {
     this.recipeService.getRecipeDetails(Number(recipeId)).subscribe(
       (response: any) => {
@@ -166,7 +167,7 @@ export class RecipeFormComponent implements OnInit {
           (this.recipeForm.get('selectedIngredients') as FormArray).push(
             newIngredientControl
           );
-          this.initializeIngredientAutocomplete(newIngredientControl, index);
+          this.setupAutocomplete(newIngredientControl, index);
         });
       },
       (error: any) => {
@@ -175,6 +176,7 @@ export class RecipeFormComponent implements OnInit {
     );
   }
 
+  // Fetches the list of ingredients from the server
   getIngredients() {
     this.ingredientService.getIngredientsPaginated(this.options).subscribe(
       (response: IResponse<IIngredint[]>) => {
@@ -186,6 +188,7 @@ export class RecipeFormComponent implements OnInit {
     );
   }
 
+  // Fetches the list of categories from the server
   getCategories() {
     this.categoryService.getCategoriesByType(true).subscribe(
       (response: any) => {
@@ -198,6 +201,7 @@ export class RecipeFormComponent implements OnInit {
     );
   }
 
+  // Populates the categories form array with controls
   populateCategories() {
     this.categories.forEach(() => {
       const control = new FormControl(false);
@@ -205,6 +209,7 @@ export class RecipeFormComponent implements OnInit {
     });
   }
 
+  // Handles changes in category selection
   onCategorySelectionChange(category: any) {
     if (!this.selectedCategoriesIds.includes(category.id)) {
       this.selectedCategoriesIds.push(category.id);
@@ -219,6 +224,7 @@ export class RecipeFormComponent implements OnInit {
     }
   }
 
+  // Removes a category from the selected categories
   removeCategory(index: number): void {
     if (index >= 0 && index < this.selectedCategoriesIds.length) {
       const removedCategoryId = this.selectedCategoriesIds.splice(index, 1)[0];
@@ -234,10 +240,12 @@ export class RecipeFormComponent implements OnInit {
     }
   }
 
+  // Navigates back to the previous page
   goBack() {
     window.history.back();
   }
 
+  // Handles form submission
   onSubmit() {
     if (this.recipeForm.invalid) {
       this.translate
@@ -305,6 +313,7 @@ export class RecipeFormComponent implements OnInit {
     }
   }
 
+  // Handles file selection for the recipe image
   onFileSelected(event: any): void {
     this.selectedFile = event.target.files[0];
 
@@ -318,6 +327,7 @@ export class RecipeFormComponent implements OnInit {
     }
   }
 
+  // Adds a new ingredient input field
   addIngredientField() {
     const newIngredientControl = this.fb.group({
       selectedIngredient: [null, Validators.required],
@@ -333,30 +343,28 @@ export class RecipeFormComponent implements OnInit {
       quantity: null,
       unit: '',
     });
-    this.initializeIngredientAutocomplete(
+
+    this.setupAutocomplete(
       newIngredientControl,
       this.selectedIngredients.length - 1
     );
   }
 
+  // Removes an ingredient input field
   removeIngredientField(index: number) {
     this.selectedIngredients.splice(index, 1);
     (this.recipeForm.get('selectedIngredients') as FormArray).removeAt(index);
   }
 
+  // Handles selection of an ingredient from the autocomplete suggestions
   onIngredientSelected(ingredient: any, index: number) {
-    const selectedIngredientId = ingredient.id;
-    const selectedIngredient = this.ingredients.find(
-      (ing) => ing.id === selectedIngredientId
-    );
-
-    if (selectedIngredient) {
+    if (ingredient) {
       const formArray = this.recipeForm.get('selectedIngredients') as FormArray;
       const formGroup = formArray.at(index) as FormGroup;
 
       // Update the form group with selected ingredient details
       formGroup.patchValue({
-        selectedIngredient: selectedIngredient.id,
+        selectedIngredient: ingredient.id,
         selectedIngredientQuantity:
           formGroup.get('selectedIngredientQuantity')?.value ?? 0,
         selectedIngredientUnit:
@@ -364,17 +372,26 @@ export class RecipeFormComponent implements OnInit {
       });
 
       // Set the selected ingredient's name in the input field
-      formGroup
-        .get('selectedIngredientInput')
-        ?.setValue(selectedIngredient.name);
+      formGroup.get('selectedIngredientInput')?.setValue(ingredient.name);
 
       // Update selectedIngredients array
       this.selectedIngredients[index] = {
-        id: selectedIngredient.id,
-        name: selectedIngredient.name,
+        id: ingredient.id,
+        name: ingredient.name,
         quantity: formGroup.get('selectedIngredientQuantity')?.value ?? 0,
         unit: formGroup.get('selectedIngredientUnit')?.value ?? '',
       };
     }
+  }
+
+  // Handles changes in the quantity input field
+  onQuantityChange(event: Event, index: number) {
+    const value = (event.target as HTMLInputElement).value;
+    this.selectedIngredients[index].quantity = parseFloat(value);
+  }
+
+  // Handles changes in the unit selection
+  onUnitChange(event: MatSelectChange, index: number) {
+    this.selectedIngredients[index].unit = event.value;
   }
 }

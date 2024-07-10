@@ -10,7 +10,7 @@
   }
 
   .recipe-details {
-    padding: 20px;
+    padding: 50px;
     margin-top: 20px;
 
     &__info {
@@ -27,7 +27,7 @@
         object-fit: fill;
         width: 400px;
         height: 400px;
-        @media (max-width: 900px) {
+        @media (max-width: 1024px) {
           max-width: 100%;
           height: auto;
         }
@@ -38,7 +38,7 @@
       font-size: 60px;
       font-weight: bold;
       margin: 50px 0;
-      @media (max-width: 900px) {
+      @media (max-width: 1024px) {
         line-height: normal;
       }
     }
@@ -77,7 +77,7 @@
     &__quantity {
       display: flex;
       flex-direction: column;
-      padding: 20px;
+      padding: 50px;
 
       button {
         margin-left: 15px;

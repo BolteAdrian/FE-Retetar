@@ -125,14 +125,19 @@
       </tr>
 
       <tr class="mat-row" *matNoDataRow>
-        <td class="mat-cell" colspan="5">
-          {{ "INPUT_TEXT.NO_DATA" | translate }} "{{ input.value }}"
+        <td class="mat-cell" colspan="4">
+          <ng-container *ngIf="input.value; else noQuantity">
+            {{ "INPUT_TEXT.NO_DATA" | translate }} "{{ input.value }}"
+          </ng-container>
+          <ng-template #noQuantity>
+            {{ "INGREDIENT.NO_INGREDIENT" | translate }}
+          </ng-template>
         </td>
       </tr>
     </table>
     <div *ngIf="isLoading" class="loading-circle-container">
       <mat-spinner diameter="100"></mat-spinner>
     </div>
-    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+    <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]"></mat-paginator>
   </div>
 </div>
