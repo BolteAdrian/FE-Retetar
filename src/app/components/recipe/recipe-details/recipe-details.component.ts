@@ -112,6 +112,7 @@ export class RecipeDetailsComponent {
             .get('NOTIFY.QUANTITY.SUBMIT.SUCCESS')
             .subscribe((res: string) => {
               this.getMaxAmount();
+              this.missingIngredients = [];
               this.notificationsService.success(res, '', {
                 timeOut: 5000,
               });
